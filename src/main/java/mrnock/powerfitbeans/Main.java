@@ -1,12 +1,11 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
 package mrnock.powerfitbeans;
 
+import java.util.ArrayList;
+import mrnock.powerfitbeans.dataacccess.DataAccess;
+import mrnock.powerfitbeans.dto.Usuari;
 /**
  *
- * @author SilviaRichard
+ * @author Richard
  */
 public class Main extends javax.swing.JFrame {
 
@@ -26,21 +25,67 @@ public class Main extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        jPanel1 = new javax.swing.JPanel();
+        btnReadUsuaris = new javax.swing.JButton();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        txaShowInfoUsuaris = new javax.swing.JTextArea();
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
+        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        getContentPane().setLayout(null);
+
+        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Read"));
+
+        btnReadUsuaris.setText("Read users");
+        btnReadUsuaris.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnReadUsuarisActionPerformed(evt);
+            }
+        });
+
+        txaShowInfoUsuaris.setColumns(20);
+        txaShowInfoUsuaris.setRows(5);
+        jScrollPane1.setViewportView(txaShowInfoUsuaris);
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(19, 19, 19)
+                        .addComponent(btnReadUsuaris))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 330, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(694, Short.MAX_VALUE))
         );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(btnReadUsuaris)
+                .addGap(18, 18, 18)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(414, Short.MAX_VALUE))
         );
+
+        getContentPane().add(jPanel1);
+        jPanel1.setBounds(6, 6, 1040, 570);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btnReadUsuarisActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnReadUsuarisActionPerformed
+        DataAccess da = new DataAccess();
+        ArrayList<Usuari> usuaris = da.getUsuaris();
+        txaShowInfoUsuaris.removeAll();
+        
+        for(Usuari u: usuaris){
+            txaShowInfoUsuaris.append(u.toString());
+        }
+        
+    }//GEN-LAST:event_btnReadUsuarisActionPerformed
 
     /**
      * @param args the command line arguments
@@ -78,5 +123,9 @@ public class Main extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnReadUsuaris;
+    private javax.swing.JPanel jPanel1;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JTextArea txaShowInfoUsuaris;
     // End of variables declaration//GEN-END:variables
 }
