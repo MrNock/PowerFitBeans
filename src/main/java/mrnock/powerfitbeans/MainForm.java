@@ -1,11 +1,16 @@
 /*
  */
 package mrnock.powerfitbeans;
+
+import mrnock.powerfitbeans.dialogs.Login;
+
 /**
  *
  * @author SilviaRichard
  */
 public class MainForm extends javax.swing.JFrame {
+    
+    private Login dlgLogin;
 
     /**
      * Creates new form MainForm
@@ -13,7 +18,12 @@ public class MainForm extends javax.swing.JFrame {
     public MainForm() {
         initComponents();
         setSize(800,500);
+        setResizable(false);
         setLocationRelativeTo(null);
+        
+        dlgLogin = new Login();
+        dlgLogin.setBounds(450, 10, 330, 440);
+        
     }
 
     /**
@@ -28,15 +38,11 @@ public class MainForm extends javax.swing.JFrame {
         buttonGroup1 = new javax.swing.ButtonGroup();
         lblWelcomeImage = new javax.swing.JLabel();
         pnlLogin = new javax.swing.JPanel();
-        lblLoginTitle = new javax.swing.JLabel();
-        lblPassword = new javax.swing.JLabel();
-        lblEmail = new javax.swing.JLabel();
-        btnSubmit = new javax.swing.JButton();
-        txtEmail = new javax.swing.JTextField();
-        txtPassword = new javax.swing.JPasswordField();
-        chkIsInstructor = new javax.swing.JCheckBox();
+        lblWelcome = new javax.swing.JLabel();
         lblMoreInfo = new javax.swing.JLabel();
         lblUrlWeb = new javax.swing.JLabel();
+        lblAccessLogin = new javax.swing.JLabel();
+        lblIconLogin = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(null);
@@ -51,40 +57,11 @@ public class MainForm extends javax.swing.JFrame {
         pnlLogin.setPreferredSize(new java.awt.Dimension(432, 432));
         pnlLogin.setLayout(null);
 
-        lblLoginTitle.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
-        lblLoginTitle.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lblLoginTitle.setText("LOGIN");
-        pnlLogin.add(lblLoginTitle);
-        lblLoginTitle.setBounds(8, 8, 310, 40);
-
-        lblPassword.setText("Password:");
-        pnlLogin.add(lblPassword);
-        lblPassword.setBounds(40, 150, 110, 16);
-
-        lblEmail.setText("E-Mail:");
-        pnlLogin.add(lblEmail);
-        lblEmail.setBounds(40, 120, 110, 16);
-
-        btnSubmit.setText("Submit");
-        btnSubmit.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnSubmitActionPerformed(evt);
-            }
-        });
-        pnlLogin.add(btnSubmit);
-        btnSubmit.setBounds(110, 200, 90, 30);
-
-        txtEmail.setToolTipText("john.doe@email.com");
-        pnlLogin.add(txtEmail);
-        txtEmail.setBounds(150, 120, 130, 22);
-
-        txtPassword.setToolTipText("Your secret password");
-        pnlLogin.add(txtPassword);
-        txtPassword.setBounds(150, 150, 130, 22);
-
-        chkIsInstructor.setText("I'm an instructor");
-        pnlLogin.add(chkIsInstructor);
-        chkIsInstructor.setBounds(100, 240, 140, 20);
+        lblWelcome.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
+        lblWelcome.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblWelcome.setText("Welcome to the Power Fit Beans App");
+        pnlLogin.add(lblWelcome);
+        lblWelcome.setBounds(8, 8, 310, 40);
 
         lblMoreInfo.setText("More info: ");
         pnlLogin.add(lblMoreInfo);
@@ -98,15 +75,31 @@ public class MainForm extends javax.swing.JFrame {
         pnlLogin.add(lblUrlWeb);
         lblUrlWeb.setBounds(140, 390, 160, 20);
 
+        lblAccessLogin.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        lblAccessLogin.setText("Click to login:");
+        pnlLogin.add(lblAccessLogin);
+        lblAccessLogin.setBounds(40, 190, 150, 30);
+
+        lblIconLogin.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/icons8-login-64.png"))); // NOI18N
+        lblIconLogin.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        lblIconLogin.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                lblIconLoginMouseClicked(evt);
+            }
+        });
+        pnlLogin.add(lblIconLogin);
+        lblIconLogin.setBounds(200, 180, 70, 50);
+
         getContentPane().add(pnlLogin);
         pnlLogin.setBounds(450, 10, 330, 440);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btnSubmitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSubmitActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnSubmitActionPerformed
+    private void lblIconLoginMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblIconLoginMouseClicked
+        dlgLogin.setVisible(true);
+        pnlLogin.setVisible(false);
+    }//GEN-LAST:event_lblIconLoginMouseClicked
 
     /**
      * @param args the command line arguments
@@ -144,17 +137,13 @@ public class MainForm extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnSubmit;
     private javax.swing.ButtonGroup buttonGroup1;
-    private javax.swing.JCheckBox chkIsInstructor;
-    private javax.swing.JLabel lblEmail;
-    private javax.swing.JLabel lblLoginTitle;
+    private javax.swing.JLabel lblAccessLogin;
+    private javax.swing.JLabel lblIconLogin;
     private javax.swing.JLabel lblMoreInfo;
-    private javax.swing.JLabel lblPassword;
     private javax.swing.JLabel lblUrlWeb;
+    private javax.swing.JLabel lblWelcome;
     private javax.swing.JLabel lblWelcomeImage;
     private javax.swing.JPanel pnlLogin;
-    private javax.swing.JTextField txtEmail;
-    private javax.swing.JPasswordField txtPassword;
     // End of variables declaration//GEN-END:variables
 }
