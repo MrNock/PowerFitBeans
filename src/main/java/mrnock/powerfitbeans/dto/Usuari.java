@@ -6,11 +6,11 @@ package mrnock.powerfitbeans.dto;
  */
 public class Usuari {
     private int Id;
-    private String Nom;
+    private String NomUsuari;
     private String Email;
     private String PasswordHash;
     private byte[] Foto;
-    private boolean IsInstructor;
+    private boolean Instructor;
 
     public int getId() {
         return Id;
@@ -20,12 +20,12 @@ public class Usuari {
         this.Id = Id;
     }
 
-    public String getNom() {
-        return Nom;
+    public String getNomUsuari() {
+        return NomUsuari;
     }
 
-    public void setNom(String Nom) {
-        this.Nom = Nom;
+    public void setNomUsuari(String NomUsuari) {
+        this.NomUsuari = NomUsuari;
     }
 
     public String getEmail() {
@@ -52,18 +52,18 @@ public class Usuari {
         this.Foto = Foto;
     }
 
-    public boolean getIsInstructor() {
-        return IsInstructor;
+    public boolean getInstructor() {
+        return Instructor;
     }
 
-    public void setIsInstructor(boolean IsInstructor) {
-        this.IsInstructor = IsInstructor;
+    public void setInstructor(boolean Instructor) {
+        this.Instructor = Instructor;
     }
 
     @Override
     public String toString() {
-        return "Id: " + Id + " | Nombre: " + Nom + " | Email: " + Email + " | PasswordHash: "
-                + PasswordHash.substring(0, 5) + " | IsInstructor: " + IsInstructor +"\n";
+        return "Id: " + Id + " | Nombre: " + NomUsuari + " | Email: " + Email + " | PasswordHash: "
+                + PasswordHash.substring(0, 5) + " | Instructor: " + Instructor +"\n";
     }
     
     

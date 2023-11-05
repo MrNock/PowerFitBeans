@@ -2,28 +2,44 @@
  */
 package mrnock.powerfitbeans;
 
-import mrnock.powerfitbeans.dialogs.Login;
+import java.io.IOException;
+import java.net.URISyntaxException;
+import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import mrnock.powerfitbeans.dataacccess.Controller;
+import mrnock.powerfitbeans.dialogs.DlgLogin;
+import mrnock.powerfitbeans.dialogs.PnlIntentos;
+import mrnock.powerfitbeans.dialogs.PnlWelcome;
+import mrnock.powerfitbeans.dto.Intent;
 
 /**
  *
  * @author SilviaRichard
  */
 public class MainForm extends javax.swing.JFrame {
-    
-    private Login dlgLogin;
+
+    private DlgLogin dlgLogin;
+    private PnlWelcome pnlWelcome;
+    private Controller controller;
 
     /**
      * Creates new form MainForm
      */
     public MainForm() {
         initComponents();
-        setSize(800,500);
+        setSize(800, 500);
         setResizable(false);
         setLocationRelativeTo(null);
-        
-        dlgLogin = new Login();
+
+        dlgLogin = new DlgLogin(this);
         dlgLogin.setBounds(450, 10, 330, 440);
-        
+
+        pnlWelcome = new PnlWelcome(this);
+        getContentPane().add(pnlWelcome);
+        pnlWelcome.setBounds(450, 10, 330, 440);
+        controller = new Controller(this);
+
     }
 
     /**
@@ -37,12 +53,6 @@ public class MainForm extends javax.swing.JFrame {
 
         buttonGroup1 = new javax.swing.ButtonGroup();
         lblWelcomeImage = new javax.swing.JLabel();
-        pnlLogin = new javax.swing.JPanel();
-        lblWelcome = new javax.swing.JLabel();
-        lblMoreInfo = new javax.swing.JLabel();
-        lblUrlWeb = new javax.swing.JLabel();
-        lblAccessLogin = new javax.swing.JLabel();
-        lblIconLogin = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(null);
@@ -53,53 +63,26 @@ public class MainForm extends javax.swing.JFrame {
         getContentPane().add(lblWelcomeImage);
         lblWelcomeImage.setBounds(10, 10, 432, 432);
 
-        pnlLogin.setBorder(javax.swing.BorderFactory.createEtchedBorder());
-        pnlLogin.setPreferredSize(new java.awt.Dimension(432, 432));
-        pnlLogin.setLayout(null);
-
-        lblWelcome.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
-        lblWelcome.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lblWelcome.setText("Welcome to the Power Fit Beans App");
-        pnlLogin.add(lblWelcome);
-        lblWelcome.setBounds(8, 8, 310, 40);
-
-        lblMoreInfo.setText("More info: ");
-        pnlLogin.add(lblMoreInfo);
-        lblMoreInfo.setBounds(80, 390, 60, 16);
-
-        lblUrlWeb.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
-        lblUrlWeb.setForeground(new java.awt.Color(0, 0, 255));
-        lblUrlWeb.setText("www.powerfitbeans.com");
-        lblUrlWeb.setToolTipText("https://paucasesnovescifp.cat/");
-        lblUrlWeb.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        pnlLogin.add(lblUrlWeb);
-        lblUrlWeb.setBounds(140, 390, 160, 20);
-
-        lblAccessLogin.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        lblAccessLogin.setText("Click to login:");
-        pnlLogin.add(lblAccessLogin);
-        lblAccessLogin.setBounds(40, 190, 150, 30);
-
-        lblIconLogin.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/icons8-login-64.png"))); // NOI18N
-        lblIconLogin.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        lblIconLogin.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                lblIconLoginMouseClicked(evt);
-            }
-        });
-        pnlLogin.add(lblIconLogin);
-        lblIconLogin.setBounds(200, 180, 70, 50);
-
-        getContentPane().add(pnlLogin);
-        pnlLogin.setBounds(450, 10, 330, 440);
-
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void lblIconLoginMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblIconLoginMouseClicked
-        dlgLogin.setVisible(true);
-        pnlLogin.setVisible(false);
-    }//GEN-LAST:event_lblIconLoginMouseClicked
+    public boolean validateUser(String email, char[] password) {
+        boolean ret = controller.validateLogin(email, password);
+        if (ret) {
+            ArrayList<Intent> intentos = controller.getAttemptsPendingReview();
+            PnlIntentos pnlIntentos = null;
+            try {
+                pnlIntentos = new PnlIntentos(intentos);
+            } catch (URISyntaxException ex) {
+                Logger.getLogger(MainForm.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (IOException ex) {
+                Logger.getLogger(MainForm.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            getContentPane().removeAll();
+            getContentPane().add(pnlIntentos);
+        }
+        return ret;
+    }
 
     /**
      * @param args the command line arguments
@@ -138,12 +121,6 @@ public class MainForm extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.ButtonGroup buttonGroup1;
-    private javax.swing.JLabel lblAccessLogin;
-    private javax.swing.JLabel lblIconLogin;
-    private javax.swing.JLabel lblMoreInfo;
-    private javax.swing.JLabel lblUrlWeb;
-    private javax.swing.JLabel lblWelcome;
     private javax.swing.JLabel lblWelcomeImage;
-    private javax.swing.JPanel pnlLogin;
     // End of variables declaration//GEN-END:variables
 }
