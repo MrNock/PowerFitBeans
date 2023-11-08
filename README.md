@@ -1,6 +1,7 @@
 # PowerFitBeans
 
 **RN 2023.11.08 14:30hrs**
+<br>
 ***Error message*** in Netbeans when testing the VLC Video Player:
 Native library (win32-x86-64/libvlc.dll) not found in resource path
 
