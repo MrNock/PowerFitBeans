@@ -13,17 +13,21 @@ import uk.co.caprica.vlcj.player.component.EmbeddedMediaPlayerComponent;
  * @author SilviaRichard
  */
 public class JFrameVLCPlayer extends javax.swing.JFrame {
-    
+
     private EmbeddedMediaPlayerComponent mediaPlayer;
+    private JFileChooser fileChooser;
+    private boolean isPlaying = false;
 
     /**
      * Creates new form JFrameVLCPlayer
      */
     public JFrameVLCPlayer() {
         initComponents();
+        fileChooser = new JFileChooser();
         mediaPlayer = new EmbeddedMediaPlayerComponent();
         //Add component and center its position within the panel
         pnlVideoPlayer.add(mediaPlayer, BorderLayout.CENTER);
+
     }
 
     /**
@@ -53,11 +57,6 @@ public class JFrameVLCPlayer extends javax.swing.JFrame {
             }
         });
 
-        lstVideos.setModel(new javax.swing.AbstractListModel<String>() {
-            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
-            public int getSize() { return strings.length; }
-            public String getElementAt(int i) { return strings[i]; }
-        });
         lstVideos.addListSelectionListener(new javax.swing.event.ListSelectionListener() {
             public void valueChanged(javax.swing.event.ListSelectionEvent evt) {
                 lstVideosValueChanged(evt);
@@ -65,10 +64,15 @@ public class JFrameVLCPlayer extends javax.swing.JFrame {
         });
         jScrollPane1.setViewportView(lstVideos);
 
-        pnlVideoPlayer.setBorder(javax.swing.BorderFactory.createTitledBorder("Video Player - xxxx.mp4"));
+        pnlVideoPlayer.setBorder(javax.swing.BorderFactory.createTitledBorder("Video Player"));
         pnlVideoPlayer.setLayout(new java.awt.BorderLayout());
 
         btnPauseResumeVideo.setText("Pause");
+        btnPauseResumeVideo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnPauseResumeVideoActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -106,43 +110,61 @@ public class JFrameVLCPlayer extends javax.swing.JFrame {
                 .addContainerGap(41, Short.MAX_VALUE))
         );
 
+        pnlVideoPlayer.getAccessibleContext().setAccessibleName("Video Player");
+
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnOpenActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnOpenActionPerformed
-        JFileChooser fileChooser = new JFileChooser();
         //Only directories not files
         fileChooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
-        
+
         //Variable to get button pressed (Open or Cancel)
         int result = fileChooser.showOpenDialog(this);
-        
-        if(result == JFileChooser.APPROVE_OPTION){
+
+        if (result == JFileChooser.APPROVE_OPTION) {
             txtVideosPath.setText(fileChooser.getSelectedFile().getAbsolutePath());
             File videosFolder = new File(fileChooser.getSelectedFile().getAbsolutePath());
             File[] videos = videosFolder.listFiles();
             DefaultListModel dlm = new DefaultListModel();
-            
-            
-            for (int i=0; i < videos.length; i++){
+
+            for (int i = 0; i < videos.length; i++) {
                 File video = new File(videos[i].getAbsolutePath());
-                if(video.isFile()){
+                if (video.isFile()) {
                     dlm.addElement(video.getName());
                 }
             }
             lstVideos.removeAll();
             lstVideos.setModel(dlm);
         }
-        
-        
+
+
     }//GEN-LAST:event_btnOpenActionPerformed
 
     private void lstVideosValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_lstVideosValueChanged
         //Adjunt mouse click
-        if(evt.getValueIsAdjusting()){
+        if (evt.getValueIsAdjusting()) {
             return;
         }
+        String videoFileFolder = fileChooser.getSelectedFile().getAbsolutePath();
+        String videoFileAbsolutePath = videoFileFolder + File.separator + lstVideos.getSelectedValue();
+        mediaPlayer.mediaPlayer().media().play(videoFileAbsolutePath);
+        pnlVideoPlayer.setBorder(javax.swing.BorderFactory.createTitledBorder("Video Player - " + lstVideos.getSelectedValue()));
+        btnPauseResumeVideo.setText("Pause");
+        isPlaying = true;
     }//GEN-LAST:event_lstVideosValueChanged
+
+    private void btnPauseResumeVideoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPauseResumeVideoActionPerformed
+        if (isPlaying) {
+            mediaPlayer.mediaPlayer().controls().pause();
+            isPlaying = false;
+            btnPauseResumeVideo.setText("Resume");
+        } else{
+            mediaPlayer.mediaPlayer().controls().start();
+            isPlaying = true;
+            btnPauseResumeVideo.setText("Pause");
+        }
+    }//GEN-LAST:event_btnPauseResumeVideoActionPerformed
 
     /**
      * @param args the command line arguments
