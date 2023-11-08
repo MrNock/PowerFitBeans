@@ -7,61 +7,61 @@ package mrnock.powerfitbeans.dto;
  * @author SilviaRichard
  */
 public class Intent {
-    private int Id;
-    private int IdUsuari;
-    private int IdExercici;
+    private int id;
+    private int idUsuari;
+    private int idExercici;
     private String nomUsuari;
     private String nomExercici;
-    private String Timestamp_Inici;
-    private String Timestamp_Fi;
-    private String Videofile;
+    private String timestamp_Inici;
+    private String timestamp_Fi;
+    private String videoFile;
     
     public int getId() {
-        return Id;
+        return id;
     }
 
-    public void setId(int Id) {
-        this.Id = Id;
+    public void setId(int id) {
+        this.id = id;
     }
 
     public int getIdUsuari() {
-        return IdUsuari;
+        return idUsuari;
     }
 
-    public void setIdUsuari(int IdUsuari) {
-        this.IdUsuari = IdUsuari;
+    public void setIdUsuari(int idUsuari) {
+        this.idUsuari = idUsuari;
     }
 
     public int getIdExercici() {
-        return IdExercici;
+        return idExercici;
     }
 
-    public void setIdExercici(int IdExercici) {
-        this.IdExercici = IdExercici;
+    public void setIdExercici(int idExercici) {
+        this.idExercici = idExercici;
     }
 
     public String getTimestamp_Inici() {
-        return Timestamp_Inici;
+        return timestamp_Inici;
     }
 
-    public void setTimestamp_Inici(String Timestamp_Inici) {
-        this.Timestamp_Inici = Timestamp_Inici;
+    public void setTimestamp_Inici(String timestamp_Inici) {
+        this.timestamp_Inici = timestamp_Inici;
     }
 
     public String getTimestamp_Fi() {
-        return Timestamp_Fi;
+        return timestamp_Fi;
     }
 
-    public void setTimestamp_Fi(String Timestamp_Fi) {
-        this.Timestamp_Fi = Timestamp_Fi;
+    public void setTimestamp_Fi(String timestamp_Fi) {
+        this.timestamp_Fi = timestamp_Fi;
     }
 
-    public String getVideofile() {
-        return Videofile;
+    public String getVideoFile() {
+        return videoFile;
     }
 
-    public void setVideofile(String Videofile) {
-        this.Videofile = Videofile;
+    public void setVideoFile(String videoFile) {
+        this.videoFile = videoFile;
     }
 
     public String getNomUsuari() {

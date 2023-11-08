@@ -7,34 +7,35 @@ package mrnock.powerfitbeans.dto;
  * @author SilviaRichard
  */
 public class Review {
-    private int Id;
-    private int Valoracio;
+
+    private int id;
+    private int valoracio;
     private int idIntent;
     private int idReviewer;
-    private String Comentari;
+    private String comentari;
 
     public int getId() {
-        return Id;
+        return id;
     }
 
-    public void setId(int Id) {
-        this.Id = Id;
+    public void setId(int id) {
+        this.id = id;
     }
 
     public int getValoracio() {
-        return Valoracio;
+        return valoracio;
     }
 
-    public void setValoracio(int Valoracio) {
-        this.Valoracio = Valoracio;
+    public void setValoracio(int valoracio) {
+        this.valoracio = valoracio;
     }
 
     public String getComentari() {
-        return Comentari;
+        return comentari;
     }
 
-    public void setComentari(String Comentari) {
-        this.Comentari = Comentari;
+    public void setComentari(String comentari) {
+        this.comentari = comentari;
     }
 
     public int getIdIntent() {
@@ -52,6 +53,5 @@ public class Review {
     public void setIdReviewer(int idReviewer) {
         this.idReviewer = idReviewer;
     }
-    
-    
+
 }

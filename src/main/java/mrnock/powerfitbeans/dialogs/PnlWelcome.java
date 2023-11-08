@@ -11,6 +11,7 @@ public class PnlWelcome extends javax.swing.JPanel {
 
     /**
      * Creates new form PnlWelcome
+     * @param mainForm
      */
     public PnlWelcome(MainForm mainForm) {
         this.mainForm = mainForm;

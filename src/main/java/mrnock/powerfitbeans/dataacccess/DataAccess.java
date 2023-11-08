@@ -115,7 +115,7 @@ public class DataAccess {
                 attempt.setNomExercici(resultSet.getString("NomExercici"));
                 attempt.setTimestamp_Inici(resultSet.getString("Timestamp_Inici"));
                 attempt.setTimestamp_Fi(resultSet.getString("Timestamp_Fi"));
-                attempt.setVideofile(resultSet.getString("VideoFile"));
+                attempt.setVideoFile(resultSet.getString("VideoFile"));
                 intents.add(attempt);
             }
         } catch (SQLException e) {
@@ -187,7 +187,7 @@ public class DataAccess {
                 attempt.setNomExercici(resultSet.getString("NomExercici"));
                 attempt.setTimestamp_Inici(resultSet.getString("Timestamp_Inici"));
                 attempt.setTimestamp_Fi(resultSet.getString("Timestamp_Fi"));
-                attempt.setVideofile(resultSet.getString("VideoFile"));
+                attempt.setVideoFile(resultSet.getString("VideoFile"));
                 intents.add(attempt);
             }
         } catch (SQLException e) {

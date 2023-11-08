@@ -5,67 +5,66 @@ package mrnock.powerfitbeans.dto;
  * @author Richard
  */
 public class Usuari {
-    private int Id;
-    private String NomUsuari;
-    private String Email;
-    private String PasswordHash;
-    private byte[] Foto;
-    private boolean Instructor;
+
+    private int id;
+    private String nomUsuari;
+    private String email;
+    private String passwordHash;
+    private byte[] foto;
+    private boolean instructor;
 
     public int getId() {
-        return Id;
+        return id;
     }
 
-    public void setId(int Id) {
-        this.Id = Id;
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getNomUsuari() {
-        return NomUsuari;
+        return nomUsuari;
     }
 
-    public void setNomUsuari(String NomUsuari) {
-        this.NomUsuari = NomUsuari;
+    public void setNomUsuari(String nomUsuari) {
+        this.nomUsuari = nomUsuari;
     }
 
     public String getEmail() {
-        return Email;
+        return email;
     }
 
-    public void setEmail(String Email) {
-        this.Email = Email;
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public String getPasswordHash() {
-        return PasswordHash;
+        return passwordHash;
     }
 
-    public void setPasswordHash(String PasswordHash) {
-        this.PasswordHash = PasswordHash;
+    public void setPasswordHash(String passwordHash) {
+        this.passwordHash = passwordHash;
     }
 
     public byte[] getFoto() {
-        return Foto;
+        return foto;
     }
 
-    public void setFoto(byte[] Foto) {
-        this.Foto = Foto;
+    public void setFoto(byte[] foto) {
+        this.foto = foto;
     }
 
     public boolean getInstructor() {
-        return Instructor;
+        return instructor;
     }
 
-    public void setInstructor(boolean Instructor) {
-        this.Instructor = Instructor;
+    public void setInstructor(boolean instructor) {
+        this.instructor = instructor;
     }
 
     @Override
     public String toString() {
-        return "Id: " + Id + " | Nombre: " + NomUsuari + " | Email: " + Email + " | PasswordHash: "
-                + PasswordHash.substring(0, 5) + " | Instructor: " + Instructor +"\n";
+        return "Id: " + id + " | Nombre: " + nomUsuari + " | Email: " + email + " | PasswordHash: "
+                + passwordHash.substring(0, 5) + " | Instructor: " + instructor + "\n";
     }
-    
-    
-    
+
 }

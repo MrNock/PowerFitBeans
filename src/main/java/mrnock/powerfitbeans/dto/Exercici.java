@@ -7,32 +7,32 @@ package mrnock.powerfitbeans.dto;
  * @author SilviaRichard
  */
 public class Exercici {
-    private int Id;
-    private String NomExercici;
-    private String Descripcio;
+    private int id;
+    private String nomExercici;
+    private String descripcio;
 
     public int getId() {
-        return Id;
+        return id;
     }
 
-    public void setId(int Id) {
-        this.Id = Id;
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getNomExercici() {
-        return NomExercici;
+        return nomExercici;
     }
 
-    public void setNomExercici(String NomExercici) {
-        this.NomExercici = NomExercici;
+    public void setNomExercici(String nomExercici) {
+        this.nomExercici = nomExercici;
     }
 
     public String getDescripcio() {
-        return Descripcio;
+        return descripcio;
     }
 
-    public void setDescripcio(String Descripcio) {
-        this.Descripcio = Descripcio;
+    public void setDescripcio(String descripcio) {
+        this.descripcio = descripcio;
     }
     
     

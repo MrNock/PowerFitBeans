@@ -5,15 +5,6 @@ import java.io.IOException;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.Iterator;
-import javafx.beans.binding.Bindings;
-import javafx.beans.property.DoubleProperty;
-import javafx.embed.swing.JFXPanel;
-import javafx.scene.Scene;
-import javafx.scene.layout.StackPane;
-import javafx.scene.media.Media;
-import javafx.scene.media.MediaPlayer;
-import javafx.scene.media.MediaView;
-import javafx.stage.Screen;
 import javax.swing.DefaultListModel;
 import mrnock.powerfitbeans.dto.Intent;
 
@@ -57,7 +48,7 @@ public class PnlIntentos extends javax.swing.JPanel {
             /*
             final JFXPanel VFXPanel = new JFXPanel();
 
-            Media m = new Media(getClass().getResource("/videos/" + intentos.get(0).getVideofile()).toString());
+            Media m = new Media(getClass().getResource("/videos/" + intentos.get(0).getVideoFile()).toString());
 
             MediaPlayer player = new MediaPlayer(m);
             MediaView viewer = new MediaView(player);
@@ -91,7 +82,7 @@ public class PnlIntentos extends javax.swing.JPanel {
         }
 
         /*
-                mediaURL = getClass().getResource("/videos/" + intentos.get(0).getVideofile());
+                mediaURL = getClass().getResource("/videos/" + intentos.get(0).getVideoFile());
                 //create the media player with the media url
                 Player mediaPlayer = Manager.createRealizedPlayer(mediaURL);
                 //get components for video and playback controls
