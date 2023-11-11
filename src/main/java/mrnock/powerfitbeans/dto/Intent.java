@@ -7,6 +7,7 @@ package mrnock.powerfitbeans.dto;
  * @author SilviaRichard
  */
 public class Intent {
+
     private int id;
     private int idUsuari;
     private int idExercici;
@@ -15,7 +16,7 @@ public class Intent {
     private String timestamp_Inici;
     private String timestamp_Fi;
     private String videoFile;
-    
+
     public int getId() {
         return id;
     }
@@ -79,6 +80,4 @@ public class Intent {
     public void setNomExercici(String nomExercici) {
         this.nomExercici = nomExercici;
     }
-
-    
 }

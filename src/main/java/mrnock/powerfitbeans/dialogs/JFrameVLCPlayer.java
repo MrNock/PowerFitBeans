@@ -47,8 +47,11 @@ public class JFrameVLCPlayer extends javax.swing.JFrame {
         btnPauseResumeVideo = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        getContentPane().setLayout(null);
 
         txtVideosPath.setText("Pick folder...");
+        getContentPane().add(txtVideosPath);
+        txtVideosPath.setBounds(52, 39, 447, 22);
 
         btnOpen.setText("Open...");
         btnOpen.addActionListener(new java.awt.event.ActionListener() {
@@ -56,6 +59,8 @@ public class JFrameVLCPlayer extends javax.swing.JFrame {
                 btnOpenActionPerformed(evt);
             }
         });
+        getContentPane().add(btnOpen);
+        btnOpen.setBounds(427, 73, 72, 23);
 
         lstVideos.addListSelectionListener(new javax.swing.event.ListSelectionListener() {
             public void valueChanged(javax.swing.event.ListSelectionEvent evt) {
@@ -64,8 +69,13 @@ public class JFrameVLCPlayer extends javax.swing.JFrame {
         });
         jScrollPane1.setViewportView(lstVideos);
 
+        getContentPane().add(jScrollPane1);
+        jScrollPane1.setBounds(52, 124, 203, 326);
+
         pnlVideoPlayer.setBorder(javax.swing.BorderFactory.createTitledBorder("Video Player"));
         pnlVideoPlayer.setLayout(new java.awt.BorderLayout());
+        getContentPane().add(pnlVideoPlayer);
+        pnlVideoPlayer.setBounds(339, 160, 420, 290);
 
         btnPauseResumeVideo.setText("Pause");
         btnPauseResumeVideo.addActionListener(new java.awt.event.ActionListener() {
@@ -73,44 +83,8 @@ public class JFrameVLCPlayer extends javax.swing.JFrame {
                 btnPauseResumeVideoActionPerformed(evt);
             }
         });
-
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(52, 52, 52)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                        .addComponent(btnOpen)
-                        .addComponent(txtVideosPath, javax.swing.GroupLayout.PREFERRED_SIZE, 447, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 203, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(39, 39, 39)
-                        .addComponent(pnlVideoPlayer, javax.swing.GroupLayout.PREFERRED_SIZE, 465, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(27, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(btnPauseResumeVideo)
-                .addGap(223, 223, 223))
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(39, 39, 39)
-                .addComponent(txtVideosPath, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(btnOpen)
-                .addGap(28, 28, 28)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 326, Short.MAX_VALUE)
-                    .addComponent(pnlVideoPlayer, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(btnPauseResumeVideo)
-                .addContainerGap(41, Short.MAX_VALUE))
-        );
-
-        pnlVideoPlayer.getAccessibleContext().setAccessibleName("Video Player");
+        getContentPane().add(btnPauseResumeVideo);
+        btnPauseResumeVideo.setBounds(491, 462, 72, 23);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents

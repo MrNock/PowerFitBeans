@@ -1,98 +1,102 @@
 package mrnock.powerfitbeans.dialogs;
 
+import java.awt.BorderLayout;
 import java.io.File;
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.Iterator;
 import javax.swing.DefaultListModel;
+import javax.swing.JFileChooser;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
+import javax.swing.table.DefaultTableModel;
+import mrnock.powerfitbeans.MainForm;
 import mrnock.powerfitbeans.dto.Intent;
+import uk.co.caprica.vlcj.player.component.EmbeddedMediaPlayerComponent;
 
 /**
  *
  * @author SilviaRichard
  */
 public class PnlIntentos extends javax.swing.JPanel {
+    
+    MainForm mainForm;
+    ArrayList<Intent> intentos;
+    private EmbeddedMediaPlayerComponent mediaPlayer;
+    private boolean isPlaying = false;
+    
+    String VIDEO_PATH = "C:\\Users\\SilviaRichard\\AppData\\Local\\Simulap\\videos";
 
     /**
      * Creates new form PnlIntentos
      *
+     * @param mainForm
      * @param intentos
      * @throws java.net.URISyntaxException
      * @throws java.io.IOException
      */
-    public PnlIntentos(ArrayList<Intent> intentos) throws URISyntaxException, IOException {
+    public PnlIntentos(MainForm mainForm, ArrayList<Intent> intentos) throws URISyntaxException, IOException {
         initComponents();
+        this.intentos = intentos;
+        
+        mediaPlayer = new EmbeddedMediaPlayerComponent();
+        //Add component and center its position within the panel
+        pnlVideoPlayer.add(mediaPlayer, BorderLayout.CENTER);
+        pnlVideoPlayer.setVisible(true);
+        setBounds(10, 10, 1000, 432);
 
-        Iterator<Intent> iterator = intentos.iterator();
-        DefaultListModel defaultlm = (DefaultListModel) lstPendingReviews.getModel();
-        while (iterator.hasNext()) {
-
-            defaultlm.addElement(iterator.next().getNomUsuari() + " " + iterator.next().getNomExercici());
-        }
-
-        lstPendingReviews.setModel(new javax.swing.AbstractListModel<String>() {
-            String[] strings = {"Elemento 1", "Elemento 2"};
-
-            public int getSize() {
-                return strings.length;
+        //Iterator<Intent> iterator = intentos.iterator();
+        DefaultTableModel dtm = (DefaultTableModel) tblPendingReviews.getModel();
+        
+        for (Intent i : intentos) {
+            dtm.insertRow(dtm.getRowCount(), new Object[]{
+                i.getTimestamp_Inici(),
+                i.getNomUsuari(),
+                i.getNomExercici()
             }
-
-            public String getElementAt(int i) {
-                return strings[i];
+            );
+        }
+        
+        tblPendingReviews.setRowSelectionInterval(0, 0);
+   
+        
+        tblPendingReviews.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
+            @Override
+            public void valueChanged(ListSelectionEvent evt) {
+                // do some actions here, for example
+                // print first column value from selected row
+                if (evt.getValueIsAdjusting()) {
+                    return;
+                }
+                playSelectedVideo(tblPendingReviews.getSelectedRow());
             }
         });
-
+             
         if (!intentos.isEmpty()) {
-
-            /*
-            final JFXPanel VFXPanel = new JFXPanel();
-
-            Media m = new Media(getClass().getResource("/videos/" + intentos.get(0).getVideoFile()).toString());
-
-            MediaPlayer player = new MediaPlayer(m);
-            MediaView viewer = new MediaView(player);
-
-            StackPane root = new StackPane();
-            Scene scene = new Scene(root);
-
-            // center video position
-            //javafx.geometry.Rectangle2D screen = Screen.getPrimary().getVisualBounds();
-            viewer.setX(0);
-            viewer.setY(0);
-            //viewer.setX((screen.getWidth() - videoPanel.getWidth()) / 2);
-            //viewer.setY((screen.getHeight() - videoPanel.getHeight()) / 2);
-
-            // resize video based on screen size
-            DoubleProperty width = viewer.fitWidthProperty();
-            DoubleProperty height = viewer.fitHeightProperty();
-            width.bind(Bindings.selectDouble(viewer.sceneProperty(), "width"));
-            height.bind(Bindings.selectDouble(viewer.sceneProperty(), "height"));
-            viewer.setPreserveRatio(true);
-
-            // add video to stackpane
-            root.getChildren().add(viewer);
-
-            VFXPanel.setScene(scene);
-            //player.play();
-            //videoPanel.setLayout(new BorderLayout());
-            //videoPanel.add(VFXPanel, BorderLayout.CENTER); 
-            add(VFXPanel);
-             */
+            playSelectedVideo(0);
         }
+    }
+    
+    private void playSelectedVideo(int row) {
+        
+        String videoName = intentos.get(row).getVideoFile();
 
-        /*
-                mediaURL = getClass().getResource("/videos/" + intentos.get(0).getVideoFile());
-                //create the media player with the media url
-                Player mediaPlayer = Manager.createRealizedPlayer(mediaURL);
-                //get components for video and playback controls
-                Component video = mediaPlayer.getVisualComponent();
-                Component controls = mediaPlayer.getControlPanelComponent();
-                add(video);
-                add(controls);
-            } catch (MalformedURLException ex) {
-                Logger.getLogger(PnlIntentos.class.getName()).log(Level.SEVERE, null, ex);
-            }*/
+        //String videoFileFolder = fileChooser.getSelectedFile().getAbsolutePath();
+        String videoFileAbsolutePath = VIDEO_PATH + File.separator + videoName;
+        
+        File f = new File(videoFileAbsolutePath);
+        if (f.exists()) {
+            // TODO: Comprobar si el video existe
+            
+            mediaPlayer.mediaPlayer().media().play(videoFileAbsolutePath);
+           
+            pnlVideoPlayer.setBorder(javax.swing.BorderFactory.createTitledBorder("Video Player - " + videoName));
+           
+            //btnPauseResumeVideo.setText("Pause");
+            isPlaying = true;
+        }        
+        
     }
 
     /**
@@ -105,24 +109,70 @@ public class PnlIntentos extends javax.swing.JPanel {
     private void initComponents() {
 
         jScrollPane1 = new javax.swing.JScrollPane();
-        lstPendingReviews = new javax.swing.JList<>();
+        tblPendingReviews = new javax.swing.JTable();
+        lblLogoImg = new javax.swing.JLabel();
+        lblWelcomeInstructor = new javax.swing.JLabel();
+        pnlVideoPlayer = new javax.swing.JPanel();
+        lblPendingReview = new javax.swing.JLabel();
 
+        setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        setPreferredSize(new java.awt.Dimension(1000, 432));
         setLayout(null);
 
-        lstPendingReviews.setModel(new javax.swing.AbstractListModel<String>() {
-            String[] strings = { "Elemento 1", "Elemento 2" };
-            public int getSize() { return strings.length; }
-            public String getElementAt(int i) { return strings[i]; }
+        tblPendingReviews.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "Date", "User", "Exercici"
+            }
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
         });
-        jScrollPane1.setViewportView(lstPendingReviews);
+        jScrollPane1.setViewportView(tblPendingReviews);
+        if (tblPendingReviews.getColumnModel().getColumnCount() > 0) {
+            tblPendingReviews.getColumnModel().getColumn(0).setResizable(false);
+            tblPendingReviews.getColumnModel().getColumn(2).setResizable(false);
+        }
 
         add(jScrollPane1);
-        jScrollPane1.setBounds(20, 20, 150, 146);
+        jScrollPane1.setBounds(28, 132, 390, 154);
+
+        lblLogoImg.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/54x54_PowerFitBeans.png"))); // NOI18N
+        lblLogoImg.setText("jLabel1");
+        add(lblLogoImg);
+        lblLogoImg.setBounds(815, 25, 56, 52);
+
+        lblWelcomeInstructor.setFont(new java.awt.Font("Arial", 2, 18)); // NOI18N
+        lblWelcomeInstructor.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        lblWelcomeInstructor.setText("Welcome <Instructor Name>");
+        add(lblWelcomeInstructor);
+        lblWelcomeInstructor.setBounds(368, 24, 429, 52);
+
+        pnlVideoPlayer.setBorder(javax.swing.BorderFactory.createTitledBorder("Playing <Ejercicio>"));
+        pnlVideoPlayer.setLayout(new java.awt.BorderLayout());
+        add(pnlVideoPlayer);
+        pnlVideoPlayer.setBounds(476, 94, 530, 370);
+
+        lblPendingReview.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
+        lblPendingReview.setText("Pending Review");
+        add(lblPendingReview);
+        lblPendingReview.setBounds(28, 104, 149, 22);
     }// </editor-fold>//GEN-END:initComponents
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JList<String> lstPendingReviews;
+    private javax.swing.JLabel lblLogoImg;
+    private javax.swing.JLabel lblPendingReview;
+    private javax.swing.JLabel lblWelcomeInstructor;
+    private javax.swing.JPanel pnlVideoPlayer;
+    private javax.swing.JTable tblPendingReviews;
     // End of variables declaration//GEN-END:variables
 }

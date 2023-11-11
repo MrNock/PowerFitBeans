@@ -2,27 +2,31 @@
  */
 package mrnock.powerfitbeans.dialogs;
 
-import java.util.Arrays;
 import javax.swing.JOptionPane;
 import mrnock.powerfitbeans.MainForm;
-
 
 /**
  *
  * @author SilviaRichard
  */
 public class DlgLogin extends javax.swing.JDialog {
+
     MainForm mainForm = null;
+
     /**
      * Creates new form Login
+     *
+     * @param mainForm
+     * @param isModal
      */
     public DlgLogin(MainForm mainForm) {
-        
-        super(mainForm,DlgLogin.ModalityType.DOCUMENT_MODAL);
+
+        super(mainForm, DlgLogin.ModalityType.DOCUMENT_MODAL);
         this.mainForm = mainForm;
         initComponents();
         setSize(432, 432);
         setLayout(null);
+        setLocationRelativeTo(null);
 
     }
 
@@ -66,10 +70,12 @@ public class DlgLogin extends javax.swing.JDialog {
         pnlLogin.add(btnSubmit);
         btnSubmit.setBounds(210, 200, 90, 30);
 
+        txtEmail.setText("a@b.c");
         txtEmail.setToolTipText("john.doe@email.com");
         pnlLogin.add(txtEmail);
         txtEmail.setBounds(190, 120, 130, 22);
 
+        txtPassword.setText("string");
         txtPassword.setToolTipText("Your secret password");
         pnlLogin.add(txtPassword);
         txtPassword.setBounds(190, 150, 130, 22);
@@ -89,13 +95,13 @@ public class DlgLogin extends javax.swing.JDialog {
     private void btnSubmitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSubmitActionPerformed
         String email = txtEmail.getText();
         char[] password = txtPassword.getPassword();
-        
-        if(mainForm.validateUser(email, password)){
+
+        if (mainForm.validateUser(email, password)) {
             this.dispose();
-        }else{
+        } else {
             JOptionPane.showMessageDialog(this, "El email o password es incorrecto", "Error de Login", JOptionPane.ERROR_MESSAGE);
         }
-        
+
     }//GEN-LAST:event_btnSubmitActionPerformed
 
     /**
@@ -127,7 +133,7 @@ public class DlgLogin extends javax.swing.JDialog {
         //</editor-fold>
 
         /* Create and display the dialog */
-        /*
+ /*
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 DlgLogin dialog = new DlgLogin(mainForm);

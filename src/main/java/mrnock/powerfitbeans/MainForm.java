@@ -9,6 +9,8 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import mrnock.powerfitbeans.dataacccess.Controller;
 import mrnock.powerfitbeans.dialogs.DlgLogin;
+import mrnock.powerfitbeans.dialogs.JFrameIntentos;
+import mrnock.powerfitbeans.dialogs.PanelAuxiliar;
 import mrnock.powerfitbeans.dialogs.PnlIntentos;
 import mrnock.powerfitbeans.dialogs.PnlWelcome;
 import mrnock.powerfitbeans.dto.Intent;
@@ -22,13 +24,15 @@ public class MainForm extends javax.swing.JFrame {
     private DlgLogin dlgLogin;
     private PnlWelcome pnlWelcome;
     private Controller controller;
+    //private PnlIntentos pnlIntentos;
+    private PanelAuxiliar panelAuxiliar;
 
     /**
      * Creates new form MainForm
      */
     public MainForm() {
         initComponents();
-        setSize(800, 500);
+        setSize(1000, 500);
         setResizable(false);
         setLocationRelativeTo(null);
 
@@ -51,7 +55,6 @@ public class MainForm extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        buttonGroup1 = new javax.swing.ButtonGroup();
         lblWelcomeImage = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -67,19 +70,17 @@ public class MainForm extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     public boolean validateUser(String email, char[] password) {
-        boolean ret = controller.validateLogin(email, password);
+        boolean ret = true; //controller.validateLogin(email, password);
         if (ret) {
             ArrayList<Intent> intentos = controller.getAttemptsPendingReview();
-            PnlIntentos pnlIntentos = null;
-            try {
-                pnlIntentos = new PnlIntentos(intentos);
-            } catch (URISyntaxException ex) {
-                Logger.getLogger(MainForm.class.getName()).log(Level.SEVERE, null, ex);
-            } catch (IOException ex) {
-                Logger.getLogger(MainForm.class.getName()).log(Level.SEVERE, null, ex);
-            }
+            
+            //pnlIntentos = new PnlIntentos(this, intentos);
+            panelAuxiliar = new PanelAuxiliar();
             getContentPane().removeAll();
-            getContentPane().add(pnlIntentos);
+            getContentPane().add(panelAuxiliar);
+            panelAuxiliar.repaint();
+            this.repaint();
+
         }
         return ret;
     }
@@ -100,27 +101,20 @@ public class MainForm extends javax.swing.JFrame {
                     break;
                 }
             }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(MainForm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(MainForm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(MainForm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | javax.swing.UnsupportedLookAndFeelException ex) {
             java.util.logging.Logger.getLogger(MainForm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
 
+        //</editor-fold>
+
         /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new MainForm().setVisible(true);
-            }
+        java.awt.EventQueue.invokeLater(() -> {
+            new MainForm().setVisible(true);
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.JLabel lblWelcomeImage;
     // End of variables declaration//GEN-END:variables
 }
