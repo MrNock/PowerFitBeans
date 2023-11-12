@@ -4,6 +4,7 @@ import at.favre.lib.crypto.bcrypt.BCrypt;
 import java.util.ArrayList;
 import mrnock.powerfitbeans.MainForm;
 import mrnock.powerfitbeans.dto.Intent;
+import mrnock.powerfitbeans.dto.Review;
 import mrnock.powerfitbeans.dto.Usuari;
 
 /**
@@ -21,18 +22,18 @@ public class Controller {
 
     }
 
-    public boolean validateLogin(String email, char[] password) {
+    public Usuari validateLogin(String email, char[] password) {
         Usuari user = da.getUser(email);
 
         if (user != null) {
 
             String userPasswordHashInDatabase = user.getPasswordHash();
             BCrypt.Result result = BCrypt.verifyer().verify(password, userPasswordHashInDatabase);
-
-            return result.verified;
+            if (result.verified) {
+                return user;
+            }
         }
-
-        return false;
+        return null;
     }
 
     public ArrayList<Intent> getAttemptsPendingReview() {
@@ -46,6 +47,24 @@ public class Controller {
 
     public ArrayList<Intent> getAttemptsPerUser(Usuari user) {
         return da.getAttemptsPerUser(user);
+    }
+
+    public Review getAttemptReview(int idIntent) {
+        return da.getAttemptReview(idIntent);
+    }
+
+    public void updateReview(Review review) {
+        da.updateReview(review);
+    }
+
+    public void insertReview(Review review) {
+        da.insertReview(review);
+    }
+
+    public int deleteAttempts(Intent attempt) {
+        
+        da.deleteReviewsByAttempt(attempt);
+        return da.deleteAttempts(attempt);
     }
 
 }

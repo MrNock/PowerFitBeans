@@ -1,5 +1,4 @@
-/*
- */
+
 package mrnock.powerfitbeans.dto;
 
 /**

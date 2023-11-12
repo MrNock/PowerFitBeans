@@ -14,6 +14,7 @@ import mrnock.powerfitbeans.dialogs.PnlIntentos;
 import mrnock.powerfitbeans.dialogs.PnlShowAllUsers;
 import mrnock.powerfitbeans.dialogs.PnlWelcome;
 import mrnock.powerfitbeans.dto.Intent;
+import mrnock.powerfitbeans.dto.Review;
 import mrnock.powerfitbeans.dto.Usuari;
 
 /**
@@ -27,6 +28,8 @@ public class MainForm extends javax.swing.JFrame {
     private Controller controller;
     private PnlIntentos pnlIntentos;
     private PnlShowAllUsers pnlShowAllUsers;
+    private int idReviewer;
+    private String userName;
     //private PanelAuxiliar panelAuxiliar;
 
     /**
@@ -34,25 +37,12 @@ public class MainForm extends javax.swing.JFrame {
      */
     public MainForm() {
         initComponents();
-        setSize(1000, 500);
+        setSize(1000, 600);
         setResizable(false);
         setLocationRelativeTo(null);
 
-        // dlgLogin = new DlgLogin(this);
-        // dlgLogin.setBounds(450, 10, 330, 440);
-        // TEST
         controller = new Controller(this);
-        /*ArrayList<Intent> intentos = controller.getAttemptsPendingReview();
 
-        //ArrayList<Intent> intentos = new ArrayList<Intent>();
-        try {
-            pnlIntentos = new PnlIntentos(this, intentos);
-        } catch (URISyntaxException | IOException ex) {
-            Logger.getLogger(MainForm.class.getName()).log(Level.SEVERE, null, ex);
-        }*/
-
-        // getContentPane().remove(lblWelcomeImage);
-        // getContentPane().add(pnlIntentos, 0);
         pnlWelcome = new PnlWelcome(this);
         getContentPane().add(pnlWelcome);
         pnlWelcome.setBounds(450, 10, 330, 440);
@@ -88,48 +78,69 @@ public class MainForm extends javax.swing.JFrame {
         dlgLogin.setVisible(true);
     }
 
-    public boolean validateUser(String email, char[] password) {
+    public void validateUser(String email, char[] password) {
 
         // ArrayList<Intent> intentos = controller.getAttemptsPendingReview();
-        boolean ret = controller.validateLogin(email, password);
-        if (!ret) {
+        Usuari user = controller.validateLogin(email, password);
+        if (user == null) {
             JOptionPane.showMessageDialog(this, "El email o password es incorrecto", "Error de Login", JOptionPane.ERROR_MESSAGE);
         } else {
             dlgLogin.dispose();
+            userName = user.getNomUsuari();
             showPnlIntentos();
-//            try {
-//                
-//                pnlIntentos = new PnlIntentos(this, intentos);
-//            } catch (URISyntaxException | IOException ex) {
-//                Logger.getLogger(MainForm.class.getName()).log(Level.SEVERE, null, ex);
-//            }
-//            getContentPane().removeAll();
-//            getContentPane().add(pnlIntentos);
-//
-//            pnlIntentos.updateUI();
-//            pnlIntentos.playSelectedVideo(0);
+            idReviewer = user.getId();
+            
         }
 
-        return ret;
+    }
+
+    public void updateReview(Review review) {
+        controller.updateReview(review);
+    }
+
+    public void insertReview(Review review) {
+        controller.insertReview(review);
+    }
+
+    public boolean deleteAttempts(Intent attempt) {
+        int result = JOptionPane.showConfirmDialog(this, "Are you sure you want to delete the attempt with id. " + attempt.getId() + "?", "Please confirm action", JOptionPane.YES_NO_OPTION);
+
+        if (result == JOptionPane.YES_OPTION) {
+            if (controller.deleteAttempts(attempt) > 0) {
+
+                JOptionPane.showMessageDialog(this, "Attempt with id. " + attempt.getId() + " has been deleted successfully", "Confirmation", JOptionPane.INFORMATION_MESSAGE);
+                return true;
+            } else {
+                JOptionPane.showMessageDialog(this, "Attempt with id. " + attempt.getId() + " was not deleted", "Error message", JOptionPane.ERROR_MESSAGE);
+
+            }
+        }
+        return false;
+
     }
 
     public void showAllUsers() {
         getContentPane().removeAll();
-        pnlShowAllUsers = new PnlShowAllUsers(this);
+        pnlShowAllUsers = new PnlShowAllUsers(this, idReviewer);
         getContentPane().add(pnlShowAllUsers);
         pnlShowAllUsers.initializeElements();
         pnlShowAllUsers.updateUI();
     }
-    
-    public ArrayList<Usuari> getAllUsers(){
+
+    public ArrayList<Usuari> getAllUsers() {
         return controller.getAllUsers();
     }
 
     public void showPnlIntentos() {
         ArrayList<Intent> intentos = controller.getAttemptsPendingReview();
+
         getContentPane().removeAll();
+        if (pnlShowAllUsers != null) {
+            pnlShowAllUsers.updateUI();
+        }
+
         try {
-            pnlIntentos = new PnlIntentos(this, intentos);
+            pnlIntentos = new PnlIntentos(this, intentos, userName);
         } catch (URISyntaxException | IOException ex) {
             Logger.getLogger(MainForm.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -139,9 +150,13 @@ public class MainForm extends javax.swing.JFrame {
         pnlIntentos.playSelectedVideo(0);
 
     }
-    
-    public ArrayList<Intent> getAttemptsPerUser(Usuari user){
+
+    public ArrayList<Intent> getAttemptsPerUser(Usuari user) {
         return controller.getAttemptsPerUser(user);
+    }
+
+    public Review getAttemptReview(int idIntent) {
+        return controller.getAttemptReview(idIntent);
     }
 
     /**

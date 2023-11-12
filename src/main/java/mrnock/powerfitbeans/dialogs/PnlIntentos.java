@@ -32,15 +32,17 @@ public class PnlIntentos extends javax.swing.JPanel {
      * @throws java.net.URISyntaxException
      * @throws java.io.IOException
      */
-    public PnlIntentos(MainForm mainForm, ArrayList<Intent> intentos) throws URISyntaxException, IOException {
+    public PnlIntentos(MainForm mainForm, ArrayList<Intent> intentos, String username) throws URISyntaxException, IOException {
         initComponents();
         this.intentos = intentos;
         this.mainForm = mainForm;
+        
+        lblWelcomeInstructor.setText("Welcome " + username);
 
         mediaPlayer = new EmbeddedMediaPlayerComponent();
         //Add component and center its position within the panel
         pnlVideoPlayer.add(mediaPlayer, BorderLayout.CENTER);
-        setBounds(10, 10, 900, 432);
+        setBounds(10, 10, 950, 500);
 
         DefaultTableModel dtm = (DefaultTableModel) tblPendingReviews.getModel();
 
@@ -99,7 +101,6 @@ public class PnlIntentos extends javax.swing.JPanel {
         lblPendingReview = new javax.swing.JLabel();
         btnVerUsuarios = new javax.swing.JButton();
 
-        setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         setPreferredSize(new java.awt.Dimension(1000, 432));
 
         tblPendingReviews.setModel(new javax.swing.table.DefaultTableModel(

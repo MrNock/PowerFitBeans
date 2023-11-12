@@ -11,6 +11,7 @@ import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
 import mrnock.powerfitbeans.MainForm;
 import mrnock.powerfitbeans.dto.Intent;
+import mrnock.powerfitbeans.dto.Review;
 import mrnock.powerfitbeans.dto.Usuari;
 import uk.co.caprica.vlcj.player.component.EmbeddedMediaPlayerComponent;
 
@@ -19,26 +20,29 @@ import uk.co.caprica.vlcj.player.component.EmbeddedMediaPlayerComponent;
  * @author SilviaRichard
  */
 public class PnlShowAllUsers extends javax.swing.JPanel {
-
+    
     private MainForm mainForm;
     private ArrayList<Usuari> users;
     private ArrayList<Intent> intents;
     private EmbeddedMediaPlayerComponent mediaPlayer;
     private boolean playVideo = false;
     private boolean isPlaying = false;
-
+    private int idReviewer;
+    private Review selectedReview;
+    
     String VIDEO_PATH = "C:\\Users\\SilviaRichard\\AppData\\Local\\Simulap\\videos";
 
     /**
      * Creates new form PnlShowAllUsers
      */
-    public PnlShowAllUsers(MainForm mainForm) {
+    public PnlShowAllUsers(MainForm mainForm, int idReviewer) {
         this.mainForm = mainForm;
-
+        this.idReviewer = idReviewer;
+        
         initComponents();
-        setBounds(10, 10, 900, 432);
+        setBounds(10, 10, 950, 500);
         mediaPlayer = new EmbeddedMediaPlayerComponent();
-
+        
         pnlVideoPlayer.add(mediaPlayer, BorderLayout.CENTER);
     }
 
@@ -54,12 +58,21 @@ public class PnlShowAllUsers extends javax.swing.JPanel {
         jScrollPane2 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
         pnlVideoPlayer = new javax.swing.JPanel();
-        jScrollPane1 = new javax.swing.JScrollPane();
+        scrListUsers = new javax.swing.JScrollPane();
         lstUsers = new javax.swing.JList<>();
-        jScrollPane3 = new javax.swing.JScrollPane();
+        scrTableSelectedUser = new javax.swing.JScrollPane();
         tblSelectedUserInfo = new javax.swing.JTable();
         btnBack = new javax.swing.JButton();
         btnPauseResumeVideo = new javax.swing.JButton();
+        pnlExtraInfo = new javax.swing.JPanel();
+        lblQualification = new javax.swing.JLabel();
+        sldQualification = new javax.swing.JSlider();
+        lblComments = new javax.swing.JLabel();
+        scrComments = new javax.swing.JScrollPane();
+        txtComments = new javax.swing.JTextArea();
+        btnEditReview = new javax.swing.JButton();
+        btnAddReview = new javax.swing.JButton();
+        btnDeleteAttempt = new javax.swing.JButton();
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -79,7 +92,7 @@ public class PnlShowAllUsers extends javax.swing.JPanel {
         pnlVideoPlayer.setBorder(javax.swing.BorderFactory.createTitledBorder("Video Player"));
         pnlVideoPlayer.setLayout(new java.awt.BorderLayout());
         add(pnlVideoPlayer);
-        pnlVideoPlayer.setBounds(450, 140, 280, 210);
+        pnlVideoPlayer.setBounds(20, 250, 240, 160);
 
         lstUsers.setBorder(javax.swing.BorderFactory.createTitledBorder("Users"));
         lstUsers.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -87,12 +100,12 @@ public class PnlShowAllUsers extends javax.swing.JPanel {
                 lstUsersMouseClicked(evt);
             }
         });
-        jScrollPane1.setViewportView(lstUsers);
+        scrListUsers.setViewportView(lstUsers);
 
-        add(jScrollPane1);
-        jScrollPane1.setBounds(20, 20, 190, 160);
+        add(scrListUsers);
+        scrListUsers.setBounds(40, 70, 190, 160);
 
-        jScrollPane3.setBorder(javax.swing.BorderFactory.createTitledBorder("Attempts of Selected User"));
+        scrTableSelectedUser.setBorder(javax.swing.BorderFactory.createTitledBorder("Attempts of Selected User"));
 
         tblSelectedUserInfo.setBorder(javax.swing.BorderFactory.createTitledBorder(""));
         tblSelectedUserInfo.setModel(new javax.swing.table.DefaultTableModel(
@@ -103,10 +116,10 @@ public class PnlShowAllUsers extends javax.swing.JPanel {
                 "ID", "Activity", "Start_Date", "End_Date"
             }
         ));
-        jScrollPane3.setViewportView(tblSelectedUserInfo);
+        scrTableSelectedUser.setViewportView(tblSelectedUserInfo);
 
-        add(jScrollPane3);
-        jScrollPane3.setBounds(20, 192, 380, 230);
+        add(scrTableSelectedUser);
+        scrTableSelectedUser.setBounds(270, 10, 490, 230);
 
         btnBack.setText("Back");
         btnBack.addActionListener(new java.awt.event.ActionListener() {
@@ -115,7 +128,7 @@ public class PnlShowAllUsers extends javax.swing.JPanel {
             }
         });
         add(btnBack);
-        btnBack.setBounds(650, 20, 72, 23);
+        btnBack.setBounds(20, 20, 72, 23);
 
         btnPauseResumeVideo.setText("Pause");
         btnPauseResumeVideo.addActionListener(new java.awt.event.ActionListener() {
@@ -124,15 +137,78 @@ public class PnlShowAllUsers extends javax.swing.JPanel {
             }
         });
         add(btnPauseResumeVideo);
-        btnPauseResumeVideo.setBounds(550, 370, 110, 40);
+        btnPauseResumeVideo.setBounds(80, 420, 110, 30);
+
+        pnlExtraInfo.setBorder(javax.swing.BorderFactory.createTitledBorder("Extra Info"));
+        pnlExtraInfo.setLayout(null);
+
+        lblQualification.setText("Qualification");
+        lblQualification.setToolTipText("");
+        pnlExtraInfo.add(lblQualification);
+        lblQualification.setBounds(10, 20, 100, 30);
+
+        sldQualification.setMajorTickSpacing(1);
+        sldQualification.setMaximum(5);
+        sldQualification.setPaintLabels(true);
+        sldQualification.setPaintTicks(true);
+        sldQualification.setSnapToTicks(true);
+        sldQualification.setToolTipText("");
+        sldQualification.setValue(3);
+        sldQualification.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        pnlExtraInfo.add(sldQualification);
+        sldQualification.setBounds(90, 14, 200, 44);
+
+        lblComments.setText("Comments");
+        lblComments.setToolTipText("");
+        pnlExtraInfo.add(lblComments);
+        lblComments.setBounds(10, 60, 70, 20);
+
+        txtComments.setColumns(20);
+        txtComments.setLineWrap(true);
+        txtComments.setRows(5);
+        scrComments.setViewportView(txtComments);
+
+        pnlExtraInfo.add(scrComments);
+        scrComments.setBounds(80, 70, 370, 80);
+
+        add(pnlExtraInfo);
+        pnlExtraInfo.setBounds(280, 250, 480, 160);
+
+        btnEditReview.setText("Edit Review");
+        btnEditReview.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEditReviewActionPerformed(evt);
+            }
+        });
+        add(btnEditReview);
+        btnEditReview.setBounds(540, 420, 110, 30);
+
+        btnAddReview.setText("Add Review");
+        btnAddReview.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAddReviewActionPerformed(evt);
+            }
+        });
+        add(btnAddReview);
+        btnAddReview.setBounds(400, 420, 100, 30);
+
+        btnDeleteAttempt.setText("Delete Attempt");
+        btnDeleteAttempt.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnDeleteAttemptActionPerformed(evt);
+            }
+        });
+        add(btnDeleteAttempt);
+        btnDeleteAttempt.setBounds(150, 20, 110, 30);
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBackActionPerformed
         mainForm.showPnlIntentos();
+        
     }//GEN-LAST:event_btnBackActionPerformed
 
     private void lstUsersMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lstUsersMouseClicked
-
+        
         initializeUserDataTable(users.get(lstUsers.getSelectedIndex()));
     }//GEN-LAST:event_lstUsersMouseClicked
 
@@ -141,7 +217,7 @@ public class PnlShowAllUsers extends javax.swing.JPanel {
             btnPauseResumeVideo.setText("Resume");
             mediaPlayer.mediaPlayer().controls().pause();
             isPlaying = false;
-
+            
         } else {
             btnPauseResumeVideo.setText("Play");
             mediaPlayer.mediaPlayer().controls().play();
@@ -149,10 +225,51 @@ public class PnlShowAllUsers extends javax.swing.JPanel {
         }
     }//GEN-LAST:event_btnPauseResumeVideoActionPerformed
 
+    private void btnEditReviewActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditReviewActionPerformed
+        Review review = new Review();
+        //Intent intent = intents.get(tblSelectedUserInfo.getSelectedRow());
+        review.setId(selectedReview.getId());
+        review.setIdReviewer(idReviewer);
+        review.setValoracio(sldQualification.getValue());
+        review.setComentari(txtComments.getText());
+        mainForm.updateReview(review);
+    }//GEN-LAST:event_btnEditReviewActionPerformed
+
+    private void btnAddReviewActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddReviewActionPerformed
+        Review review = new Review();
+        Intent intent = intents.get(tblSelectedUserInfo.getSelectedRow());
+        review.setIdIntent(intent.getId());
+        review.setIdReviewer(idReviewer);
+        review.setValoracio(sldQualification.getValue());
+        review.setComentari(txtComments.getText());
+        mainForm.insertReview(review);
+    }//GEN-LAST:event_btnAddReviewActionPerformed
+
+    private void btnDeleteAttemptActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteAttemptActionPerformed
+        playVideo = false;
+        Intent intent = intents.get(tblSelectedUserInfo.getSelectedRow());
+        System.out.println("Intento: " + intent.getId());
+        if (mainForm.deleteAttempts(intent)) {
+            
+            DefaultTableModel dtm = (DefaultTableModel) tblSelectedUserInfo.getModel();
+            dtm.removeRow(tblSelectedUserInfo.getSelectedRow());
+                        
+            tblSelectedUserInfo.setModel(dtm);
+            
+            //tblSelectedUserInfo.removeRowSelectionInterval(tblSelectedUserInfo.getSelectedRow(), tblSelectedUserInfo.getSelectedRow());
+            
+            if (tblSelectedUserInfo.getRowCount() > 0) {
+                tblSelectedUserInfo.setRowSelectionInterval(0, 0);
+                
+            }
+        }
+        playVideo = true;
+    }//GEN-LAST:event_btnDeleteAttemptActionPerformed
+    
     public void initializeElements() {
         initializeUserList();
     }
-
+    
     private void initializeUserList() {
         DefaultListModel dlm = new DefaultListModel();
         users = mainForm.getAllUsers();
@@ -160,25 +277,24 @@ public class PnlShowAllUsers extends javax.swing.JPanel {
         for (Usuari u : users) {
             dlm.addElement(u.getNomUsuari());
         }
-
+        
         lstUsers.setModel(dlm);
     }
-
+    
     private void initializeUserDataTable(Usuari user) {
         playVideo = false;
         intents = mainForm.getAttemptsPerUser(user);
         DefaultTableModel dtm = (DefaultTableModel) tblSelectedUserInfo.getModel();
-
+        
         dtm.setRowCount(0);
         for (Intent intent : intents) {
             String valueEndDate = (intent.getTimestamp_Fi() == null ? "" : intent.getTimestamp_Fi());
             dtm.insertRow(dtm.getRowCount(), new Object[]{
                 intent.getId(), intent.getNomExercici(), intent.getTimestamp_Inici(), valueEndDate});
-            //"ID", "EJERCICIO", "INICIO", "FIN"});
         }
-
+        
         tblSelectedUserInfo.setModel(dtm);
-
+        
         tblSelectedUserInfo.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
             @Override
             public void valueChanged(ListSelectionEvent evt) {
@@ -186,23 +302,43 @@ public class PnlShowAllUsers extends javax.swing.JPanel {
                     return;
                 }
                 playSelectedVideo(tblSelectedUserInfo.getSelectedRow());
+                setReviewData(tblSelectedUserInfo.getSelectedRow());
             }
         });
-
+        
         playVideo = true;
         tblSelectedUserInfo.setRowSelectionInterval(0, 0);
     }
-
+    
+    private void setReviewData(int row) {
+        if (playVideo) {
+            Intent intent = intents.get(row);
+            selectedReview = mainForm.getAttemptReview(intent.getId());
+            
+            if (selectedReview.getComentari() == null || selectedReview.getComentari().isEmpty()) {
+                btnEditReview.setVisible(false);
+                txtComments.setText("");
+                sldQualification.setValue(3);
+            } else {
+                btnEditReview.setVisible(true);
+                sldQualification.setValue(selectedReview.getValoracio());
+                txtComments.setText(selectedReview.getComentari());
+            }
+        }
+    }
+    
     private void playSelectedVideo(int intento) {
         if (playVideo) {
             String videoName = intents.get(intento).getVideoFile();
+            String userName = intents.get(intento).getNomUsuari();
             String videoFileAbsolutePath = VIDEO_PATH + File.separator + videoName;
-
+            
             File f = new File(videoFileAbsolutePath);
             if (f.exists()) {
-
+                
                 mediaPlayer.mediaPlayer().media().play(videoFileAbsolutePath);
                 pnlVideoPlayer.setBorder(javax.swing.BorderFactory.createTitledBorder("Video Player - " + videoName));
+                scrTableSelectedUser.setBorder(javax.swing.BorderFactory.createTitledBorder(userName + "'s Attempts"));
                 isPlaying = true;
                 btnPauseResumeVideo.setText("Pause");
             }
@@ -211,14 +347,23 @@ public class PnlShowAllUsers extends javax.swing.JPanel {
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnAddReview;
     private javax.swing.JButton btnBack;
+    private javax.swing.JButton btnDeleteAttempt;
+    private javax.swing.JButton btnEditReview;
     private javax.swing.JButton btnPauseResumeVideo;
-    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JTable jTable1;
+    private javax.swing.JLabel lblComments;
+    private javax.swing.JLabel lblQualification;
     private javax.swing.JList<String> lstUsers;
+    private javax.swing.JPanel pnlExtraInfo;
     private javax.swing.JPanel pnlVideoPlayer;
+    private javax.swing.JScrollPane scrComments;
+    private javax.swing.JScrollPane scrListUsers;
+    private javax.swing.JScrollPane scrTableSelectedUser;
+    private javax.swing.JSlider sldQualification;
     private javax.swing.JTable tblSelectedUserInfo;
+    private javax.swing.JTextArea txtComments;
     // End of variables declaration//GEN-END:variables
 }

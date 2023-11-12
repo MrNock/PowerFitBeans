@@ -37,7 +37,7 @@ public class DataAccess {
         try (Connection con = getConnection(); PreparedStatement selectStatement = con.prepareStatement(sql);) {
             selectStatement.setString(1, email);
             ResultSet resultSet = selectStatement.executeQuery();
-            
+
             if (resultSet.next()) {
                 user = new Usuari(); // Cuando la consulta devuelve al menos un registro, se crea un usuario
                 user.setId(resultSet.getInt("Id"));
@@ -199,7 +199,7 @@ public class DataAccess {
 
     public Review getAttemptReview(int idIntent) {
         Review review = null;
-        String sql = "SELECT * FROM Review WHERE IdIntent = ?";
+        String sql = "SELECT * FROM Review WHERE IdIntent = ? ORDER BY id";
         try (Connection connection = getConnection(); PreparedStatement selectStatement = connection.prepareStatement(sql);) {
             selectStatement.setInt(1, idIntent);
             ResultSet resultSet = selectStatement.executeQuery();
@@ -234,5 +234,38 @@ public class DataAccess {
         }
         return result;
     }
-    
+
+    public int deleteReviewsByAttempt(Intent attempt) {
+        int result = 0;
+        String sql = "DELETE from Review WHERE IdIntent=?";
+        try (Connection conn = getConnection(); PreparedStatement updateStatement = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
+            updateStatement.setInt(1, attempt.getId());
+
+            result = updateStatement.executeUpdate();
+            if (result == 0) {
+                throw new SQLException("No reviews have been deleted.");
+            }
+        } catch (SQLException e) {
+            System.err.println("Error de conexión: " + e.getMessage());
+        }
+        return result;
+
+    }
+
+    public int deleteAttempts(Intent attempt) {
+        int result = 0;
+        String sql = "DELETE from Intents WHERE Id=?";
+        try (Connection conn = getConnection(); PreparedStatement updateStatement = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
+            updateStatement.setInt(1, attempt.getId());
+
+            result = updateStatement.executeUpdate();
+            if (result == 0) {
+                throw new SQLException("No attempts have been deleted.");
+            }
+        } catch (SQLException e) {
+            System.err.println("Error de conexión: " + e.getMessage());
+        }
+        return result;
+    }
+
 }
