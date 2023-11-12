@@ -40,4 +40,12 @@ public class Controller {
         return da.getAttemptsPendingReview();
     }
 
+    public ArrayList<Usuari> getAllUsers() {
+        return da.getAllUsers();
+    }
+
+    public ArrayList<Intent> getAttemptsPerUser(Usuari user) {
+        return da.getAttemptsPerUser(user);
+    }
+
 }

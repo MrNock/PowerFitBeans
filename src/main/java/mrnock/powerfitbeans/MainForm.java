@@ -11,8 +11,10 @@ import javax.swing.JOptionPane;
 import mrnock.powerfitbeans.dataacccess.Controller;
 import mrnock.powerfitbeans.dialogs.DlgLogin;
 import mrnock.powerfitbeans.dialogs.PnlIntentos;
+import mrnock.powerfitbeans.dialogs.PnlShowAllUsers;
 import mrnock.powerfitbeans.dialogs.PnlWelcome;
 import mrnock.powerfitbeans.dto.Intent;
+import mrnock.powerfitbeans.dto.Usuari;
 
 /**
  *
@@ -24,6 +26,7 @@ public class MainForm extends javax.swing.JFrame {
     private PnlWelcome pnlWelcome;
     private Controller controller;
     private PnlIntentos pnlIntentos;
+    private PnlShowAllUsers pnlShowAllUsers;
     //private PanelAuxiliar panelAuxiliar;
 
     /**
@@ -87,42 +90,58 @@ public class MainForm extends javax.swing.JFrame {
 
     public boolean validateUser(String email, char[] password) {
 
-        //JOptionPane.showMessageDialog(this, "El email o password es incorrecto", "Error de Login", JOptionPane.ERROR_MESSAGE);
-        ArrayList<Intent> intentos = controller.getAttemptsPendingReview();
-
+        // ArrayList<Intent> intentos = controller.getAttemptsPendingReview();
         boolean ret = controller.validateLogin(email, password);
         if (!ret) {
             JOptionPane.showMessageDialog(this, "El email o password es incorrecto", "Error de Login", JOptionPane.ERROR_MESSAGE);
         } else {
             dlgLogin.dispose();
-            try {
-                // panelAuxiliar = new PanelAuxiliar();
-                pnlIntentos = new PnlIntentos(this, intentos);
-            } catch (URISyntaxException | IOException ex) {
-                Logger.getLogger(MainForm.class.getName()).log(Level.SEVERE, null, ex);
-            }
-            getContentPane().removeAll();
-            getContentPane().add(pnlIntentos);
-            //repaint();
-            pnlIntentos.updateUI();
-            pnlIntentos.playSelectedVideo(0);
+            showPnlIntentos();
+//            try {
+//                
+//                pnlIntentos = new PnlIntentos(this, intentos);
+//            } catch (URISyntaxException | IOException ex) {
+//                Logger.getLogger(MainForm.class.getName()).log(Level.SEVERE, null, ex);
+//            }
+//            getContentPane().removeAll();
+//            getContentPane().add(pnlIntentos);
+//
+//            pnlIntentos.updateUI();
+//            pnlIntentos.playSelectedVideo(0);
         }
-        /*
-        if (ret) {
-            try {
-                ArrayList<Intent> intentos = controller.getAttemptsPendingReview();
 
-                pnlIntentos = new PnlIntentos(this, intentos);
-                getContentPane().removeAll();
-                getContentPane().add(pnlIntentos);
-                pnlIntentos.repaint();
-                this.repaint();
-            } catch (URISyntaxException | IOException ex) {
-                Logger.getLogger(MainForm.class.getName()).log(Level.SEVERE, null, ex);
-            }
-
-        }*/
         return ret;
+    }
+
+    public void showAllUsers() {
+        getContentPane().removeAll();
+        pnlShowAllUsers = new PnlShowAllUsers(this);
+        getContentPane().add(pnlShowAllUsers);
+        pnlShowAllUsers.initializeElements();
+        pnlShowAllUsers.updateUI();
+    }
+    
+    public ArrayList<Usuari> getAllUsers(){
+        return controller.getAllUsers();
+    }
+
+    public void showPnlIntentos() {
+        ArrayList<Intent> intentos = controller.getAttemptsPendingReview();
+        getContentPane().removeAll();
+        try {
+            pnlIntentos = new PnlIntentos(this, intentos);
+        } catch (URISyntaxException | IOException ex) {
+            Logger.getLogger(MainForm.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        getContentPane().add(pnlIntentos);
+
+        pnlIntentos.updateUI();
+        pnlIntentos.playSelectedVideo(0);
+
+    }
+    
+    public ArrayList<Intent> getAttemptsPerUser(Usuari user){
+        return controller.getAttemptsPerUser(user);
     }
 
     /**

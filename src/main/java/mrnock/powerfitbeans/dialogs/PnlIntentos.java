@@ -18,7 +18,7 @@ import uk.co.caprica.vlcj.player.component.EmbeddedMediaPlayerComponent;
  */
 public class PnlIntentos extends javax.swing.JPanel {
 
-    //MainForm mainForm;
+    MainForm mainForm;
     ArrayList<Intent> intentos;
     private EmbeddedMediaPlayerComponent mediaPlayer;
 
@@ -35,17 +35,14 @@ public class PnlIntentos extends javax.swing.JPanel {
     public PnlIntentos(MainForm mainForm, ArrayList<Intent> intentos) throws URISyntaxException, IOException {
         initComponents();
         this.intentos = intentos;
+        this.mainForm = mainForm;
 
         mediaPlayer = new EmbeddedMediaPlayerComponent();
         //Add component and center its position within the panel
         pnlVideoPlayer.add(mediaPlayer, BorderLayout.CENTER);
-        //mediaPlayer.setVisible(true);
-        //pnlVideoPlayer.setVisible(true);
         setBounds(10, 10, 900, 432);
 
-        
         DefaultTableModel dtm = (DefaultTableModel) tblPendingReviews.getModel();
-        //DefaultTableModel dtm = new DefaultTableModel();
 
         for (Intent i : intentos) {
             dtm.insertRow(dtm.getRowCount(), new Object[]{
@@ -57,10 +54,6 @@ public class PnlIntentos extends javax.swing.JPanel {
         }
         tblPendingReviews.setModel(dtm);
         tblPendingReviews.setRowSelectionInterval(0, 0);
-        
-       /* if (!intentos.isEmpty()) {
-            playSelectedVideo(0);
-        }*/
 
         tblPendingReviews.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
             @Override
@@ -78,21 +71,15 @@ public class PnlIntentos extends javax.swing.JPanel {
 
         String videoName = intentos.get(row).getVideoFile();
 
-        //String videoFileFolder = fileChooser.getSelectedFile().getAbsolutePath();
         String videoFileAbsolutePath = VIDEO_PATH + File.separator + videoName;
 
         File f = new File(videoFileAbsolutePath);
         if (f.exists()) {
-            // TODO: Comprobar si el video existe
 
             mediaPlayer.mediaPlayer().media().play(videoFileAbsolutePath);
-
             pnlVideoPlayer.setBorder(javax.swing.BorderFactory.createTitledBorder("Video Player - " + videoName));
 
-            //btnPauseResumeVideo.setText("Pause");
-            //   isPlaying = true;
         }
-
     }
 
     /**
@@ -202,7 +189,7 @@ public class PnlIntentos extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnVerUsuariosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVerUsuariosActionPerformed
-        // TODO add your handling code here:
+        mainForm.showAllUsers();
     }//GEN-LAST:event_btnVerUsuariosActionPerformed
 
 
