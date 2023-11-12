@@ -70,9 +70,9 @@ public class PnlWelcome extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void lblIconLoginMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblIconLoginMouseClicked
-        dlgLogin = new DlgLogin(mainForm);
-        dlgLogin.setVisible(true);
-      
+        //dlgLogin = new DlgLogin(mainForm);
+        //dlgLogin.setVisible(true);
+      mainForm.validateLogin();
     }//GEN-LAST:event_lblIconLoginMouseClicked
 
 
@@ -83,6 +83,6 @@ public class PnlWelcome extends javax.swing.JPanel {
     private javax.swing.JLabel lblUrlWeb;
     private javax.swing.JLabel lblWelcome;
     // End of variables declaration//GEN-END:variables
-    private DlgLogin dlgLogin;
+   // private DlgLogin dlgLogin;
     private MainForm mainForm;
 }

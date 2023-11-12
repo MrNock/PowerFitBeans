@@ -5,9 +5,6 @@ import java.io.File;
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
-import java.util.Iterator;
-import javax.swing.DefaultListModel;
-import javax.swing.JFileChooser;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
@@ -20,12 +17,11 @@ import uk.co.caprica.vlcj.player.component.EmbeddedMediaPlayerComponent;
  * @author SilviaRichard
  */
 public class PnlIntentos extends javax.swing.JPanel {
-    
-    MainForm mainForm;
+
+    //MainForm mainForm;
     ArrayList<Intent> intentos;
     private EmbeddedMediaPlayerComponent mediaPlayer;
-    private boolean isPlaying = false;
-    
+
     String VIDEO_PATH = "C:\\Users\\SilviaRichard\\AppData\\Local\\Simulap\\videos";
 
     /**
@@ -39,16 +35,18 @@ public class PnlIntentos extends javax.swing.JPanel {
     public PnlIntentos(MainForm mainForm, ArrayList<Intent> intentos) throws URISyntaxException, IOException {
         initComponents();
         this.intentos = intentos;
-        
+
         mediaPlayer = new EmbeddedMediaPlayerComponent();
         //Add component and center its position within the panel
         pnlVideoPlayer.add(mediaPlayer, BorderLayout.CENTER);
-        pnlVideoPlayer.setVisible(true);
-        setBounds(10, 10, 1000, 432);
+        //mediaPlayer.setVisible(true);
+        //pnlVideoPlayer.setVisible(true);
+        setBounds(10, 10, 900, 432);
 
-        //Iterator<Intent> iterator = intentos.iterator();
-        DefaultTableModel dtm = (DefaultTableModel) tblPendingReviews.getModel();
         
+        DefaultTableModel dtm = (DefaultTableModel) tblPendingReviews.getModel();
+        //DefaultTableModel dtm = new DefaultTableModel();
+
         for (Intent i : intentos) {
             dtm.insertRow(dtm.getRowCount(), new Object[]{
                 i.getTimestamp_Inici(),
@@ -57,46 +55,44 @@ public class PnlIntentos extends javax.swing.JPanel {
             }
             );
         }
-        
+        tblPendingReviews.setModel(dtm);
         tblPendingReviews.setRowSelectionInterval(0, 0);
-   
         
+       /* if (!intentos.isEmpty()) {
+            playSelectedVideo(0);
+        }*/
+
         tblPendingReviews.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
             @Override
             public void valueChanged(ListSelectionEvent evt) {
-                // do some actions here, for example
-                // print first column value from selected row
                 if (evt.getValueIsAdjusting()) {
                     return;
                 }
                 playSelectedVideo(tblPendingReviews.getSelectedRow());
             }
         });
-             
-        if (!intentos.isEmpty()) {
-            playSelectedVideo(0);
-        }
+
     }
-    
-    private void playSelectedVideo(int row) {
-        
+
+    public void playSelectedVideo(int row) {
+
         String videoName = intentos.get(row).getVideoFile();
 
         //String videoFileFolder = fileChooser.getSelectedFile().getAbsolutePath();
         String videoFileAbsolutePath = VIDEO_PATH + File.separator + videoName;
-        
+
         File f = new File(videoFileAbsolutePath);
         if (f.exists()) {
             // TODO: Comprobar si el video existe
-            
+
             mediaPlayer.mediaPlayer().media().play(videoFileAbsolutePath);
-           
+
             pnlVideoPlayer.setBorder(javax.swing.BorderFactory.createTitledBorder("Video Player - " + videoName));
-           
+
             //btnPauseResumeVideo.setText("Pause");
-            isPlaying = true;
-        }        
-        
+            //   isPlaying = true;
+        }
+
     }
 
     /**
@@ -114,10 +110,10 @@ public class PnlIntentos extends javax.swing.JPanel {
         lblWelcomeInstructor = new javax.swing.JLabel();
         pnlVideoPlayer = new javax.swing.JPanel();
         lblPendingReview = new javax.swing.JLabel();
+        btnVerUsuarios = new javax.swing.JButton();
 
         setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         setPreferredSize(new java.awt.Dimension(1000, 432));
-        setLayout(null);
 
         tblPendingReviews.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -141,33 +137,77 @@ public class PnlIntentos extends javax.swing.JPanel {
             tblPendingReviews.getColumnModel().getColumn(2).setResizable(false);
         }
 
-        add(jScrollPane1);
-        jScrollPane1.setBounds(28, 132, 390, 154);
-
         lblLogoImg.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/54x54_PowerFitBeans.png"))); // NOI18N
         lblLogoImg.setText("jLabel1");
-        add(lblLogoImg);
-        lblLogoImg.setBounds(815, 25, 56, 52);
 
         lblWelcomeInstructor.setFont(new java.awt.Font("Arial", 2, 18)); // NOI18N
         lblWelcomeInstructor.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         lblWelcomeInstructor.setText("Welcome <Instructor Name>");
-        add(lblWelcomeInstructor);
-        lblWelcomeInstructor.setBounds(368, 24, 429, 52);
 
         pnlVideoPlayer.setBorder(javax.swing.BorderFactory.createTitledBorder("Playing <Ejercicio>"));
         pnlVideoPlayer.setLayout(new java.awt.BorderLayout());
-        add(pnlVideoPlayer);
-        pnlVideoPlayer.setBounds(476, 94, 530, 370);
 
         lblPendingReview.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
         lblPendingReview.setText("Pending Review");
-        add(lblPendingReview);
-        lblPendingReview.setBounds(28, 104, 149, 22);
+
+        btnVerUsuarios.setText("Ver usuarios");
+        btnVerUsuarios.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnVerUsuariosActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
+        this.setLayout(layout);
+        layout.setHorizontalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(367, 367, 367)
+                .addComponent(lblWelcomeInstructor, javax.swing.GroupLayout.PREFERRED_SIZE, 429, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(lblLogoImg, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addGroup(layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(27, 27, 27)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(lblPendingReview, javax.swing.GroupLayout.PREFERRED_SIZE, 149, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 390, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(142, 142, 142)
+                        .addComponent(btnVerUsuarios, javax.swing.GroupLayout.PREFERRED_SIZE, 147, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(58, 58, 58)
+                .addComponent(pnlVideoPlayer, javax.swing.GroupLayout.PREFERRED_SIZE, 450, javax.swing.GroupLayout.PREFERRED_SIZE))
+        );
+        layout.setVerticalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(23, 23, 23)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(lblWelcomeInstructor, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(1, 1, 1)
+                        .addComponent(lblLogoImg, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(17, 17, 17)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(10, 10, 10)
+                        .addComponent(lblPendingReview, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(6, 6, 6)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 154, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(92, 92, 92)
+                        .addComponent(btnVerUsuarios))
+                    .addComponent(pnlVideoPlayer, javax.swing.GroupLayout.PREFERRED_SIZE, 320, javax.swing.GroupLayout.PREFERRED_SIZE)))
+        );
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btnVerUsuariosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVerUsuariosActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnVerUsuariosActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnVerUsuarios;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel lblLogoImg;
     private javax.swing.JLabel lblPendingReview;
