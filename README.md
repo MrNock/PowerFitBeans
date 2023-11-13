@@ -1,4 +1,18 @@
 # PowerFitBeans
+**RN 2023.11.12 22:00hrs**
+<br>
+***JTable in JAVA Swing | Update Selected Row From JTable***
+<br>Working with JTables in Java.
+<br>I have found this YouTube video very useful:
+<br>https://www.youtube.com/watch?v=Tg62AxNRir4
+
+**RN 2023.11.12 17:30hrs**
+<br>
+***Video Player*** not visible in JPanel.
+<br>
+***Solved***
+<br>After trying different components (JPanel, JFrame and JDialog) I found out that the error was due to the updateUI method. This link helped me:
+<br>https://java.hotexamples.com/es/examples/javax.swing/JScrollPane/updateUI/java-jscrollpane-updateui-method-examples.html
 
 **RN 2023.11.08 14:30hrs**
 <br>
