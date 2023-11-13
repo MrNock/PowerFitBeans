@@ -3,8 +3,12 @@ package mrnock.powerfitbeans.dialogs;
 import mrnock.powerfitbeans.MainForm;
 
 /**
+ * This DlgLogin class extends from JDialog and it is used to get users
+ * credentials and login into the app. It is instantiated from the MainForm.
  *
- * @author SilviaRichard
+ * @author Richard Navarro {@literal <richardnavarro@paucasesnovescifp.cat>}
+ * @version 2.0 Final version to submit for Unit 1 (Desarrollo de Interfaces)
+ * @since 1.5
  */
 public class DlgLogin extends javax.swing.JDialog {
 
@@ -13,7 +17,7 @@ public class DlgLogin extends javax.swing.JDialog {
     /**
      * Creates new form Login
      *
-     * @param mainForm
+     * @param mainForm information from the MainForm screen.
      */
     public DlgLogin(MainForm mainForm) {
 
@@ -23,7 +27,6 @@ public class DlgLogin extends javax.swing.JDialog {
         setSize(432, 432);
         setLayout(null);
         setLocationRelativeTo(null);
-
     }
 
     /**
@@ -66,12 +69,10 @@ public class DlgLogin extends javax.swing.JDialog {
         pnlLogin.add(btnSubmit);
         btnSubmit.setBounds(210, 200, 90, 30);
 
-        txtEmail.setText("a@b.c");
         txtEmail.setToolTipText("john.doe@email.com");
         pnlLogin.add(txtEmail);
         txtEmail.setBounds(190, 120, 130, 22);
 
-        txtPassword.setText("string");
         txtPassword.setToolTipText("Your secret password");
         pnlLogin.add(txtPassword);
         txtPassword.setBounds(190, 150, 130, 22);
@@ -88,12 +89,15 @@ public class DlgLogin extends javax.swing.JDialog {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    /**
+     * This method validates the user login, enabling him/her access into the
+     * app.
+     */
     private void btnSubmitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSubmitActionPerformed
 
         String email = txtEmail.getText();
         char[] password = txtPassword.getPassword();
         mainForm.validateUser(email, password);
-
     }//GEN-LAST:event_btnSubmitActionPerformed
 
 

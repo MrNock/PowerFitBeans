@@ -78,7 +78,6 @@
         </Component>
         <Component class="javax.swing.JTextField" name="txtEmail">
           <Properties>
-            <Property name="text" type="java.lang.String" value="a@b.c"/>
             <Property name="toolTipText" type="java.lang.String" value="john.doe@email.com"/>
           </Properties>
           <Constraints>
@@ -89,7 +88,6 @@
         </Component>
         <Component class="javax.swing.JPasswordField" name="txtPassword">
           <Properties>
-            <Property name="text" type="java.lang.String" value="string"/>
             <Property name="toolTipText" type="java.lang.String" value="Your secret password"/>
           </Properties>
           <Constraints>

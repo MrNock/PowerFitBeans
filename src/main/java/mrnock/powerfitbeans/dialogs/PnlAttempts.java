@@ -2,77 +2,80 @@ package mrnock.powerfitbeans.dialogs;
 
 import java.awt.BorderLayout;
 import java.io.File;
-import java.io.IOException;
-import java.net.URISyntaxException;
 import java.util.ArrayList;
 import javax.swing.event.ListSelectionEvent;
-import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
 import mrnock.powerfitbeans.MainForm;
-import mrnock.powerfitbeans.dto.Intent;
+import mrnock.powerfitbeans.dto.Attempt;
 import uk.co.caprica.vlcj.player.component.EmbeddedMediaPlayerComponent;
 
 /**
+ * This PnlAttempts class extends from JPanel and it is used to display a list
+ * of users having pending reviews. Apart from this, it displays automatically a
+ * video with the first record.
  *
- * @author SilviaRichard
+ * The panel has a button to navigate to the screen with the information of all
+ * users.
+ *
+ * @author Richard Navarro {@literal <richardnavarro@paucasesnovescifp.cat>}
+ * @version 2.0 Final version to submit for Unit 1 (Desarrollo de Interfaces)
+ * @since 1.5
  */
-public class PnlIntentos extends javax.swing.JPanel {
+public class PnlAttempts extends javax.swing.JPanel {
 
     MainForm mainForm;
-    ArrayList<Intent> intentos;
+    ArrayList<Attempt> attempts;
     private EmbeddedMediaPlayerComponent mediaPlayer;
 
-    String VIDEO_PATH = "C:\\Users\\SilviaRichard\\AppData\\Local\\Simulap\\videos";
+    final String VIDEO_PATH = "C:\\Users\\SilviaRichard\\AppData\\Local\\Simulap\\videos";
 
     /**
      * Creates new form PnlIntentos
      *
-     * @param mainForm
-     * @param intentos
-     * @throws java.net.URISyntaxException
-     * @throws java.io.IOException
+     * @param mainForm information from the MainForm screen.
+     * @param attempt ArrayList of attempts pending of review.
+     * @param username to be displayed in the Welcome Label.
      */
-    public PnlIntentos(MainForm mainForm, ArrayList<Intent> intentos, String username) throws URISyntaxException, IOException {
+    public PnlAttempts(MainForm mainForm, ArrayList<Attempt> attempt, String username) {
         initComponents();
-        this.intentos = intentos;
+        this.attempts = attempt;
         this.mainForm = mainForm;
-        
+
         lblWelcomeInstructor.setText("Welcome " + username);
 
         mediaPlayer = new EmbeddedMediaPlayerComponent();
-        //Add component and center its position within the panel
         pnlVideoPlayer.add(mediaPlayer, BorderLayout.CENTER);
         setBounds(10, 10, 950, 500);
 
         DefaultTableModel dtm = (DefaultTableModel) tblPendingReviews.getModel();
 
-        for (Intent i : intentos) {
+        for (Attempt i : attempt) {
             dtm.insertRow(dtm.getRowCount(), new Object[]{
-                i.getTimestamp_Inici(),
-                i.getNomUsuari(),
-                i.getNomExercici()
-            }
-            );
+                i.getTimestampStart(),
+                i.getUserName(),
+                i.getExerciseName()
+            });
         }
         tblPendingReviews.setModel(dtm);
         tblPendingReviews.setRowSelectionInterval(0, 0);
 
-        tblPendingReviews.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
-            @Override
-            public void valueChanged(ListSelectionEvent evt) {
-                if (evt.getValueIsAdjusting()) {
-                    return;
-                }
-                playSelectedVideo(tblPendingReviews.getSelectedRow());
+        tblPendingReviews.getSelectionModel().addListSelectionListener((ListSelectionEvent evt) -> {
+            if (evt.getValueIsAdjusting()) {
+                return;
             }
+            playSelectedVideo(tblPendingReviews.getSelectedRow());
         });
-
     }
 
+    /**
+     * This method is used to play the selected video with the performance of
+     * the training.
+     *
+     * @param row number for the video to be played.
+     */
     public void playSelectedVideo(int row) {
 
-        String videoName = intentos.get(row).getVideoFile();
-
+        String videoName = attempts.get(row).getVideoFile();
         String videoFileAbsolutePath = VIDEO_PATH + File.separator + videoName;
 
         File f = new File(videoFileAbsolutePath);
@@ -80,7 +83,6 @@ public class PnlIntentos extends javax.swing.JPanel {
 
             mediaPlayer.mediaPlayer().media().play(videoFileAbsolutePath);
             pnlVideoPlayer.setBorder(javax.swing.BorderFactory.createTitledBorder("Video Player - " + videoName));
-
         }
     }
 
@@ -99,7 +101,7 @@ public class PnlIntentos extends javax.swing.JPanel {
         lblWelcomeInstructor = new javax.swing.JLabel();
         pnlVideoPlayer = new javax.swing.JPanel();
         lblPendingReview = new javax.swing.JLabel();
-        btnVerUsuarios = new javax.swing.JButton();
+        btnSeeUsers = new javax.swing.JButton();
 
         setPreferredSize(new java.awt.Dimension(1000, 432));
 
@@ -138,10 +140,10 @@ public class PnlIntentos extends javax.swing.JPanel {
         lblPendingReview.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
         lblPendingReview.setText("Pending Review");
 
-        btnVerUsuarios.setText("Ver usuarios");
-        btnVerUsuarios.addActionListener(new java.awt.event.ActionListener() {
+        btnSeeUsers.setText("See users...");
+        btnSeeUsers.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnVerUsuariosActionPerformed(evt);
+                btnSeeUsersActionPerformed(evt);
             }
         });
 
@@ -163,7 +165,7 @@ public class PnlIntentos extends javax.swing.JPanel {
                             .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 390, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(142, 142, 142)
-                        .addComponent(btnVerUsuarios, javax.swing.GroupLayout.PREFERRED_SIZE, 147, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(btnSeeUsers, javax.swing.GroupLayout.PREFERRED_SIZE, 147, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(58, 58, 58)
                 .addComponent(pnlVideoPlayer, javax.swing.GroupLayout.PREFERRED_SIZE, 450, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
@@ -184,18 +186,22 @@ public class PnlIntentos extends javax.swing.JPanel {
                         .addGap(6, 6, 6)
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 154, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(92, 92, 92)
-                        .addComponent(btnVerUsuarios))
+                        .addComponent(btnSeeUsers))
                     .addComponent(pnlVideoPlayer, javax.swing.GroupLayout.PREFERRED_SIZE, 320, javax.swing.GroupLayout.PREFERRED_SIZE)))
         );
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btnVerUsuariosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVerUsuariosActionPerformed
+    /**
+     * This method navigates to the PnlShowAllUsers screen in order to see the
+     * information for all users.
+     */
+    private void btnSeeUsersActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSeeUsersActionPerformed
         mainForm.showAllUsers();
-    }//GEN-LAST:event_btnVerUsuariosActionPerformed
+    }//GEN-LAST:event_btnSeeUsersActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnVerUsuarios;
+    private javax.swing.JButton btnSeeUsers;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel lblLogoImg;
     private javax.swing.JLabel lblPendingReview;

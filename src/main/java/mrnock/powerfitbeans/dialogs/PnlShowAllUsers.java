@@ -1,5 +1,3 @@
-/*
- */
 package mrnock.powerfitbeans.dialogs;
 
 import java.awt.BorderLayout;
@@ -7,42 +5,50 @@ import java.io.File;
 import java.util.ArrayList;
 import javax.swing.DefaultListModel;
 import javax.swing.event.ListSelectionEvent;
-import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
 import mrnock.powerfitbeans.MainForm;
-import mrnock.powerfitbeans.dto.Intent;
+import mrnock.powerfitbeans.dto.Attempt;
 import mrnock.powerfitbeans.dto.Review;
-import mrnock.powerfitbeans.dto.Usuari;
+import mrnock.powerfitbeans.dto.User;
 import uk.co.caprica.vlcj.player.component.EmbeddedMediaPlayerComponent;
 
 /**
+ * This PnlShowAllUsers class extends from JPanel and it is used to get all
+ * users information in the app, enabling the instructor to provide new reviews
+ * or edit those already provided. Besides, the instructor can delete attempts
+ * after confirming the action.
  *
- * @author SilviaRichard
+ * @author Richard Navarro {@literal <richardnavarro@paucasesnovescifp.cat>}
+ * @version 2.0 Final version to submit for Unit 1 (Desarrollo de Interfaces)
+ * @since 1.5
  */
 public class PnlShowAllUsers extends javax.swing.JPanel {
-    
+
     private MainForm mainForm;
-    private ArrayList<Usuari> users;
-    private ArrayList<Intent> intents;
+    private ArrayList<User> users;
+    private ArrayList<Attempt> attempts;
     private EmbeddedMediaPlayerComponent mediaPlayer;
     private boolean playVideo = false;
     private boolean isPlaying = false;
     private int idReviewer;
     private Review selectedReview;
-    
-    String VIDEO_PATH = "C:\\Users\\SilviaRichard\\AppData\\Local\\Simulap\\videos";
+
+    final String VIDEO_PATH = "C:\\Users\\SilviaRichard\\AppData\\Local\\Simulap\\videos";
 
     /**
      * Creates new form PnlShowAllUsers
+     *
+     * @param mainForm information from the MainForm screen
+     * @param idReviewer to identify the Reviewer
      */
     public PnlShowAllUsers(MainForm mainForm, int idReviewer) {
         this.mainForm = mainForm;
         this.idReviewer = idReviewer;
-        
+
         initComponents();
         setBounds(10, 10, 950, 500);
         mediaPlayer = new EmbeddedMediaPlayerComponent();
-        
+
         pnlVideoPlayer.add(mediaPlayer, BorderLayout.CENTER);
     }
 
@@ -55,8 +61,6 @@ public class PnlShowAllUsers extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jScrollPane2 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
         pnlVideoPlayer = new javax.swing.JPanel();
         scrListUsers = new javax.swing.JScrollPane();
         lstUsers = new javax.swing.JList<>();
@@ -73,19 +77,6 @@ public class PnlShowAllUsers extends javax.swing.JPanel {
         btnEditReview = new javax.swing.JButton();
         btnAddReview = new javax.swing.JButton();
         btnDeleteAttempt = new javax.swing.JButton();
-
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
-            },
-            new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
-            }
-        ));
-        jScrollPane2.setViewportView(jTable1);
 
         setLayout(null);
 
@@ -202,22 +193,32 @@ public class PnlShowAllUsers extends javax.swing.JPanel {
         btnDeleteAttempt.setBounds(150, 20, 110, 30);
     }// </editor-fold>//GEN-END:initComponents
 
+    /**
+     * This method navigates back to the PnlAttempts screen.
+     */
     private void btnBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBackActionPerformed
-        mainForm.showPnlIntentos();
-        
+        mainForm.showPnlAttempts();
+
     }//GEN-LAST:event_btnBackActionPerformed
 
+    /**
+     * This method initializes the Datatable component with the information.
+     */
     private void lstUsersMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lstUsersMouseClicked
-        
+
         initializeUserDataTable(users.get(lstUsers.getSelectedIndex()));
     }//GEN-LAST:event_lstUsersMouseClicked
 
+    /**
+     * This method controls the video player by playing and pausing the
+     * recordings.
+     */
     private void btnPauseResumeVideoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPauseResumeVideoActionPerformed
         if (isPlaying) {
             btnPauseResumeVideo.setText("Resume");
             mediaPlayer.mediaPlayer().controls().pause();
             isPlaying = false;
-            
+
         } else {
             btnPauseResumeVideo.setText("Play");
             mediaPlayer.mediaPlayer().controls().play();
@@ -225,117 +226,133 @@ public class PnlShowAllUsers extends javax.swing.JPanel {
         }
     }//GEN-LAST:event_btnPauseResumeVideoActionPerformed
 
+    /**
+     * This method calls the updateReview method.
+     */
     private void btnEditReviewActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditReviewActionPerformed
         Review review = new Review();
-        //Intent intent = intents.get(tblSelectedUserInfo.getSelectedRow());
+
         review.setId(selectedReview.getId());
         review.setIdReviewer(idReviewer);
-        review.setValoracio(sldQualification.getValue());
-        review.setComentari(txtComments.getText());
+        review.setScore(sldQualification.getValue());
+        review.setComment(txtComments.getText());
         mainForm.updateReview(review);
     }//GEN-LAST:event_btnEditReviewActionPerformed
 
+    /**
+     * This method calls the insertReview method.
+     */
     private void btnAddReviewActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddReviewActionPerformed
         Review review = new Review();
-        Intent intent = intents.get(tblSelectedUserInfo.getSelectedRow());
-        review.setIdIntent(intent.getId());
+        Attempt attempt = attempts.get(tblSelectedUserInfo.getSelectedRow());
+        review.setIdAttempt(attempt.getId());
         review.setIdReviewer(idReviewer);
-        review.setValoracio(sldQualification.getValue());
-        review.setComentari(txtComments.getText());
+        review.setScore(sldQualification.getValue());
+        review.setComment(txtComments.getText());
         mainForm.insertReview(review);
     }//GEN-LAST:event_btnAddReviewActionPerformed
 
+    /**
+     * This method calls the deleteAttempt method.
+     */
     private void btnDeleteAttemptActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteAttemptActionPerformed
         playVideo = false;
-        Intent intent = intents.get(tblSelectedUserInfo.getSelectedRow());
-        System.out.println("Intento: " + intent.getId());
-        if (mainForm.deleteAttempts(intent)) {
-            
+        Attempt attempt = attempts.get(tblSelectedUserInfo.getSelectedRow());
+        if (mainForm.deleteAttempt(attempt)) {
+
             DefaultTableModel dtm = (DefaultTableModel) tblSelectedUserInfo.getModel();
             dtm.removeRow(tblSelectedUserInfo.getSelectedRow());
-                        
+
             tblSelectedUserInfo.setModel(dtm);
-            
-            //tblSelectedUserInfo.removeRowSelectionInterval(tblSelectedUserInfo.getSelectedRow(), tblSelectedUserInfo.getSelectedRow());
-            
+
             if (tblSelectedUserInfo.getRowCount() > 0) {
                 tblSelectedUserInfo.setRowSelectionInterval(0, 0);
-                
             }
         }
         playVideo = true;
     }//GEN-LAST:event_btnDeleteAttemptActionPerformed
-    
+
+    /**
+     * This public method initializes the list of users.
+     */
     public void initializeElements() {
         initializeUserList();
     }
-    
+
+    /**
+     * This private method initializes the list of users.
+     */
     private void initializeUserList() {
         DefaultListModel dlm = new DefaultListModel();
         users = mainForm.getAllUsers();
         lstUsers.removeAll();
-        for (Usuari u : users) {
-            dlm.addElement(u.getNomUsuari());
+        for (User u : users) {
+            dlm.addElement(u.getUserName());
         }
-        
         lstUsers.setModel(dlm);
     }
-    
-    private void initializeUserDataTable(Usuari user) {
+
+    /**
+     * This private method initializes the Datatable of users.
+     */
+    private void initializeUserDataTable(User user) {
         playVideo = false;
-        intents = mainForm.getAttemptsPerUser(user);
+        attempts = mainForm.getAttemptsPerUser(user);
         DefaultTableModel dtm = (DefaultTableModel) tblSelectedUserInfo.getModel();
-        
+
         dtm.setRowCount(0);
-        for (Intent intent : intents) {
-            String valueEndDate = (intent.getTimestamp_Fi() == null ? "" : intent.getTimestamp_Fi());
+        for (Attempt intent : attempts) {
+            String valueEndDate = (intent.getTimestartEnd() == null ? "" : intent.getTimestartEnd());
             dtm.insertRow(dtm.getRowCount(), new Object[]{
-                intent.getId(), intent.getNomExercici(), intent.getTimestamp_Inici(), valueEndDate});
+                intent.getId(), intent.getExerciseName(), intent.getTimestampStart(), valueEndDate});
         }
-        
+
         tblSelectedUserInfo.setModel(dtm);
-        
-        tblSelectedUserInfo.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
-            @Override
-            public void valueChanged(ListSelectionEvent evt) {
-                if (evt.getValueIsAdjusting()) {
-                    return;
-                }
-                playSelectedVideo(tblSelectedUserInfo.getSelectedRow());
-                setReviewData(tblSelectedUserInfo.getSelectedRow());
+
+        tblSelectedUserInfo.getSelectionModel().addListSelectionListener((ListSelectionEvent evt) -> {
+            if (evt.getValueIsAdjusting()) {
+                return;
             }
+            playSelectedVideo(tblSelectedUserInfo.getSelectedRow());
+            setReviewData(tblSelectedUserInfo.getSelectedRow());
         });
-        
+
         playVideo = true;
         tblSelectedUserInfo.setRowSelectionInterval(0, 0);
     }
-    
+
+    /**
+     * This method adds the review details for a specific selected row.
+     */
     private void setReviewData(int row) {
         if (playVideo) {
-            Intent intent = intents.get(row);
-            selectedReview = mainForm.getAttemptReview(intent.getId());
-            
-            if (selectedReview.getComentari() == null || selectedReview.getComentari().isEmpty()) {
+            Attempt intent = attempts.get(row);
+            selectedReview = mainForm.getReviewByAttempt(intent.getId());
+
+            if (selectedReview.getComment() == null || selectedReview.getComment().isEmpty()) {
                 btnEditReview.setVisible(false);
                 txtComments.setText("");
                 sldQualification.setValue(3);
             } else {
                 btnEditReview.setVisible(true);
-                sldQualification.setValue(selectedReview.getValoracio());
-                txtComments.setText(selectedReview.getComentari());
+                sldQualification.setValue(selectedReview.getScore());
+                txtComments.setText(selectedReview.getComment());
             }
         }
     }
-    
-    private void playSelectedVideo(int intento) {
+
+    /**
+     * This method plays the video for a specific selected row.
+     */
+    private void playSelectedVideo(int attempt) {
         if (playVideo) {
-            String videoName = intents.get(intento).getVideoFile();
-            String userName = intents.get(intento).getNomUsuari();
+            String videoName = attempts.get(attempt).getVideoFile();
+            String userName = attempts.get(attempt).getUserName();
             String videoFileAbsolutePath = VIDEO_PATH + File.separator + videoName;
-            
+
             File f = new File(videoFileAbsolutePath);
             if (f.exists()) {
-                
+
                 mediaPlayer.mediaPlayer().media().play(videoFileAbsolutePath);
                 pnlVideoPlayer.setBorder(javax.swing.BorderFactory.createTitledBorder("Video Player - " + videoName));
                 scrTableSelectedUser.setBorder(javax.swing.BorderFactory.createTitledBorder(userName + "'s Attempts"));
@@ -352,8 +369,6 @@ public class PnlShowAllUsers extends javax.swing.JPanel {
     private javax.swing.JButton btnDeleteAttempt;
     private javax.swing.JButton btnEditReview;
     private javax.swing.JButton btnPauseResumeVideo;
-    private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JTable jTable1;
     private javax.swing.JLabel lblComments;
     private javax.swing.JLabel lblQualification;
     private javax.swing.JList<String> lstUsers;

@@ -1,17 +1,24 @@
-/*
- */
 package mrnock.powerfitbeans.dialogs;
+
 import mrnock.powerfitbeans.MainForm;
 
 /**
+ * This PnlWelcome class extends from JPanel and it is used to welcome the users
+ * with a welcome message and a link to the Power Fit Beans website.
  *
- * @author SilviaRichard
+ * By clicking the icon, the user will be prompted with the Login form to access
+ * the app after validation.
+ *
+ * @author Richard Navarro {@literal <richardnavarro@paucasesnovescifp.cat>}
+ * @version 2.0 Final version to submit for Unit 1 (Desarrollo de Interfaces)
+ * @since 1.5
  */
 public class PnlWelcome extends javax.swing.JPanel {
 
     /**
      * Creates new form PnlWelcome
-     * @param mainForm
+     *
+     * @param mainForm information from the MainForm screen.
      */
     public PnlWelcome(MainForm mainForm) {
         this.mainForm = mainForm;
@@ -69,10 +76,12 @@ public class PnlWelcome extends javax.swing.JPanel {
         lblUrlWeb.setBounds(140, 390, 160, 20);
     }// </editor-fold>//GEN-END:initComponents
 
+    /**
+     * This method calls the validateLogin method to validate the user, enabling
+     * him/her access into the app.
+     */
     private void lblIconLoginMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblIconLoginMouseClicked
-        //dlgLogin = new DlgLogin(mainForm);
-        //dlgLogin.setVisible(true);
-      mainForm.validateLogin();
+        mainForm.validateLogin();
     }//GEN-LAST:event_lblIconLoginMouseClicked
 
 

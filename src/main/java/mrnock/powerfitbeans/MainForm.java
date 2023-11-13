@@ -1,39 +1,44 @@
-/*
- */
 package mrnock.powerfitbeans;
 
-import java.io.IOException;
-import java.net.URISyntaxException;
 import java.util.ArrayList;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import mrnock.powerfitbeans.dataacccess.Controller;
 import mrnock.powerfitbeans.dialogs.DlgLogin;
-import mrnock.powerfitbeans.dialogs.PnlIntentos;
+import mrnock.powerfitbeans.dialogs.PnlAttempts;
 import mrnock.powerfitbeans.dialogs.PnlShowAllUsers;
 import mrnock.powerfitbeans.dialogs.PnlWelcome;
-import mrnock.powerfitbeans.dto.Intent;
+import mrnock.powerfitbeans.dto.Attempt;
 import mrnock.powerfitbeans.dto.Review;
-import mrnock.powerfitbeans.dto.Usuari;
+import mrnock.powerfitbeans.dto.User;
 
 /**
+ * This sports-training application provides users with the capability to submit
+ * workout videos, receiving personalized feedback and ratings from expert
+ * instructors. Users benefit from detailed comments and a precise 1 to 5 score,
+ * facilitating targeted improvements in athletic performance.
  *
- * @author SilviaRichard
+ * This MainForm is in charge of interacting with the rest of panels from within
+ * the app, calling different methods implemented in the Controller. This
+ * Controller is used as an intermediate interface from the DataAccess class, in
+ * order to give some additional security and freeing the MainForm to deal with
+ * the logic of the program.
+ *
+ * @author Richard Navarro {@literal <richardnavarro@paucasesnovescifp.cat>}
+ * @version 2.0 Final version to submit for Unit 1 (Desarrollo de Interfaces)
+ * @since 1.5
  */
 public class MainForm extends javax.swing.JFrame {
 
     private DlgLogin dlgLogin;
     private PnlWelcome pnlWelcome;
     private Controller controller;
-    private PnlIntentos pnlIntentos;
+    private PnlAttempts pnlAttempts;
     private PnlShowAllUsers pnlShowAllUsers;
     private int idReviewer;
     private String userName;
-    //private PanelAuxiliar panelAuxiliar;
 
     /**
-     * Creates new form MainForm
+     * MainForm constructor method with its settings
      */
     public MainForm() {
         initComponents();
@@ -46,7 +51,6 @@ public class MainForm extends javax.swing.JFrame {
         pnlWelcome = new PnlWelcome(this);
         getContentPane().add(pnlWelcome);
         pnlWelcome.setBounds(450, 10, 330, 440);
-
     }
 
     /**
@@ -72,53 +76,87 @@ public class MainForm extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    /**
+     * This method validates the Login credentials provided by users
+     */
     public void validateLogin() {
 
         dlgLogin = new DlgLogin(this);
         dlgLogin.setVisible(true);
     }
 
+    /**
+     * This method validates the Login credentials provided by users
+     *
+     * @param email String with the user's email
+     * @param password String with the user's password
+     */
     public void validateUser(String email, char[] password) {
 
-        // ArrayList<Intent> intentos = controller.getAttemptsPendingReview();
-        Usuari user = controller.validateLogin(email, password);
+        User user = controller.validateLogin(email, password);
         if (user == null) {
-            JOptionPane.showMessageDialog(this, "El email o password es incorrecto", "Error de Login", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, "The e-mail or"
+                    + " password provided is incorrect", "Login Error",
+                    JOptionPane.ERROR_MESSAGE);
         } else {
             dlgLogin.dispose();
-            userName = user.getNomUsuari();
-            showPnlIntentos();
+            userName = user.getUserName();
+            showPnlAttempts();
             idReviewer = user.getId();
-            
         }
-
     }
 
+    /**
+     * This method updates the score and comments provided by the instructor
+     *
+     * @param review Review with the updated values
+     */
     public void updateReview(Review review) {
         controller.updateReview(review);
     }
 
+    /**
+     * This method adds a new review in the Database
+     *
+     * @param review Review with the newly created values
+     */
     public void insertReview(Review review) {
         controller.insertReview(review);
     }
 
-    public boolean deleteAttempts(Intent attempt) {
-        int result = JOptionPane.showConfirmDialog(this, "Are you sure you want to delete the attempt with id. " + attempt.getId() + "?", "Please confirm action", JOptionPane.YES_NO_OPTION);
+    /**
+     * This method prompts the user to confirm a deletion of an attempt and if
+     * confirmed, it removes the specific record from the Database. To conclude,
+     * it displays a message with the result.
+     *
+     * @param attempt Attempt to be deleted
+     * @return boolean with the number of rows affected
+     */
+    public boolean deleteAttempt(Attempt attempt) {
+        int result = JOptionPane.showConfirmDialog(this, "Are you sure"
+                + " you want to delete the attempt with id. " + attempt.getId()
+                + "?", "Please confirm action", JOptionPane.YES_NO_OPTION);
 
         if (result == JOptionPane.YES_OPTION) {
-            if (controller.deleteAttempts(attempt) > 0) {
+            if (controller.deleteAttempt(attempt) > 0) {
 
-                JOptionPane.showMessageDialog(this, "Attempt with id. " + attempt.getId() + " has been deleted successfully", "Confirmation", JOptionPane.INFORMATION_MESSAGE);
+                JOptionPane.showMessageDialog(this, "Attempt with id. "
+                        + attempt.getId() + " has been deleted successfully",
+                        "Confirmation", JOptionPane.INFORMATION_MESSAGE);
                 return true;
             } else {
-                JOptionPane.showMessageDialog(this, "Attempt with id. " + attempt.getId() + " was not deleted", "Error message", JOptionPane.ERROR_MESSAGE);
-
+                JOptionPane.showMessageDialog(this, "Attempt with id. "
+                        + attempt.getId() + " was not deleted", "Error message",
+                        JOptionPane.ERROR_MESSAGE);
             }
         }
         return false;
-
     }
 
+    /**
+     * This method gets all the information from users and initializes the GUI
+     * elements.
+     */
     public void showAllUsers() {
         getContentPane().removeAll();
         pnlShowAllUsers = new PnlShowAllUsers(this, idReviewer);
@@ -127,36 +165,55 @@ public class MainForm extends javax.swing.JFrame {
         pnlShowAllUsers.updateUI();
     }
 
-    public ArrayList<Usuari> getAllUsers() {
+    /**
+     * This method gets a list with all users and their information.
+     *
+     * @return ArrayList of all user and their information.
+     */
+    public ArrayList<User> getAllUsers() {
         return controller.getAllUsers();
     }
 
-    public void showPnlIntentos() {
-        ArrayList<Intent> intentos = controller.getAttemptsPendingReview();
+    /**
+     * This method displays the main page with the attempts pending of a review
+     * from the instructor. It gives the possibility to navigate to the screen
+     * with all the information from all users, not only for those with a
+     * pending review.
+     */
+    public void showPnlAttempts() {
+        ArrayList<Attempt> attempts = controller.getAttemptsPendingReview();
 
         getContentPane().removeAll();
         if (pnlShowAllUsers != null) {
             pnlShowAllUsers.updateUI();
         }
 
-        try {
-            pnlIntentos = new PnlIntentos(this, intentos, userName);
-        } catch (URISyntaxException | IOException ex) {
-            Logger.getLogger(MainForm.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        getContentPane().add(pnlIntentos);
+        pnlAttempts = new PnlAttempts(this, attempts, userName);
 
-        pnlIntentos.updateUI();
-        pnlIntentos.playSelectedVideo(0);
+        getContentPane().add(pnlAttempts);
 
+        pnlAttempts.updateUI();
+        pnlAttempts.playSelectedVideo(0);
     }
 
-    public ArrayList<Intent> getAttemptsPerUser(Usuari user) {
+    /**
+     * This method gets a list with all the attempts for a specific user.
+     *
+     * @param user User for which we want to get the information from.
+     * @return ArrayList of users for a certain user.
+     */
+    public ArrayList<Attempt> getAttemptsPerUser(User user) {
         return controller.getAttemptsPerUser(user);
     }
 
-    public Review getAttemptReview(int idIntent) {
-        return controller.getAttemptReview(idIntent);
+    /**
+     * This method gets a review by its attempt identification.
+     *
+     * @param idAttempt Attempt identification
+     * @return Review based on an attempt id.
+     */
+    public Review getReviewByAttempt(int idAttempt) {
+        return controller.getReviewByAttempt(idAttempt);
     }
 
     /**

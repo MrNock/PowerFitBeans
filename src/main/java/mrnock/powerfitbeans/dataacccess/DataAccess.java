@@ -7,93 +7,129 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
-import mrnock.powerfitbeans.dto.Usuari;
-import mrnock.powerfitbeans.dto.Intent;
+import mrnock.powerfitbeans.dto.User;
+import mrnock.powerfitbeans.dto.Attempt;
 import mrnock.powerfitbeans.dto.Review;
 
 /**
+ * This DataAccess class is instantiated by the Controller and its in charge of
+ * dealing with the Database. It has been encapsulated to add extra security,
+ * avoiding unwanted external access.
  *
- * @author Richard
+ * It performs the connection and all CRUD methods needed in the app.
+ *
+ * @author Richard Navarro {@literal <richardnavarro@paucasesnovescifp.cat>}
+ * @version 2.0 Final version to submit for Unit 1 (Desarrollo de Interfaces)
+ * @since 1.5
  */
 public class DataAccess {
 
+    /**
+     * This method connects with the Database with the personal connection URL.
+     *
+     * @return Connection object or null on failure.
+     */
     private Connection getConnection() {
         Connection connection = null;
 
-        String connectionUrl = "jdbc:sqlserver://localhost;database=simulapdb;"
+        //My personal connection URL
+        final String CONNECTION_URL = "jdbc:sqlserver://localhost;database=simulapdb;"
                 + "user=sa;password=/Welcome02;encrypt=false;";
 
         try {
-            connection = DriverManager.getConnection(connectionUrl);
+            connection = DriverManager.getConnection(CONNECTION_URL);
         } catch (SQLException ex) {
-            System.err.println("Error de conexión: " + ex.getMessage());
+            System.err.println("Connection error: " + ex.getMessage());
         }
         return connection;
     }
 
-    public Usuari getUser(String email) {
-        Usuari user = null;
+    /**
+     * This method gets a user by its email address.
+     *
+     * @param email String with the email to look up in the Database.
+     * @return User object with the same email received by parameter.
+     */
+    public User getUser(String email) {
+        User user = null;
         String sql = "SELECT * FROM Usuaris WHERE Email = ?";
         try (Connection con = getConnection(); PreparedStatement selectStatement = con.prepareStatement(sql);) {
             selectStatement.setString(1, email);
             ResultSet resultSet = selectStatement.executeQuery();
 
             if (resultSet.next()) {
-                user = new Usuari(); // Cuando la consulta devuelve al menos un registro, se crea un usuario
+                user = new User();
                 user.setId(resultSet.getInt("Id"));
-                user.setNomUsuari(resultSet.getString("Nom"));
+                user.setUserName(resultSet.getString("Nom"));
                 user.setEmail(resultSet.getString("Email"));
                 user.setPasswordHash(resultSet.getString("PasswordHash"));
-                user.setInstructor(resultSet.getBoolean("Instructor"));
+                user.setIsInstructor(resultSet.getBoolean("Instructor"));
             }
         } catch (SQLException e) {
-            System.err.println("Error de conexión: " + e.getMessage());
+            System.err.println("Connection error: " + e.getMessage());
         }
         return user;
     }
 
-    public ArrayList<Usuari> getAllUsers() {
-        ArrayList<Usuari> usuaris = new ArrayList<>();
+    /**
+     * This method gets an ArrayList of users from the Database.
+     *
+     * @return ArrayList of users.
+     */
+    public ArrayList<User> getAllUsers() {
+        ArrayList<User> usuaris = new ArrayList<>();
         String sql = "SELECT * FROM Usuaris WHERE Instructor=0";
         try (Connection con = getConnection(); PreparedStatement selectStatement = con.prepareStatement(sql);) {
 
             ResultSet resultSet = selectStatement.executeQuery();
 
             while (resultSet.next()) {
-                Usuari user = new Usuari();
+                User user = new User();
                 user.setId(resultSet.getInt("Id"));
-                user.setNomUsuari(resultSet.getString("Nom"));
+                user.setUserName(resultSet.getString("Nom"));
                 user.setEmail(resultSet.getString("Email"));
                 user.setPasswordHash(resultSet.getString("PasswordHash"));
-                user.setInstructor(resultSet.getBoolean("Instructor"));
+                user.setIsInstructor(resultSet.getBoolean("Instructor"));
                 usuaris.add(user);
             }
         } catch (SQLException e) {
-            System.err.println("Error de conexión: " + e.getMessage());
+            System.err.println("Connection error: " + e.getMessage());
         }
         return usuaris;
     }
 
-    public int registerUser(Usuari u) {
+    /**
+     * This method adds a new user in the Database.
+     *
+     * @param user with all the details to be inserted in the Database.
+     * @return int with the number of rows affected.
+     */
+    public int registerUser(User user) {
         String sql = "INSERT INTO dbo.Usuaris (Nom, Email, PasswordHash, Instructor)"
                 + " VALUES (?,?,?,?)"
                 + " SELECT CAST(SCOPE_IDENTITY() as int)";
         try (Connection connection = getConnection(); PreparedStatement insertStatement = connection.prepareStatement(sql)) {
-            insertStatement.setString(1, u.getNomUsuari());
-            insertStatement.setString(2, u.getEmail());
-            insertStatement.setString(3, u.getPasswordHash());
-            insertStatement.setBoolean(4, u.getInstructor());
+            insertStatement.setString(1, user.getUserName());
+            insertStatement.setString(2, user.getEmail());
+            insertStatement.setString(3, user.getPasswordHash());
+            insertStatement.setBoolean(4, user.getIsInstructor());
 
             int newUserId = insertStatement.executeUpdate();
             return newUserId;
         } catch (SQLException e) {
-            System.err.println("Error de conexión: " + e.getMessage());
+            System.err.println("Connection error: " + e.getMessage());
         }
         return 0;
     }
 
-    public ArrayList<Intent> getAttemptsPendingReview() {
-        ArrayList<Intent> intents = new ArrayList<>();
+    /**
+     * This method gets a list of attempts where the instructor is pending to
+     * give a review.
+     *
+     * @return ArrayList of attempts pending of review.
+     */
+    public ArrayList<Attempt> getAttemptsPendingReview() {
+        ArrayList<Attempt> attempts = new ArrayList<>();
         String sql = "SELECT Intents.Id, Intents.IdUsuari, Usuaris.Nom,"
                 + " Intents.IdExercici, Exercicis.NomExercici, Timestamp_Inici,"
                 + " Timestamp_Fi, VideoFile"
@@ -107,32 +143,38 @@ public class DataAccess {
             ResultSet resultSet = selectStatement.executeQuery();
 
             while (resultSet.next()) {
-                Intent attempt = new Intent();
+                Attempt attempt = new Attempt();
                 attempt.setId(resultSet.getInt("Id"));
-                attempt.setIdUsuari(resultSet.getInt("IdUsuari"));
-                attempt.setNomUsuari(resultSet.getString("Nom"));
-                attempt.setIdExercici(resultSet.getInt("IdExercici"));
-                attempt.setNomExercici(resultSet.getString("NomExercici"));
-                attempt.setTimestamp_Inici(resultSet.getString("Timestamp_Inici"));
-                attempt.setTimestamp_Fi(resultSet.getString("Timestamp_Fi"));
+                attempt.setIdUser(resultSet.getInt("IdUsuari"));
+                attempt.setUserName(resultSet.getString("Nom"));
+                attempt.setIdExercise(resultSet.getInt("IdExercici"));
+                attempt.setExerciseName(resultSet.getString("NomExercici"));
+                attempt.setTimestampStart(resultSet.getString("Timestamp_Inici"));
+                attempt.setTimestartEnd(resultSet.getString("Timestamp_Fi"));
                 attempt.setVideoFile(resultSet.getString("VideoFile"));
-                intents.add(attempt);
+                attempts.add(attempt);
             }
         } catch (SQLException e) {
-            System.err.println("Error de conexión: " + e.getMessage());
+            System.err.println("Connection error: " + e.getMessage());
         }
-        return intents;
+        return attempts;
     }
 
-    public int insertReview(Review r) {
+    /**
+     * This method adds a new review in the Database.
+     *
+     * @param review Review object to be inserted in the Database.
+     * @return int number of new rows added.
+     */
+    public int insertReview(Review review) {
         int result = 0;
         String sql = "INSERT INTO dbo.Review (IdIntent, IdReviewer, Valoracio, Comentari)"
                 + " VALUES (?,?,?,?)";
         try (Connection connection = getConnection(); PreparedStatement insertStatement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
-            insertStatement.setInt(1, r.getIdIntent());
-            insertStatement.setInt(2, r.getIdReviewer());
-            insertStatement.setInt(3, r.getValoracio());
-            insertStatement.setString(4, r.getComentari());
+            insertStatement.setInt(1, review.getIdAttempt());
+            insertStatement.setInt(2, review.getIdReviewer());
+            insertStatement.setInt(3, review.getScore());
+            insertStatement.setString(4, review.getComment());
 
             result = insertStatement.executeUpdate();
             if (result == 0) {
@@ -148,25 +190,32 @@ public class DataAccess {
                 }
             }
         } catch (SQLException e) {
-            System.err.println("Error de conexión: " + e.getMessage());
+            System.err.println("Connection error: " + e.getMessage());
         }
         return result;
     }
 
     /**
-     * Mètode per comprovar si un intent es la repetició de un exercici
-     * 'failed'. Comprova si ja existeix un intent amb el mateix IdUsuari i
-     * IdExercici i la \n data es anterior a la de intent.
+     * This method checks if an attempts is a repetition of a former failed
+     * exercise. It validates if there is an attempt with the same idUser and
+     * idAttempt where its performance date is previous from the attempt date.
      *
-     * @param intent El intent a comprovar
-     * @return el id del intent anterior o 0 si no existeix un intent anterior.
+     * @param attempt Attempt to be checked.
+     * @return int with the former idAttempt or 0 if no previous attempt has
+     * been found.
      */
-    public int getPreviousFailedAttempt(Intent intent) {
+    public int getPreviousFailedAttempt(Attempt attempt) {
         return 0;
     }
 
-    public ArrayList<Intent> getAttemptsPerUser(Usuari user) {
-        ArrayList<Intent> intents = new ArrayList<>();
+    /**
+     * This method gets all the attempts for a certain user.
+     *
+     * @param user User to get all its attempts from the Database.
+     * @return ArrayList of attempts for that specific user.
+     */
+    public ArrayList<Attempt> getAttemptsPerUser(User user) {
+        ArrayList<Attempt> attempts = new ArrayList<>();
         String sql = "SELECT Intents.Id, Intents.IdUsuari, Usuaris.Nom,"
                 + " Intents.IdExercici, Exercicis.NomExercici, Timestamp_Inici,"
                 + " Timestamp_Fi, VideoFile"
@@ -179,63 +228,82 @@ public class DataAccess {
             ResultSet resultSet = selectStatement.executeQuery();
 
             while (resultSet.next()) {
-                Intent attempt = new Intent();
+                Attempt attempt = new Attempt();
                 attempt.setId(resultSet.getInt("Id"));
-                attempt.setIdUsuari(resultSet.getInt("IdUsuari"));
-                attempt.setNomUsuari(resultSet.getString("Nom"));
-                attempt.setIdExercici(resultSet.getInt("IdExercici"));
-                attempt.setNomExercici(resultSet.getString("NomExercici"));
-                attempt.setTimestamp_Inici(resultSet.getString("Timestamp_Inici"));
-                attempt.setTimestamp_Fi(resultSet.getString("Timestamp_Fi"));
+                attempt.setIdUser(resultSet.getInt("IdUsuari"));
+                attempt.setUserName(resultSet.getString("Nom"));
+                attempt.setIdExercise(resultSet.getInt("IdExercici"));
+                attempt.setExerciseName(resultSet.getString("NomExercici"));
+                attempt.setTimestampStart(resultSet.getString("Timestamp_Inici"));
+                attempt.setTimestartEnd(resultSet.getString("Timestamp_Fi"));
                 attempt.setVideoFile(resultSet.getString("VideoFile"));
-                intents.add(attempt);
+                attempts.add(attempt);
             }
         } catch (SQLException e) {
-            System.err.println("Error de conexión: " + e.getMessage());
+            System.err.println("Connection error: " + e.getMessage());
         }
-        return intents;
+        return attempts;
 
     }
 
-    public Review getAttemptReview(int idIntent) {
+    /**
+     * This method gets the last review for a specific attempts.
+     *
+     * @param idAttempt int with the identification of the attempt to look up in
+     * the Database.
+     * @return last Review for the queried attempt.
+     */
+    public Review getReviewByAttempt(int idAttempt) {
         Review review = null;
         String sql = "SELECT * FROM Review WHERE IdIntent = ? ORDER BY id";
         try (Connection connection = getConnection(); PreparedStatement selectStatement = connection.prepareStatement(sql);) {
-            selectStatement.setInt(1, idIntent);
+            selectStatement.setInt(1, idAttempt);
             ResultSet resultSet = selectStatement.executeQuery();
             review = new Review();
             while (resultSet.next()) {
                 review.setId(resultSet.getInt("Id"));
-                review.setIdIntent(resultSet.getInt("IdIntent"));
+                review.setIdAttempt(resultSet.getInt("IdIntent"));
                 review.setIdReviewer(resultSet.getInt("IdReviewer"));
-                review.setValoracio(resultSet.getInt("Valoracio"));
-                review.setComentari(resultSet.getString("Comentari"));
+                review.setScore(resultSet.getInt("Valoracio"));
+                review.setComment(resultSet.getString("Comentari"));
             }
         } catch (SQLException e) {
-            System.err.println("Error de conexión: " + e.getMessage());
+            System.err.println("Connection error: " + e.getMessage());
         }
         return review;
     }
 
-    public int updateReview(Review r) {
+    /**
+     * This method updates a review received by parameter.
+     *
+     * @param review with the new values to be updated in the Database.
+     * @return int with the rows altered with the query.
+     */
+    public int updateReview(Review review) {
         int result = 0;
         String sql = "UPDATE Review SET Valoracio=?, Comentari=? WHERE Id=?";
         try (Connection conn = getConnection(); PreparedStatement updateStatement = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
-            updateStatement.setInt(3, r.getId());
-            updateStatement.setInt(1, r.getValoracio());
-            updateStatement.setString(2, r.getComentari());
+            updateStatement.setInt(3, review.getId());
+            updateStatement.setInt(1, review.getScore());
+            updateStatement.setString(2, review.getComment());
 
             result = updateStatement.executeUpdate();
             if (result == 0) {
                 throw new SQLException("Updating review failed, no rows affected.");
             }
         } catch (SQLException e) {
-            System.err.println("Error de conexión: " + e.getMessage());
+            System.err.println("Connection error: " + e.getMessage());
         }
         return result;
     }
 
-    public int deleteReviewsByAttempt(Intent attempt) {
+    /**
+     * This method deletes all the reviews for a certain attempt.
+     *
+     * @param attempt from which the reviews have to be deleted.
+     * @return int with the number of rows affected with the action.
+     */
+    public int deleteReviewsByAttempt(Attempt attempt) {
         int result = 0;
         String sql = "DELETE from Review WHERE IdIntent=?";
         try (Connection conn = getConnection(); PreparedStatement updateStatement = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
@@ -246,13 +314,18 @@ public class DataAccess {
                 throw new SQLException("No reviews have been deleted.");
             }
         } catch (SQLException e) {
-            System.err.println("Error de conexión: " + e.getMessage());
+            System.err.println("Connection error: " + e.getMessage());
         }
         return result;
-
     }
 
-    public int deleteAttempts(Intent attempt) {
+    /**
+     * This method deletes an attempt in the Database.
+     *
+     * @param attempt to be deleted.
+     * @return int with the number of rows affected with the action.
+     */
+    public int deleteAttempt(Attempt attempt) {
         int result = 0;
         String sql = "DELETE from Intents WHERE Id=?";
         try (Connection conn = getConnection(); PreparedStatement updateStatement = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
@@ -263,9 +336,8 @@ public class DataAccess {
                 throw new SQLException("No attempts have been deleted.");
             }
         } catch (SQLException e) {
-            System.err.println("Error de conexión: " + e.getMessage());
+            System.err.println("Connection error: " + e.getMessage());
         }
         return result;
     }
-
 }

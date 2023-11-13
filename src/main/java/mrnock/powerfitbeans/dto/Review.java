@@ -1,18 +1,22 @@
-
 package mrnock.powerfitbeans.dto;
 
 /**
+ * Public class Review with its private attributes. It contains the getters and
+ * setters methods.
  *
- * @author SilviaRichard
+ * @author Richard Navarro {@literal <richardnavarro@paucasesnovescifp.cat>}
+ * @version 2.0 Final version to submit for Unit 1 (Desarrollo de Interfaces)
+ * @since 1.5
  */
 public class Review {
 
     private int id;
-    private int valoracio;
-    private int idIntent;
+    private int score;
+    private int idAttempt;
     private int idReviewer;
-    private String comentari;
+    private String comment;
 
+    //Getters and Setters
     public int getId() {
         return id;
     }
@@ -21,28 +25,28 @@ public class Review {
         this.id = id;
     }
 
-    public int getValoracio() {
-        return valoracio;
+    public int getScore() {
+        return score;
     }
 
-    public void setValoracio(int valoracio) {
-        this.valoracio = valoracio;
+    public void setScore(int score) {
+        this.score = score;
     }
 
-    public String getComentari() {
-        return comentari;
+    public String getComment() {
+        return comment;
     }
 
-    public void setComentari(String comentari) {
-        this.comentari = comentari;
+    public void setComment(String comment) {
+        this.comment = comment;
     }
 
-    public int getIdIntent() {
-        return idIntent;
+    public int getIdAttempt() {
+        return idAttempt;
     }
 
-    public void setIdIntent(int idIntent) {
-        this.idIntent = idIntent;
+    public void setIdAttempt(int idAttempt) {
+        this.idAttempt = idAttempt;
     }
 
     public int getIdReviewer() {
@@ -52,5 +56,4 @@ public class Review {
     public void setIdReviewer(int idReviewer) {
         this.idReviewer = idReviewer;
     }
-
 }
