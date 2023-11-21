@@ -1,4 +1,14 @@
 # PowerFitBeans
+
+**RN 2023.11.21 23:00hrs**
+<br>
+***Created Microsoft Azure Account and Blob Storage***
+<br>I have created a new container and a Blob Storage service and uploaded all the videos.
+<br>Useful YouTube video:
+<br>**Azure Blob Storage Containers - How to create a storage account and upload files, create folders**: https://youtu.be/M_1R0ZOlP-w
+
+
+
 **RN 2023.11.12 22:00hrs**
 <br>
 ***JTable in JAVA Swing | Update Selected Row From JTable***
