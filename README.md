@@ -1,5 +1,12 @@
 # PowerFitBeans
 
+**RN 2023.12.24 20:50hrs**
+<br>
+Found code to insert the component into a JScrollPane
+<br>
+
+
+https://stackoverflow.com/questions/10346449/scrolling-a-jpanel
 **RN 2023.11.21 23:00hrs**
 <br>
 ***Created Microsoft Azure Account and Blob Storage***
