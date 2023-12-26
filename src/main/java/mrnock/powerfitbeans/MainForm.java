@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import mrnock.powerfitbeans.dataacccess.Controller;
 import mrnock.powerfitbeans.dialogs.DlgLogin;
-import mrnock.powerfitbeans.dialogs.PnlAttempts;
+import mrnock.powerfitbeans.dialogs.PnlActivities;
 import mrnock.powerfitbeans.dialogs.PnlShowAllUsers;
 import mrnock.powerfitbeans.dialogs.PnlWelcome;
 import mrnock.powerfitbeans.dto.Activity;
@@ -33,7 +33,7 @@ public class MainForm extends javax.swing.JFrame {
     private DlgLogin dlgLogin;
     private PnlWelcome pnlWelcome;
     private Controller controller;
-    private PnlAttempts pnlAttempts;
+    private PnlActivities pnlAttempts;
     private PnlShowAllUsers pnlShowAllUsers;
     private User loggedUser;
 
@@ -186,8 +186,8 @@ public class MainForm extends javax.swing.JFrame {
             pnlShowAllUsers.updateUI();
         }
 
-//        pnlAttempts = new PnlAttempts(this, attempts, userName);
-        pnlAttempts = new PnlAttempts(this, loggedUser);
+//        pnlAttempts = new PnlActivities(this, attempts, userName);
+        pnlAttempts = new PnlActivities(this, loggedUser);
 
         getContentPane().add(pnlAttempts);
 
@@ -215,7 +215,7 @@ public class MainForm extends javax.swing.JFrame {
         return controller.getReviewByAttempt(idAttempt);
     }
     
-    public ArrayList<Activity> getPendingActivitiesByUser(User u)
+    public ArrayList<Activity> getActivitiesByUser(User u)
     {
         return controller.getPendingActivitiesByUser(u);
     }
