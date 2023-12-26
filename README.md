@@ -3,9 +3,9 @@
 <br>
 Found useful code to ***convert SQL Timestamp to String***:
 <br>
-https://stackoverflow.com/questions/35170620/format-java-sql-timestamp-into-a-string
-<br>
-**I had a problem with Github when doing the commits. It seems that the issue came after doing the merge from `main` branch to `master`. For some unknown reason, the commits were sent to another Github account instead of this repository.**<br>
+https://stackoverflow.com/questions/35170620/format-java-sql-timestamp-into-a-string<br>
+
+***I had a problem with Github when doing the commits. It seems that the issue came after doing the merge from `main` branch to `master`. For some unknown reason, the commits were sent to another Github account instead of this repository***br>
 <br>
 **RN 2023.12.24 20:50hrs**
 <br>
