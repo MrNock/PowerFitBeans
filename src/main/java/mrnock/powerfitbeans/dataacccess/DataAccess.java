@@ -193,7 +193,7 @@ public class DataAccess {
     public ArrayList<Activity> getPendingReviewByUser(User user) {
 
         ArrayList<Activity> activities = new ArrayList<>();
-        String sql = "select NomExercici,Usuaris.Nom,Timestamp_Inici,Review.Id as reviewId "
+        String sql = "select NomExercici,Usuaris.Nom,Timestamp_Inici,Review.Id as reviewId, Intents.Videofile as videofile "
                 + "from Usuaris full join Intents on Intents.IdUsuari = Usuaris.Id full join  Exercicis on Exercicis.id = Intents.IdExercici full "
                 + "join Review on Review.IdIntent = Intents.id where Usuaris.Id = ?";
         try (Connection connection = getConnection(); PreparedStatement selectStatement = connection.prepareStatement(sql);) {
@@ -205,12 +205,13 @@ public class DataAccess {
                 Activity activity = new Activity();
                 activity.setExerciseName(resultSet.getString("NomExercici"));
                 //activity.setTimeStamp(resultSet.getString("Timestamp_Inici"));
-                  Timestamp fecha = resultSet.getTimestamp("Timestamp_Inici");
+                Timestamp fecha = resultSet.getTimestamp("Timestamp_Inici");
                 System.out.println("fecha " + fecha);
                 Date d = new Date();
                 d.setTime(fecha.getTime());
                 activity.setTimeStamp(d);
                 activity.setIdReview(resultSet.getInt("reviewId"));
+                activity.setVideofile(resultSet.getString("videofile"));
                 activities.add(activity);
             }
         } catch (SQLException e) {

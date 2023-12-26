@@ -2,6 +2,7 @@ package mrnock.powerfitbeans.dialogs;
 
 import java.awt.BorderLayout;
 import java.awt.Image;
+import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -11,6 +12,10 @@ import mrnock.powerfitbeans.MainForm;
 import mrnock.powerfitbeans.dto.Activity;
 import mrnock.powerfitbeans.dto.User;
 import javax.swing.JScrollPane;
+import mrnock.events.MiEventPlayVideo;
+import mrnock.events.MiEventPlayVideoListener;
+import mrnock.events.MiEventSwipe;
+import mrnock.events.MiEventSwipeListener;
 import uk.co.caprica.vlcj.player.component.EmbeddedMediaPlayerComponent;
 
 /**
@@ -25,7 +30,7 @@ import uk.co.caprica.vlcj.player.component.EmbeddedMediaPlayerComponent;
  * @version 2.0 Final version to submit for Unit 1 (Desarrollo de Interfaces)
  * @since 1.5
  */
-public class PnlAttempts extends javax.swing.JPanel {
+public class PnlAttempts extends javax.swing.JPanel implements MiEventSwipeListener, MiEventPlayVideoListener {
 
     SimpleDateFormat pattern = new SimpleDateFormat("EEE, dd MMM yyyy @ HH:mm"); //Tue, 16 Nov 2023 @ 18:24
     //String formattedDate = pattern.formatted(timeStamp);
@@ -46,7 +51,7 @@ public class PnlAttempts extends javax.swing.JPanel {
      */
     public PnlAttempts(MainForm mainForm, User user) {
         initComponents();
-        
+
         ImageIcon imageIcon = new ImageIcon(getClass().getResource("/images/logout.png"));
         Image image = imageIcon.getImage();
         Image newimg = image.getScaledInstance(54, 54, java.awt.Image.SCALE_SMOOTH);
@@ -74,6 +79,7 @@ public class PnlAttempts extends javax.swing.JPanel {
 
         } else {
             fillContainer(user);
+            btnSeeUsers.setVisible(false);
 
         }
 
@@ -83,8 +89,10 @@ public class PnlAttempts extends javax.swing.JPanel {
         ArrayList<Activity> activities = mainForm.getPendingActivitiesByUser(user);
         for (Activity activity : activities) {
 
-            PnlExercise pne = new PnlExercise(activity.getExerciseName(), PnlExercise.IconExercise.NOT_ATTEMPTED_YET, user.getUserName(), "");
-
+            PnlExercise pne = new PnlExercise(activity.getExerciseName(), PnlExercise.IconExercise.NOT_ATTEMPTED_YET,
+                    user.getUserName(), "", activity.getVideofile());
+            pne.addMiEventoSwipe(this);
+            pne.addMiEventoPlayVideo(this);
             this.pnlContenedor.add(pne);
 
         }
@@ -93,11 +101,14 @@ public class PnlAttempts extends javax.swing.JPanel {
         for (Activity activity : activitiesPendingReview) {
             PnlExercise pne = null;
             if (activity.getIdReview() < 0) {
-                pne = new PnlExercise(activity.getExerciseName(), PnlExercise.IconExercise.PENDING_REVIEW, user.getUserName(), pattern.format(activity.getTimeStamp()));
-
+                pne = new PnlExercise(activity.getExerciseName(), PnlExercise.IconExercise.PENDING_REVIEW, user.getUserName(),
+                        pattern.format(activity.getTimeStamp()), activity.getVideofile());
             } else {
-                pne = new PnlExercise(activity.getExerciseName(), PnlExercise.IconExercise.COMPLETE, user.getUserName(), pattern.format(activity.getTimeStamp()));
+                pne = new PnlExercise(activity.getExerciseName(), PnlExercise.IconExercise.COMPLETE, user.getUserName(),
+                        pattern.format(activity.getTimeStamp()), activity.getVideofile());
             }
+            pne.addMiEventoSwipe(this);
+            pne.addMiEventoPlayVideo(this);
 
             this.pnlContenedor.add(pne);
         }
@@ -110,17 +121,21 @@ public class PnlAttempts extends javax.swing.JPanel {
      *
      * @param row number for the video to be played.
      */
-    public void playSelectedVideo(int row) {
+    public void playSelectedVideo(String videoFile) {
+        if (videoFile == null || videoFile.isEmpty()) {
 
+            mediaPlayer.mediaPlayer().controls().stop();
+        } else {
 //        String videoName = attempts.get(row).getVideoFile();
-//        String videoFileAbsolutePath = VIDEO_PATH + File.separator + videoName;
-//
-//        File f = new File(videoFileAbsolutePath);
-//        if (f.exists()) {
-//
-//            mediaPlayer.mediaPlayer().media().play(videoFileAbsolutePath);
-//            pnlVideoPlayer.setBorder(javax.swing.BorderFactory.createTitledBorder("Video Player - " + videoName));
-//        }
+            String videoFileAbsolutePath = VIDEO_PATH + File.separator + videoFile;
+
+            File f = new File(videoFileAbsolutePath);
+            if (f.exists()) {
+
+                mediaPlayer.mediaPlayer().media().play(videoFileAbsolutePath);
+                pnlVideoPlayer.setBorder(javax.swing.BorderFactory.createTitledBorder("Video Player - " + videoFile));
+            }
+        }
     }
 
     /**
@@ -132,13 +147,17 @@ public class PnlAttempts extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jLabel1 = new javax.swing.JLabel();
         lblLogoImg = new javax.swing.JLabel();
         lblWelcomeInstructor = new javax.swing.JLabel();
         pnlVideoPlayer = new javax.swing.JPanel();
-        lblPendingReview = new javax.swing.JLabel();
+        lblSwipeEvent = new javax.swing.JLabel();
         btnSeeUsers = new javax.swing.JButton();
         pnlExercises = new javax.swing.JPanel();
         lblLogOut = new javax.swing.JLabel();
+        lblActivities = new javax.swing.JLabel();
+
+        jLabel1.setText("jLabel1");
 
         setPreferredSize(new java.awt.Dimension(1000, 432));
 
@@ -152,8 +171,7 @@ public class PnlAttempts extends javax.swing.JPanel {
         pnlVideoPlayer.setBorder(javax.swing.BorderFactory.createTitledBorder("Playing <Ejercicio>"));
         pnlVideoPlayer.setLayout(new java.awt.BorderLayout());
 
-        lblPendingReview.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
-        lblPendingReview.setText("Activities");
+        lblSwipeEvent.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
 
         btnSeeUsers.setText("See users...");
         btnSeeUsers.addActionListener(new java.awt.event.ActionListener() {
@@ -170,6 +188,9 @@ public class PnlAttempts extends javax.swing.JPanel {
             }
         });
 
+        lblActivities.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
+        lblActivities.setText("Activities");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -179,19 +200,20 @@ public class PnlAttempts extends javax.swing.JPanel {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(6, 6, 6)
+                                .addComponent(pnlExercises, javax.swing.GroupLayout.PREFERRED_SIZE, 470, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18))
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                .addGap(27, 27, 27)
                                 .addComponent(btnSeeUsers, javax.swing.GroupLayout.PREFERRED_SIZE, 147, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(124, 124, 124))
-                            .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(lblPendingReview, javax.swing.GroupLayout.PREFERRED_SIZE, 149, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addGap(6, 6, 6)
-                                        .addComponent(pnlExercises, javax.swing.GroupLayout.PREFERRED_SIZE, 470, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                                .addGap(18, 18, 18)))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addComponent(lblActivities, javax.swing.GroupLayout.PREFERRED_SIZE, 149, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(lblSwipeEvent, javax.swing.GroupLayout.PREFERRED_SIZE, 149, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(170, 170, 170)))
                         .addComponent(pnlVideoPlayer, javax.swing.GroupLayout.PREFERRED_SIZE, 411, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap(65, Short.MAX_VALUE))
+                        .addContainerGap(56, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(lblLogoImg, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -206,7 +228,9 @@ public class PnlAttempts extends javax.swing.JPanel {
                 .addGap(34, 34, 34)
                 .addComponent(lblLogoImg, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(lblPendingReview, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblSwipeEvent, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblActivities, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(pnlExercises, javax.swing.GroupLayout.DEFAULT_SIZE, 230, Short.MAX_VALUE)
                 .addGap(18, 18, 18)
@@ -214,15 +238,13 @@ public class PnlAttempts extends javax.swing.JPanel {
                 .addGap(35, 35, 35))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lblWelcomeInstructor, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lblLogOut, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(lblLogOut, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblWelcomeInstructor, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addComponent(pnlVideoPlayer, javax.swing.GroupLayout.PREFERRED_SIZE, 286, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(53, 53, 53))
         );
-
-        lblPendingReview.getAccessibleContext().setAccessibleName("Activities");
     }// </editor-fold>//GEN-END:initComponents
 
     /**
@@ -234,17 +256,29 @@ public class PnlAttempts extends javax.swing.JPanel {
     }//GEN-LAST:event_btnSeeUsersActionPerformed
 
     private void lblLogOutMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblLogOutMouseClicked
-        // TODO add your handling code here:
+        mainForm.showWelcomePanel();
     }//GEN-LAST:event_lblLogOutMouseClicked
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnSeeUsers;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel lblActivities;
     private javax.swing.JLabel lblLogOut;
     private javax.swing.JLabel lblLogoImg;
-    private javax.swing.JLabel lblPendingReview;
+    private javax.swing.JLabel lblSwipeEvent;
     private javax.swing.JLabel lblWelcomeInstructor;
     private javax.swing.JPanel pnlExercises;
     private javax.swing.JPanel pnlVideoPlayer;
     // End of variables declaration//GEN-END:variables
+
+    @Override
+    public void miEventoSwipeActionPerformed(MiEventSwipe evt) {
+        lblSwipeEvent.setText(evt.swipeInfo());
+    }
+
+    @Override
+    public void miEventoPlayVideoActionPerformed(MiEventPlayVideo evt) {
+        playSelectedVideo(evt.getVideoFile());
+    }
 }

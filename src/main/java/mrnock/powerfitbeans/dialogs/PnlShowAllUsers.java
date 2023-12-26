@@ -197,7 +197,7 @@ public class PnlShowAllUsers extends javax.swing.JPanel {
      * This method navigates back to the PnlAttempts screen.
      */
     private void btnBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBackActionPerformed
-        //mainForm.showPnlAttempts();
+        mainForm.showPnlAttempts();
 
     }//GEN-LAST:event_btnBackActionPerformed
 

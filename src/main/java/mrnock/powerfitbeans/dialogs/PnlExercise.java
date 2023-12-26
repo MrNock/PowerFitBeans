@@ -7,6 +7,8 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import javax.swing.ImageIcon;
+import mrnock.events.MiEventPlayVideo;
+import mrnock.events.MiEventPlayVideoListener;
 import mrnock.events.MiEventSwipe;
 import mrnock.events.MiEventSwipeListener;
 
@@ -20,7 +22,9 @@ public class PnlExercise extends javax.swing.JPanel implements Serializable {
         NOT_ATTEMPTED_YET, PENDING_REVIEW, COMPLETE
     };
     private int posX = 0;
+    protected String videoFile;
     ArrayList<MiEventSwipeListener> listeners = new ArrayList<>();
+    ArrayList<MiEventPlayVideoListener> listenersPlayVideo = new ArrayList<>();
 
     /**
      * Creates new form PnlExercise
@@ -29,15 +33,15 @@ public class PnlExercise extends javax.swing.JPanel implements Serializable {
         initComponents();
     }
 
-    public PnlExercise(String idExercise, IconExercise icon, String user, String timeStamp) {
+    public PnlExercise(String idExercise, IconExercise icon, String user, String timeStamp, String videoFile) {
         initComponents();
-        
+
 //        String pattern = new SimpleDateFormat("EEE, dd MMM yyyy @ HH:mm").format(new Date()); //Tue, 16 Nov 2023 @ 18:24
 //        String formattedDate = pattern.formatted(timeStamp);
-        
         this.lblExerciseID.setText(idExercise);
         this.lblUserName.setText(user);
         this.lblTimeStamp.setText(timeStamp);
+        this.videoFile = videoFile;
 
         int size = 30;
         switch (icon) {
@@ -153,11 +157,12 @@ public class PnlExercise extends javax.swing.JPanel implements Serializable {
     }//GEN-LAST:event_formMouseClicked
 
     private void formMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_formMouseReleased
-        System.out.println("posX=" + posX + " evt.pos=" + evt.getXOnScreen());
         if (evt.getXOnScreen() - posX > 0) {
             fireMiEventoSwipeAction(MiEventSwipe.Direction.RIGHT);
         } else if (evt.getXOnScreen() - posX < 0) {
             fireMiEventoSwipeAction(MiEventSwipe.Direction.LEFT);
+        } else {
+            fireMiEventoPlayVideo();
         }
     }//GEN-LAST:event_formMouseReleased
 
@@ -165,10 +170,18 @@ public class PnlExercise extends javax.swing.JPanel implements Serializable {
         posX = evt.getXOnScreen();
     }//GEN-LAST:event_formMousePressed
 
+    private void fireMiEventoPlayVideo() {
+        for (MiEventPlayVideoListener l : listenersPlayVideo) {
+            MiEventPlayVideo evt = new MiEventPlayVideo(this, videoFile);
+            l.miEventoPlayVideoActionPerformed(evt);
+        }
+    }
+
+    ;
     private void fireMiEventoSwipeAction(MiEventSwipe.Direction d) {
         for (MiEventSwipeListener l : listeners) {
             MiEventSwipe evt = new MiEventSwipe(this, this.lblExerciseID.getText(), d);
-            l.miEventoActionPerformed(evt);
+            l.miEventoSwipeActionPerformed(evt);
         }
     }
 
@@ -178,6 +191,14 @@ public class PnlExercise extends javax.swing.JPanel implements Serializable {
 
     public void removeMiEventoSwipe(MiEventSwipe l) {
         listeners.remove(l);
+    }
+
+    public void addMiEventoPlayVideo(MiEventPlayVideoListener l) {
+        listenersPlayVideo.add(l);
+    }
+
+    public void removeMiEventoPlayVideo(MiEventPlayVideoListener l) {
+        listenersPlayVideo.remove(l);
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

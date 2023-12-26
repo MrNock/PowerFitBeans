@@ -35,8 +35,7 @@ public class MainForm extends javax.swing.JFrame {
     private Controller controller;
     private PnlAttempts pnlAttempts;
     private PnlShowAllUsers pnlShowAllUsers;
-    private int idReviewer;
-    private String userName;
+    private User loggedUser;
 
     /**
      * MainForm constructor method with its settings
@@ -49,9 +48,17 @@ public class MainForm extends javax.swing.JFrame {
 
         controller = new Controller(this);
 
+        showWelcomePanel();
+    }
+    
+    public void showWelcomePanel()
+    {
+        getContentPane().removeAll();
+        getContentPane().repaint();
         pnlWelcome = new PnlWelcome(this);
+        pnlWelcome.setBounds(0, 10, 1000, 440);
         getContentPane().add(pnlWelcome);
-        pnlWelcome.setBounds(450, 10, 330, 440);
+        pnlWelcome.repaint();
     }
 
     /**
@@ -63,16 +70,8 @@ public class MainForm extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        lblWelcomeImage = new javax.swing.JLabel();
-
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(null);
-
-        lblWelcomeImage.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/432x432_PowerFitBeans.png"))); // NOI18N
-        lblWelcomeImage.setMaximumSize(new java.awt.Dimension(112, 108));
-        lblWelcomeImage.setMinimumSize(new java.awt.Dimension(112, 108));
-        getContentPane().add(lblWelcomeImage);
-        lblWelcomeImage.setBounds(10, 10, 432, 432);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -94,16 +93,14 @@ public class MainForm extends javax.swing.JFrame {
      */
     public void validateUser(String email, char[] password) {
 
-        User user = controller.validateLogin(email, password);
-        if (user == null) {
+        loggedUser = controller.validateLogin(email, password);
+        if (loggedUser == null) {
             JOptionPane.showMessageDialog(this, "The e-mail or"
                     + " password provided is incorrect", "Login Error",
                     JOptionPane.ERROR_MESSAGE);
         } else {
             dlgLogin.dispose();
-            userName = user.getUserName();
-            showPnlAttempts(user);
-            idReviewer = user.getId();
+            showPnlAttempts();
         }
     }
 
@@ -160,7 +157,7 @@ public class MainForm extends javax.swing.JFrame {
      */
     public void showAllUsers() {
         getContentPane().removeAll();
-        pnlShowAllUsers = new PnlShowAllUsers(this, idReviewer);
+        pnlShowAllUsers = new PnlShowAllUsers(this, loggedUser.getId());
         getContentPane().add(pnlShowAllUsers);
         pnlShowAllUsers.initializeElements();
         pnlShowAllUsers.updateUI();
@@ -181,21 +178,21 @@ public class MainForm extends javax.swing.JFrame {
      * with all the information from all users, not only for those with a
      * pending review.
      */
-    public void showPnlAttempts(User user) {
+    public void showPnlAttempts() {
         //ArrayList<Attempt> attempts = controller.getAttemptsPendingReview();
-
+        
         getContentPane().removeAll();
         if (pnlShowAllUsers != null) {
             pnlShowAllUsers.updateUI();
         }
 
 //        pnlAttempts = new PnlAttempts(this, attempts, userName);
-        pnlAttempts = new PnlAttempts(this, user);
+        pnlAttempts = new PnlAttempts(this, loggedUser);
 
         getContentPane().add(pnlAttempts);
 
         pnlAttempts.updateUI();
-        pnlAttempts.playSelectedVideo(0);
+        pnlAttempts.playSelectedVideo("");
     }
 
     /**
@@ -257,6 +254,5 @@ public class MainForm extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JLabel lblWelcomeImage;
     // End of variables declaration//GEN-END:variables
 }

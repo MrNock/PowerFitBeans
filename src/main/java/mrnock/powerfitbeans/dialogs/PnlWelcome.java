@@ -39,6 +39,7 @@ public class PnlWelcome extends javax.swing.JPanel {
         lblIconLogin = new javax.swing.JLabel();
         lblMoreInfo = new javax.swing.JLabel();
         lblUrlWeb = new javax.swing.JLabel();
+        lblWelcomeImage = new javax.swing.JLabel();
 
         setLayout(null);
 
@@ -46,12 +47,12 @@ public class PnlWelcome extends javax.swing.JPanel {
         lblWelcome.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lblWelcome.setText("Welcome to the Power Fit Beans App");
         add(lblWelcome);
-        lblWelcome.setBounds(8, 8, 310, 40);
+        lblWelcome.setBounds(530, 40, 310, 40);
 
         lblAccessLogin.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         lblAccessLogin.setText("Click to login:");
         add(lblAccessLogin);
-        lblAccessLogin.setBounds(40, 190, 150, 30);
+        lblAccessLogin.setBounds(560, 140, 150, 30);
 
         lblIconLogin.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/icons8-login-64.png"))); // NOI18N
         lblIconLogin.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
@@ -61,11 +62,11 @@ public class PnlWelcome extends javax.swing.JPanel {
             }
         });
         add(lblIconLogin);
-        lblIconLogin.setBounds(200, 180, 70, 50);
+        lblIconLogin.setBounds(720, 130, 70, 50);
 
         lblMoreInfo.setText("More info: ");
         add(lblMoreInfo);
-        lblMoreInfo.setBounds(80, 390, 60, 16);
+        lblMoreInfo.setBounds(600, 340, 60, 16);
 
         lblUrlWeb.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
         lblUrlWeb.setForeground(new java.awt.Color(0, 0, 255));
@@ -73,7 +74,13 @@ public class PnlWelcome extends javax.swing.JPanel {
         lblUrlWeb.setToolTipText("https://paucasesnovescifp.cat/");
         lblUrlWeb.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         add(lblUrlWeb);
-        lblUrlWeb.setBounds(140, 390, 160, 20);
+        lblUrlWeb.setBounds(660, 340, 160, 20);
+
+        lblWelcomeImage.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/432x432_PowerFitBeans.png"))); // NOI18N
+        lblWelcomeImage.setMaximumSize(new java.awt.Dimension(112, 108));
+        lblWelcomeImage.setMinimumSize(new java.awt.Dimension(112, 108));
+        add(lblWelcomeImage);
+        lblWelcomeImage.setBounds(10, 10, 432, 432);
     }// </editor-fold>//GEN-END:initComponents
 
     /**
@@ -91,6 +98,7 @@ public class PnlWelcome extends javax.swing.JPanel {
     private javax.swing.JLabel lblMoreInfo;
     private javax.swing.JLabel lblUrlWeb;
     private javax.swing.JLabel lblWelcome;
+    private javax.swing.JLabel lblWelcomeImage;
     // End of variables declaration//GEN-END:variables
    // private DlgLogin dlgLogin;
     private MainForm mainForm;

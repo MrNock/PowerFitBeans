@@ -6,5 +6,5 @@ package mrnock.events;
  */
 
 public interface MiEventSwipeListener {
-    public void miEventoActionPerformed(MiEventSwipe evt);
+    public void miEventoSwipeActionPerformed(MiEventSwipe evt);
 }
