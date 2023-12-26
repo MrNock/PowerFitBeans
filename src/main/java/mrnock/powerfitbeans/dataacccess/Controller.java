@@ -3,6 +3,7 @@ package mrnock.powerfitbeans.dataacccess;
 import at.favre.lib.crypto.bcrypt.BCrypt;
 import java.util.ArrayList;
 import mrnock.powerfitbeans.MainForm;
+import mrnock.powerfitbeans.dto.Activity;
 import mrnock.powerfitbeans.dto.Attempt;
 import mrnock.powerfitbeans.dto.Review;
 import mrnock.powerfitbeans.dto.User;
@@ -61,8 +62,8 @@ public class Controller {
      *
      * @return ArrayList of users in the app.
      */
-    public ArrayList<User> getAllUsers() {
-        return da.getAllUsers();
+    public ArrayList<User> getAllNormalUsers() {
+        return da.getAllNormalUsers();
     }
 
     /**
@@ -115,4 +116,15 @@ public class Controller {
         da.deleteReviewsByAttempt(attempt);
         return da.deleteAttempt(attempt);
     }
+    
+     public ArrayList<Activity> getPendingActivitiesByUser(User user)
+     {
+         return da.getPendingActivitiesByUser(user);
+     }
+     
+     
+     public ArrayList<Activity> getPendingReviewByUser(User user)
+     {
+         return da.getPendingReviewByUser(user);
+     }
 }

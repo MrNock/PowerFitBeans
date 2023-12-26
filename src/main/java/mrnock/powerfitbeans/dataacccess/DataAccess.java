@@ -1,14 +1,20 @@
 package mrnock.powerfitbeans.dataacccess;
 
+import com.microsoft.sqlserver.jdbc.osgi.Activator;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
+import mrnock.powerfitbeans.dto.Activity;
 import mrnock.powerfitbeans.dto.User;
 import mrnock.powerfitbeans.dto.Attempt;
+import mrnock.powerfitbeans.dto.Exercise;
 import mrnock.powerfitbeans.dto.Review;
 
 /**
@@ -24,6 +30,8 @@ import mrnock.powerfitbeans.dto.Review;
  */
 public class DataAccess {
 
+    // String pattern = "ddd, dd mmm yyyy @ HH:mm"; //Tue, 16 Nov 2023 @ 18:24
+    //SimpleDateFormat sdf = new SimpleDateFormat(pattern);
     /**
      * This method connects with the Database with the personal connection URL.
      *
@@ -63,7 +71,7 @@ public class DataAccess {
                 user.setUserName(resultSet.getString("Nom"));
                 user.setEmail(resultSet.getString("Email"));
                 user.setPasswordHash(resultSet.getString("PasswordHash"));
-                user.setIsInstructor(resultSet.getBoolean("Instructor"));
+                user.setIsInstructor(resultSet.getInt("IsInstructor") == 1);
             }
         } catch (SQLException e) {
             System.err.println("Connection error: " + e.getMessage());
@@ -76,9 +84,9 @@ public class DataAccess {
      *
      * @return ArrayList of users.
      */
-    public ArrayList<User> getAllUsers() {
+    public ArrayList<User> getAllNormalUsers() {
         ArrayList<User> usuaris = new ArrayList<>();
-        String sql = "SELECT * FROM Usuaris WHERE Instructor=0";
+        String sql = "SELECT * FROM Usuaris WHERE IsInstructor=0";
         try (Connection con = getConnection(); PreparedStatement selectStatement = con.prepareStatement(sql);) {
 
             ResultSet resultSet = selectStatement.executeQuery();
@@ -89,7 +97,7 @@ public class DataAccess {
                 user.setUserName(resultSet.getString("Nom"));
                 user.setEmail(resultSet.getString("Email"));
                 user.setPasswordHash(resultSet.getString("PasswordHash"));
-                user.setIsInstructor(resultSet.getBoolean("Instructor"));
+                user.setIsInstructor(resultSet.getInt("IsInstructor") == 1);
                 usuaris.add(user);
             }
         } catch (SQLException e) {
@@ -105,7 +113,7 @@ public class DataAccess {
      * @return int with the number of rows affected.
      */
     public int registerUser(User user) {
-        String sql = "INSERT INTO dbo.Usuaris (Nom, Email, PasswordHash, Instructor)"
+        String sql = "INSERT INTO dbo.Usuaris (Nom, Email, PasswordHash, isInstructor)"
                 + " VALUES (?,?,?,?)"
                 + " SELECT CAST(SCOPE_IDENTITY() as int)";
         try (Connection connection = getConnection(); PreparedStatement insertStatement = connection.prepareStatement(sql)) {
@@ -158,6 +166,57 @@ public class DataAccess {
             System.err.println("Connection error: " + e.getMessage());
         }
         return attempts;
+    }
+
+    public ArrayList<Activity> getPendingActivitiesByUser(User user) {
+        ArrayList<Activity> activities = new ArrayList<>();
+        String sql = "select NomExercici from Exercicis where id not in "
+                + "( select Exercicis.id from Usuaris full join Intents "
+                + "on Intents.IdUsuari = Usuaris.Id full join  Exercicis on Exercicis.id = Intents.IdExercici full join Review on Review.IdIntent = Intents.id "
+                + "where Usuaris.Id = ?)";
+        try (Connection connection = getConnection(); PreparedStatement selectStatement = connection.prepareStatement(sql);) {
+
+            selectStatement.setInt(1, user.getId());
+            ResultSet resultSet = selectStatement.executeQuery();
+
+            while (resultSet.next()) {
+                Activity activity = new Activity();
+                activity.setExerciseName(resultSet.getString("NomExercici"));
+                activities.add(activity);
+            }
+        } catch (SQLException e) {
+            System.err.println("Connection error: " + e.getMessage());
+        }
+        return activities;
+    }
+
+    public ArrayList<Activity> getPendingReviewByUser(User user) {
+
+        ArrayList<Activity> activities = new ArrayList<>();
+        String sql = "select NomExercici,Usuaris.Nom,Timestamp_Inici,Review.Id as reviewId "
+                + "from Usuaris full join Intents on Intents.IdUsuari = Usuaris.Id full join  Exercicis on Exercicis.id = Intents.IdExercici full "
+                + "join Review on Review.IdIntent = Intents.id where Usuaris.Id = ?";
+        try (Connection connection = getConnection(); PreparedStatement selectStatement = connection.prepareStatement(sql);) {
+
+            selectStatement.setInt(1, user.getId());
+            ResultSet resultSet = selectStatement.executeQuery();
+
+            while (resultSet.next()) {
+                Activity activity = new Activity();
+                activity.setExerciseName(resultSet.getString("NomExercici"));
+                //activity.setTimeStamp(resultSet.getString("Timestamp_Inici"));
+                  Timestamp fecha = resultSet.getTimestamp("Timestamp_Inici");
+                System.out.println("fecha " + fecha);
+                Date d = new Date();
+                d.setTime(fecha.getTime());
+                activity.setTimeStamp(d);
+                activity.setIdReview(resultSet.getInt("reviewId"));
+                activities.add(activity);
+            }
+        } catch (SQLException e) {
+            System.err.println("Connection error: " + e.getMessage());
+        }
+        return activities;
     }
 
     /**

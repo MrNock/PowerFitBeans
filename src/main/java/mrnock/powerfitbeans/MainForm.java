@@ -7,6 +7,7 @@ import mrnock.powerfitbeans.dialogs.DlgLogin;
 import mrnock.powerfitbeans.dialogs.PnlAttempts;
 import mrnock.powerfitbeans.dialogs.PnlShowAllUsers;
 import mrnock.powerfitbeans.dialogs.PnlWelcome;
+import mrnock.powerfitbeans.dto.Activity;
 import mrnock.powerfitbeans.dto.Attempt;
 import mrnock.powerfitbeans.dto.Review;
 import mrnock.powerfitbeans.dto.User;
@@ -101,7 +102,7 @@ public class MainForm extends javax.swing.JFrame {
         } else {
             dlgLogin.dispose();
             userName = user.getUserName();
-            showPnlAttempts();
+            showPnlAttempts(user);
             idReviewer = user.getId();
         }
     }
@@ -170,8 +171,8 @@ public class MainForm extends javax.swing.JFrame {
      *
      * @return ArrayList of all user and their information.
      */
-    public ArrayList<User> getAllUsers() {
-        return controller.getAllUsers();
+    public ArrayList<User> getAllNormalUsers() {
+        return controller.getAllNormalUsers();
     }
 
     /**
@@ -180,15 +181,16 @@ public class MainForm extends javax.swing.JFrame {
      * with all the information from all users, not only for those with a
      * pending review.
      */
-    public void showPnlAttempts() {
-        ArrayList<Attempt> attempts = controller.getAttemptsPendingReview();
+    public void showPnlAttempts(User user) {
+        //ArrayList<Attempt> attempts = controller.getAttemptsPendingReview();
 
         getContentPane().removeAll();
         if (pnlShowAllUsers != null) {
             pnlShowAllUsers.updateUI();
         }
 
-        pnlAttempts = new PnlAttempts(this, attempts, userName);
+//        pnlAttempts = new PnlAttempts(this, attempts, userName);
+        pnlAttempts = new PnlAttempts(this, user);
 
         getContentPane().add(pnlAttempts);
 
@@ -215,7 +217,16 @@ public class MainForm extends javax.swing.JFrame {
     public Review getReviewByAttempt(int idAttempt) {
         return controller.getReviewByAttempt(idAttempt);
     }
-
+    
+    public ArrayList<Activity> getPendingActivitiesByUser(User u)
+    {
+        return controller.getPendingActivitiesByUser(u);
+    }
+    
+    public ArrayList<Activity> getPendingReviewByUser(User u)
+    {
+        return controller.getPendingReviewByUser(u);
+    }
     /**
      * @param args the command line arguments
      */
