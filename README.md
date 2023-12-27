@@ -1,19 +1,28 @@
 # PowerFitBeans
+**RN 2023.12.26 17:00hrs**
+<br>
+Found useful code to ***convert SQL Timestamp to String***:
+<br>
+https://stackoverflow.com/questions/35170620/format-java-sql-timestamp-into-a-string<br>
 
+***I had a problem with Github when doing the commits. It seems that the issue came after doing the merge from `main` branch to `master`. For some unknown reason, the commits were sent to another Github account instead of this repository***<br>
+<br>
 **RN 2023.12.24 20:50hrs**
 <br>
 Found code to insert the component into a JScrollPane
 <br>
-
-
-https://stackoverflow.com/questions/10346449/scrolling-a-jpanel
+https://stackoverflow.com/questions/10346449/scrolling-a-jpanel<br>
+<br>
 **RN 2023.11.21 23:00hrs**
 <br>
 ***Created Microsoft Azure Account and Blob Storage***
-<br>I have created a new container and a Blob Storage service and uploaded all the videos.
-<br>Useful YouTube video:
-<br>**Azure Blob Storage Containers - How to create a storage account and upload files, create folders**: https://youtu.be/M_1R0ZOlP-w
-
+<br>
+I have created a new container and a Blob Storage service and uploaded all the videos.
+<br>
+Useful YouTube video:
+<br>
+**Azure Blob Storage Containers - How to create a storage account and upload files, create folders**: https://youtu.be/M_1R0ZOlP-w
+<br>
 
 
 **RN 2023.11.12 22:00hrs**
