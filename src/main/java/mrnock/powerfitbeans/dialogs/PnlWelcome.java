@@ -10,8 +10,8 @@ import mrnock.powerfitbeans.MainForm;
  * the app after validation.
  *
  * @author Richard Navarro {@literal <richardnavarro@paucasesnovescifp.cat>}
- * @version 2.0 Final version to submit for Unit 1 (Desarrollo de Interfaces)
- * @since 1.5
+ * @version 2.0 Final version to submit for Unit 3 (Desarrollo de Interfaces)
+ * @since 2.0
  */
 public class PnlWelcome extends javax.swing.JPanel {
 

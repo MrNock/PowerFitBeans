@@ -2,10 +2,7 @@ package mrnock.powerfitbeans.dialogs;
 
 import java.awt.Image;
 import java.io.Serializable;
-import java.sql.Timestamp;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import javax.swing.ImageIcon;
 import mrnock.events.MiEventPlayVideo;
 import mrnock.events.MiEventPlayVideoListener;
@@ -36,8 +33,6 @@ public class PnlExercise extends javax.swing.JPanel implements Serializable {
     public PnlExercise(String idExercise, IconExercise icon, String user, String timeStamp, String videoFile) {
         initComponents();
 
-//        String pattern = new SimpleDateFormat("EEE, dd MMM yyyy @ HH:mm").format(new Date()); //Tue, 16 Nov 2023 @ 18:24
-//        String formattedDate = pattern.formatted(timeStamp);
         this.lblExerciseID.setText(idExercise);
         this.lblUserName.setText(user);
         this.lblTimeStamp.setText(timeStamp);
@@ -45,28 +40,24 @@ public class PnlExercise extends javax.swing.JPanel implements Serializable {
 
         int size = 30;
         switch (icon) {
-            case NOT_ATTEMPTED_YET: {
+            case NOT_ATTEMPTED_YET -> {
                 ImageIcon imageIcon = new ImageIcon(getClass().getResource("/images/notAttemptedYet.png"));
                 Image image = imageIcon.getImage();
                 Image newimg = image.getScaledInstance(size, size, java.awt.Image.SCALE_SMOOTH);
                 this.lblStatusIcon.setIcon(new ImageIcon(newimg));
             }
-            break;
-            case PENDING_REVIEW: {
+            case PENDING_REVIEW -> {
                 ImageIcon imageIcon = new ImageIcon(getClass().getResource("/images/pendingReview.png"));
                 Image image = imageIcon.getImage();
                 Image newimg = image.getScaledInstance(size, size, java.awt.Image.SCALE_SMOOTH);
                 this.lblStatusIcon.setIcon(new ImageIcon(newimg));
             }
-            break;
-            case COMPLETE: {
+            case COMPLETE -> {
                 ImageIcon imageIcon = new ImageIcon(getClass().getResource("/images/complete.png"));
                 Image image = imageIcon.getImage();
                 Image newimg = image.getScaledInstance(size, size, java.awt.Image.SCALE_SMOOTH);
                 this.lblStatusIcon.setIcon(new ImageIcon(newimg));
             }
-
-            break;
         }
     }
 

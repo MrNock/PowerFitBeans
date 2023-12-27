@@ -1,5 +1,7 @@
 package mrnock.powerfitbeans.dialogs;
 
+import com.azure.storage.blob.BlobClient;
+import com.azure.storage.blob.BlobClientBuilder;
 import com.azure.storage.blob.BlobContainerClient;
 import com.azure.storage.blob.BlobServiceClient;
 import com.azure.storage.blob.BlobServiceClientBuilder;
@@ -9,10 +11,10 @@ import java.awt.Image;
 import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.LinkedList;
 import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
+import javax.swing.JOptionPane;
 import mrnock.powerfitbeans.MainForm;
 import mrnock.powerfitbeans.dto.Activity;
 import mrnock.powerfitbeans.dto.User;
@@ -32,34 +34,33 @@ import uk.co.caprica.vlcj.player.component.EmbeddedMediaPlayerComponent;
  * users.
  *
  * @author Richard Navarro {@literal <richardnavarro@paucasesnovescifp.cat>}
- * @version 2.0 Final version to submit for Unit 1 (Desarrollo de Interfaces)
+ * @version 2.0 Final version to submit for Unit 3 (Desarrollo de Interfaces)
  * @since 1.5
  */
 public class PnlActivities extends javax.swing.JPanel implements MiEventSwipeListener, MiEventPlayVideoListener {
 
     SimpleDateFormat pattern = new SimpleDateFormat("EEE, dd MMM yyyy @ HH:mm"); //Tue, 16 Nov 2023 @ 18:24
-    //String formattedDate = pattern.formatted(timeStamp);
     MainForm mainForm;
-    //ArrayList<Attempt> attempts;
     private EmbeddedMediaPlayerComponent mediaPlayer;
     private JScrollPane scrollPane;
     private javax.swing.JPanel pnlContenedor = new javax.swing.JPanel();
     private LinkedList<String> azureVideos = new LinkedList<>();
 
-    String connectStr = "DefaultEndpointsProtocol=https;AccountName=myvideoserver;AccountKey=N8qIEKx8aBdswJm2ZjByjSF0JsqCCcB5VAELyQi204KiuLxt2YDWpQmzFnEmsrIQLnZbZkIiIUD3+AStFiz1oQ==;EndpointSuffix=core.windows.net";
+    final private String connectStr = "DefaultEndpointsProtocol=https;AccountName=myvideoserver;AccountKey=N8qIEKx8aBdswJm2ZjByjSF0JsqCCcB5VAELyQi204KiuLxt2YDWpQmzFnEmsrIQLnZbZkIiIUD3+AStFiz1oQ==;EndpointSuffix=core.windows.net";
+    final private String containerName = "mrnockvideos";
+    private String videoFileAbsoluteTempPath = System.getProperty("java.io.tmpdir");
 
     /**
      * Creates new form PnlIntentos
      *
      * @param mainForm information from the MainForm screen.
-     * @param attempt ArrayList of attempts pending of review.
-     * @param username to be displayed in the Welcome Label.
+     * @param user logged in user into the app.
      */
     public PnlActivities(MainForm mainForm, User user) {
         initComponents();
 
         lblSwipeEvent.setText("");
-        btnPlayPause.setText(". . .");
+        btnPlayPause.setText("...");
         btnPlayPause.setEnabled(false);
         ImageIcon imageIcon = new ImageIcon(getClass().getResource("/images/logout.png"));
         Image image = imageIcon.getImage();
@@ -91,15 +92,17 @@ public class PnlActivities extends javax.swing.JPanel implements MiEventSwipeLis
             btnSeeUsers.setVisible(false);
         }
         initializeVideoListFromCloud();
+        if (videoFileAbsoluteTempPath.isEmpty()) {
+            videoFileAbsoluteTempPath = "c:" + File.separator + "temp";
+        }
     }
 
     private void initializeVideoListFromCloud() {
         BlobServiceClient blobServiceClient = new BlobServiceClientBuilder().connectionString(connectStr).buildClient();
-        BlobContainerClient containerClient = blobServiceClient.getBlobContainerClient("mrnockvideos");
+        BlobContainerClient containerClient = blobServiceClient.getBlobContainerClient(containerName);
 
         for (BlobItem blobItem : containerClient.listBlobs()) {
             azureVideos.add(blobItem.getName());
-            System.out.println("Video " + blobItem.getName() + " añadido correctamente.");
         }
 
     }
@@ -138,26 +141,51 @@ public class PnlActivities extends javax.swing.JPanel implements MiEventSwipeLis
      * This method is used to play the selected video with the performance of
      * the training.
      *
-     * @param row number for the video to be played.
+     * @param videoFile video to be played
      */
     public void playSelectedVideo(String videoFile) {
         if (videoFile == null || videoFile.isEmpty()) {
             mediaPlayer.mediaPlayer().controls().stop();
-            btnPlayPause.setText("");
+            btnPlayPause.setText("...");
             btnPlayPause.setEnabled(false);
         } else {
-//        String videoName = attempts.get(row).getVideoFile();
-            String videoFileAbsolutePath = connectStr + File.separator + videoFile;
 
-            File f = new File(videoFileAbsolutePath);
-            if (f.exists()) {
-
-                mediaPlayer.mediaPlayer().media().play(videoFileAbsolutePath);
+            if (downloadVideoIfNecessary(videoFile)) {
+                mediaPlayer.mediaPlayer().media().play(videoFileAbsoluteTempPath + File.separator + videoFile);
                 pnlVideoPlayer.setBorder(javax.swing.BorderFactory.createTitledBorder("Video Player - " + videoFile));
                 btnPlayPause.setText("Pause");
                 btnPlayPause.setEnabled(true);
+            } else {
+                JOptionPane.showMessageDialog(this, "File is not in azure", "File not found", JOptionPane.ERROR_MESSAGE);
             }
         }
+    }
+
+    /**
+     * This method is used to check if video file needs to be downloaded to Temp
+     * dir
+     *
+     * @param videoFile video to be downloaded.
+     */
+    private boolean downloadVideoIfNecessary(String videoFile) {
+        File f = new File(videoFileAbsoluteTempPath + File.separator + videoFile);
+        if (!f.exists()) {
+            //Check that the video is in azure
+            if (azureVideos.contains(videoFile)) {
+                //download the video
+                BlobClient blobClient = new BlobClientBuilder().connectionString(connectStr)
+                        .blobName(videoFile)
+                        .containerName(containerName)
+                        .buildClient();
+                blobClient.downloadToFile(videoFileAbsoluteTempPath + File.separator + videoFile);
+
+            } else {
+                //The video file is not uploaded in azure
+                return false;
+            }
+
+        }
+        return true;
     }
 
     /**

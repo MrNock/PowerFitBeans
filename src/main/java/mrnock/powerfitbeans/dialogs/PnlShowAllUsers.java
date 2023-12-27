@@ -19,7 +19,7 @@ import uk.co.caprica.vlcj.player.component.EmbeddedMediaPlayerComponent;
  * after confirming the action.
  *
  * @author Richard Navarro {@literal <richardnavarro@paucasesnovescifp.cat>}
- * @version 2.0 Final version to submit for Unit 1 (Desarrollo de Interfaces)
+ * @version 2.0 Final version to submit for Unit 3 (Desarrollo de Interfaces)
  * @since 1.5
  */
 public class PnlShowAllUsers extends javax.swing.JPanel {

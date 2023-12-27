@@ -1,6 +1,5 @@
 package mrnock.powerfitbeans.dataacccess;
 
-import com.microsoft.sqlserver.jdbc.osgi.Activator;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -8,13 +7,11 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.sql.Timestamp;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import mrnock.powerfitbeans.dto.Activity;
 import mrnock.powerfitbeans.dto.User;
 import mrnock.powerfitbeans.dto.Attempt;
-import mrnock.powerfitbeans.dto.Exercise;
 import mrnock.powerfitbeans.dto.Review;
 
 /**
@@ -25,13 +22,11 @@ import mrnock.powerfitbeans.dto.Review;
  * It performs the connection and all CRUD methods needed in the app.
  *
  * @author Richard Navarro {@literal <richardnavarro@paucasesnovescifp.cat>}
- * @version 2.0 Final version to submit for Unit 1 (Desarrollo de Interfaces)
+ * @version 2.0 Final version to submit for Unit 3 (Desarrollo de Interfaces)
  * @since 1.5
  */
 public class DataAccess {
 
-    // String pattern = "ddd, dd mmm yyyy @ HH:mm"; //Tue, 16 Nov 2023 @ 18:24
-    //SimpleDateFormat sdf = new SimpleDateFormat(pattern);
     /**
      * This method connects with the Database with the personal connection URL.
      *
@@ -168,6 +163,13 @@ public class DataAccess {
         return attempts;
     }
 
+    /**
+     * This method gets a list of activities pending filtered by user.
+     *
+     * @param user User from whom the app needs to return his/her pending
+     * activities.
+     * @return ArrayList of activities for a specific user.
+     */
     public ArrayList<Activity> getPendingActivitiesByUser(User user) {
         ArrayList<Activity> activities = new ArrayList<>();
         String sql = "select NomExercici from Exercicis where id not in "
@@ -204,7 +206,6 @@ public class DataAccess {
             while (resultSet.next()) {
                 Activity activity = new Activity();
                 activity.setExerciseName(resultSet.getString("NomExercici"));
-                //activity.setTimeStamp(resultSet.getString("Timestamp_Inici"));
                 Timestamp fecha = resultSet.getTimestamp("Timestamp_Inici");
                 System.out.println("fecha " + fecha);
                 Date d = new Date();

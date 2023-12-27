@@ -7,7 +7,7 @@ import mrnock.powerfitbeans.MainForm;
  * credentials and login into the app. It is instantiated from the MainForm.
  *
  * @author Richard Navarro {@literal <richardnavarro@paucasesnovescifp.cat>}
- * @version 2.0 Final version to submit for Unit 1 (Desarrollo de Interfaces)
+ * @version 2.0 Final version to submit for Unit 3 (Desarrollo de Interfaces)
  * @since 1.5
  */
 public class DlgLogin extends javax.swing.JDialog {

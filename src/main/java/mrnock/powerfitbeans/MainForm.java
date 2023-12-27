@@ -25,7 +25,7 @@ import mrnock.powerfitbeans.dto.User;
  * the logic of the program.
  *
  * @author Richard Navarro {@literal <richardnavarro@paucasesnovescifp.cat>}
- * @version 2.0 Final version to submit for Unit 1 (Desarrollo de Interfaces)
+ * @version 2.0 Final version to submit for Unit 3 (Desarrollo de Interfaces)
  * @since 1.5
  */
 public class MainForm extends javax.swing.JFrame {
@@ -46,13 +46,12 @@ public class MainForm extends javax.swing.JFrame {
         setResizable(false);
         setLocationRelativeTo(null);
 
-        controller = new Controller(this);
+        controller = new Controller();
 
         showWelcomePanel();
     }
-    
-    public void showWelcomePanel()
-    {
+
+    public void showWelcomePanel() {
         getContentPane().removeAll();
         getContentPane().repaint();
         pnlWelcome = new PnlWelcome(this);
@@ -180,7 +179,7 @@ public class MainForm extends javax.swing.JFrame {
      */
     public void showPnlAttempts() {
         //ArrayList<Attempt> attempts = controller.getAttemptsPendingReview();
-        
+
         getContentPane().removeAll();
         if (pnlShowAllUsers != null) {
             pnlShowAllUsers.updateUI();
@@ -214,16 +213,15 @@ public class MainForm extends javax.swing.JFrame {
     public Review getReviewByAttempt(int idAttempt) {
         return controller.getReviewByAttempt(idAttempt);
     }
-    
-    public ArrayList<Activity> getActivitiesByUser(User u)
-    {
+
+    public ArrayList<Activity> getActivitiesByUser(User u) {
         return controller.getPendingActivitiesByUser(u);
     }
-    
-    public ArrayList<Activity> getPendingReviewByUser(User u)
-    {
+
+    public ArrayList<Activity> getPendingReviewByUser(User u) {
         return controller.getPendingReviewByUser(u);
     }
+
     /**
      * @param args the command line arguments
      */

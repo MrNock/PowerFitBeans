@@ -2,7 +2,6 @@ package mrnock.powerfitbeans.dataacccess;
 
 import at.favre.lib.crypto.bcrypt.BCrypt;
 import java.util.ArrayList;
-import mrnock.powerfitbeans.MainForm;
 import mrnock.powerfitbeans.dto.Activity;
 import mrnock.powerfitbeans.dto.Attempt;
 import mrnock.powerfitbeans.dto.Review;
@@ -14,16 +13,14 @@ import mrnock.powerfitbeans.dto.User;
  * MainForm (dealing with the rest of windows in the app.
  *
  * @author Richard Navarro {@literal <richardnavarro@paucasesnovescifp.cat>}
- * @version 2.0 Final version to submit for Unit 1 (Desarrollo de Interfaces)
+ * @version 2.0 Final version to submit for Unit 3 (Desarrollo de Interfaces)
  * @since 1.5
  */
 public class Controller {
 
-    MainForm main = null;
     DataAccess da = null;
 
-    public Controller(MainForm main) {
-        this.main = main;
+    public Controller() {
         da = new DataAccess();
     }
 
@@ -116,15 +113,12 @@ public class Controller {
         da.deleteReviewsByAttempt(attempt);
         return da.deleteAttempt(attempt);
     }
-    
-     public ArrayList<Activity> getPendingActivitiesByUser(User user)
-     {
-         return da.getPendingActivitiesByUser(user);
-     }
-     
-     
-     public ArrayList<Activity> getPendingReviewByUser(User user)
-     {
-         return da.getPendingReviewByUser(user);
-     }
+
+    public ArrayList<Activity> getPendingActivitiesByUser(User user) {
+        return da.getPendingActivitiesByUser(user);
+    }
+
+    public ArrayList<Activity> getPendingReviewByUser(User user) {
+        return da.getPendingReviewByUser(user);
+    }
 }
