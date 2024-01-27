@@ -1,4 +1,30 @@
 # PowerFitBeans
+**RN 2024.01.27 12:00hrs**
+<br>
+Found some useful articles and YouTube video related to these topics:
+<br>
+***SVG vs PNG: What Are the Differences and When to Use Them***
+https://kinsta.com/blog/svg-vs-png/
+<br>
+***Bulb Digital Channel: Tips and Tricks to make our UX Design simpler and nicer***
+https://www.youtube.com/watch?v=rtxBKzReQXA
+<br>
+***Everything you should know about 8 point grid system in UX design***
+Website, apps, dashboard, UI, etc. there is a variety of screen sizes. Pixel densities have continued to increase making the work of asset generation more complicated for designers. Utilizing number like 8 to size and space elements makes scaling for a wide variety of devices easy and consistent. Also, the majority of popular screen sizes are divisible by 8 which makes for an easy fit. The principle of 8pt Grid is that use multiples of 8 (8, 16, 24, 32, 40, 48, 56, etc.) to layout, dimensions, padding, and margin of elements.
+https://uxplanet.org/everything-you-should-know-about-8-point-grid-system-in-ux-design-b69cb945b18d
+<br>
+***The 60–30–10 Rule***
+What is the 60–30–10 Rule?
+The 60–30–10 rule is a popular color theory used by interior designers, fashion designers, and graphic designers to create a balanced and harmonious color scheme. The rule states that a color scheme should consist of three colors in the following proportions:
+
+* 60% of the dominant color
+* 30% of the secondary color
+* 10% of the accent color
+* 
+The dominant color is the main color of the design, and it should be the most prominent and visible color. The secondary color is a complementary color that supports the dominant color and provides visual interest. The accent color is a pop of color that adds a bit of excitement and contrast to the design.
+
+https://uxplanet.org/the-60-30-10-rule-a-foolproof-way-to-choose-colors-for-your-ui-design-d15625e56d25
+<br>
 **RN 2023.12.26 17:00hrs**
 <br>
 Found useful code to ***convert SQL Timestamp to String***:
