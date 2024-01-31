@@ -1,7 +1,14 @@
 # PowerFitBeans
 **RN 2024.01.31 22:00hrs**
 <br>
-***FlatLaf Tutorial - How to install flatlaf look and feel (Part 1 and 2)***
+***Problem importing jar file into a `Maven` project***
+<br>
+I was struggling when trying to upload the `flatlaf-intellij-themes` library to my project, but then I have read carefully the explanations and navigated to https://search.maven.org/artifact/com.formdev/flatlaf-intellij-themes/3.3/jar?eh= and eventually, found the dependencies needed to be added to my `pom` file.
+<br>
+<br>
+**RN 2024.01.31 21:00hrs**
+<br>
+***FlatLaf Tutorial - How to install flatlaf look and feel \(Part 1 and 2\)***
 <br>
 Video tutorial to do the basic setup in Netbeans.
 <br>
