@@ -1,4 +1,13 @@
 # PowerFitBeans
+**RN 2024.01.31 22:00hrs**
+<br>
+***FlatLaf Tutorial - How to install flatlaf look and feel (Part 1 and 2)***
+<br>
+Video tutorial to do the basic setup in Netbeans.
+<br>
+https://www.youtube.com/watch?v=Dqlwr3uIeVM
+<br>
+<br>
 **RN 2024.01.27 12:00hrs**
 <br>
 I have found some useful articles and YouTube videos related to the following topics:
