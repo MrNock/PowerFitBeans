@@ -228,6 +228,7 @@ public class MainForm extends javax.swing.JFrame {
      */
     public static void main(String args[]) {
         
+        FlatLightLaf.registerCustomDefaultsSource("style");
         FlatLightLaf.setup();
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(() -> {
