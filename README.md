@@ -1,4 +1,11 @@
 # PowerFitBeans
+**RN 2024.01.31 23:30hrs**
+<br>
+Open-licensed SVG Vector and Icons (free download):
+<br>
+https://www.svgrepo.com/
+<br>
+<br>
 **RN 2024.01.31 22:00hrs**
 <br>
 ***Problem importing jar file into a `Maven` project***
