@@ -1,5 +1,7 @@
 package mrnock.powerfitbeans.dialogs;
 
+import com.formdev.flatlaf.FlatDarkLaf;
+import com.formdev.flatlaf.FlatLightLaf;
 import mrnock.powerfitbeans.MainForm;
 
 /**
@@ -24,6 +26,10 @@ public class DlgLogin extends javax.swing.JDialog {
         super(mainForm, DlgLogin.ModalityType.DOCUMENT_MODAL);
         this.mainForm = mainForm;
         initComponents();
+        imgEMail.setSvgImage(
+                "images/email.svg", 60, 60);
+        imgPassword.setSvgImage(
+                "images/incognito.svg", 60, 60);
         setSize(432, 432);
         setLayout(null);
         setLocationRelativeTo(null);
@@ -45,6 +51,8 @@ public class DlgLogin extends javax.swing.JDialog {
         txtEmail = new javax.swing.JTextField();
         txtPassword = new javax.swing.JPasswordField();
         lblLoginTitle = new javax.swing.JLabel();
+        imgPassword = new mrnock.tools.SVGImage();
+        imgEMail = new mrnock.tools.SVGImage();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         getContentPane().setLayout(null);
@@ -82,6 +90,10 @@ public class DlgLogin extends javax.swing.JDialog {
         lblLoginTitle.setText("LOGIN");
         pnlLogin.add(lblLoginTitle);
         lblLoginTitle.setBounds(20, 20, 380, 50);
+        pnlLogin.add(imgPassword);
+        imgPassword.setBounds(330, 150, 30, 30);
+        pnlLogin.add(imgEMail);
+        imgEMail.setBounds(329, 116, 30, 30);
 
         getContentPane().add(pnlLogin);
         pnlLogin.setBounds(6, 6, 419, 374);
@@ -103,6 +115,8 @@ public class DlgLogin extends javax.swing.JDialog {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnSubmit;
+    private mrnock.tools.SVGImage imgEMail;
+    private mrnock.tools.SVGImage imgPassword;
     private javax.swing.JLabel lblEmail;
     private javax.swing.JLabel lblLoginTitle;
     private javax.swing.JLabel lblPassword;

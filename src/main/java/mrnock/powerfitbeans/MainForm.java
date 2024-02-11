@@ -1,8 +1,14 @@
 package mrnock.powerfitbeans;
 
+import com.formdev.flatlaf.FlatDarkLaf;
 import com.formdev.flatlaf.FlatLightLaf;
+import com.formdev.flatlaf.intellijthemes.FlatArcDarkIJTheme;
+import com.formdev.flatlaf.intellijthemes.materialthemeuilite.FlatLightOwlIJTheme;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
+import javax.swing.SwingUtilities;
+import javax.swing.UIManager;
+import javax.swing.UnsupportedLookAndFeelException;
 import mrnock.powerfitbeans.dataacccess.Controller;
 import mrnock.powerfitbeans.dialogs.DlgLogin;
 import mrnock.powerfitbeans.dialogs.PnlActivities;
@@ -56,7 +62,7 @@ public class MainForm extends javax.swing.JFrame {
         getContentPane().removeAll();
         getContentPane().repaint();
         pnlWelcome = new PnlWelcome(this);
-        pnlWelcome.setBounds(0, 10, 1000, 440);
+        pnlWelcome.setBounds(0, 10, 1000, 500);
         getContentPane().add(pnlWelcome);
         pnlWelcome.repaint();
     }
@@ -223,13 +229,27 @@ public class MainForm extends javax.swing.JFrame {
         return controller.getPendingReviewByUser(u);
     }
 
+    public void changeLookAndFeel(boolean isEnabled) throws UnsupportedLookAndFeelException {
+        if (isEnabled) {
+            UIManager.setLookAndFeel(new FlatArcDarkIJTheme());
+            FlatDarkLaf.registerCustomDefaultsSource("style"); //Properties
+            FlatDarkLaf.setup();
+
+        } else {
+            UIManager.setLookAndFeel(new FlatLightOwlIJTheme());
+            FlatLightLaf.registerCustomDefaultsSource("style"); //Properties
+            FlatLightLaf.setup();
+        }
+        SwingUtilities.updateComponentTreeUI(this);
+    }
+
     /**
      * @param args the command line arguments
      */
     public static void main(String args[]) {
-        
-        FlatLightLaf.registerCustomDefaultsSource("style");
-        FlatLightLaf.setup();
+
+        FlatLightLaf.registerCustomDefaultsSource("style"); //Properties
+        FlatLightLaf.setup(); //FlatLightLaf (Light) || FlatDarkLaf (Dark) 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(() -> {
             new MainForm().setVisible(true);

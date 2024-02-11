@@ -62,7 +62,7 @@ public class PnlActivities extends javax.swing.JPanel implements MiEventSwipeLis
         lblSwipeEvent.setText("");
         btnPlayPause.setText("...");
         btnPlayPause.setEnabled(false);
-        ImageIcon imageIcon = new ImageIcon(getClass().getResource("/images/logout.png"));
+        ImageIcon imageIcon = new ImageIcon(getClass().getResource("/images/home.svg"));
         Image image = imageIcon.getImage();
         Image newimg = image.getScaledInstance(54, 54, java.awt.Image.SCALE_SMOOTH);
         this.lblLogOut.setIcon(new ImageIcon(newimg));

@@ -1,5 +1,10 @@
+/*
+ */
 package mrnock.powerfitbeans.dialogs;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.UnsupportedLookAndFeelException;
 import mrnock.powerfitbeans.MainForm;
 
 /**
@@ -21,8 +26,12 @@ public class PnlWelcome extends javax.swing.JPanel {
      * @param mainForm information from the MainForm screen.
      */
     public PnlWelcome(MainForm mainForm) {
+
         this.mainForm = mainForm;
         initComponents();
+        imgWelcome.setSvgImage("images/PowerFitBeansLogo.svg", 450, 450);
+        imgLogin.setSvgImage("images/login-2.svg", 60, 60);
+        imgLogin.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
     }
 
     /**
@@ -34,72 +43,159 @@ public class PnlWelcome extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        lblWelcome = new javax.swing.JLabel();
-        lblAccessLogin = new javax.swing.JLabel();
-        lblIconLogin = new javax.swing.JLabel();
+        pnlLeft = new javax.swing.JPanel();
+        imgWelcome = new mrnock.tools.SVGImage();
+        pnlLeftFooter = new javax.swing.JPanel();
         lblMoreInfo = new javax.swing.JLabel();
         lblUrlWeb = new javax.swing.JLabel();
-        lblWelcomeImage = new javax.swing.JLabel();
+        pnlRight = new javax.swing.JPanel();
+        lblWelcome = new javax.swing.JLabel();
+        pnlLoginWelcome = new javax.swing.JPanel();
+        lblAccessLogin = new javax.swing.JLabel();
+        imgLogin = new mrnock.tools.SVGImage();
+        pnlDarkLightMode = new javax.swing.JPanel();
+        tglDarkLight = new javax.swing.JToggleButton();
 
-        setLayout(null);
+        setMinimumSize(new java.awt.Dimension(1000, 500));
+        setPreferredSize(new java.awt.Dimension(1000, 500));
+        setLayout(new java.awt.GridLayout(1, 0));
 
-        lblWelcome.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
-        lblWelcome.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lblWelcome.setText("Welcome to the Power Fit Beans App");
-        add(lblWelcome);
-        lblWelcome.setBounds(530, 40, 310, 40);
+        pnlLeft.setMaximumSize(new java.awt.Dimension(480, 480));
+        pnlLeft.setLayout(new javax.swing.BoxLayout(pnlLeft, javax.swing.BoxLayout.Y_AXIS));
 
-        lblAccessLogin.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        lblAccessLogin.setText("Click to login:");
-        add(lblAccessLogin);
-        lblAccessLogin.setBounds(560, 140, 150, 30);
+        imgWelcome.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        imgWelcome.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        imgWelcome.setAlignmentX(0.5F);
+        imgWelcome.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
+        imgWelcome.setMaximumSize(new java.awt.Dimension(460, 460));
+        imgWelcome.setMinimumSize(new java.awt.Dimension(460, 460));
+        imgWelcome.setPreferredSize(new java.awt.Dimension(460, 460));
+        pnlLeft.add(imgWelcome);
 
-        lblIconLogin.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/icons8-login-64.png"))); // NOI18N
-        lblIconLogin.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        lblIconLogin.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                lblIconLoginMouseClicked(evt);
-            }
-        });
-        add(lblIconLogin);
-        lblIconLogin.setBounds(720, 130, 70, 50);
+        pnlLeftFooter.setMaximumSize(new java.awt.Dimension(480, 30));
+        pnlLeftFooter.setMinimumSize(new java.awt.Dimension(480, 30));
+        pnlLeftFooter.setPreferredSize(new java.awt.Dimension(480, 30));
 
+        lblMoreInfo.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
         lblMoreInfo.setText("More info: ");
-        add(lblMoreInfo);
-        lblMoreInfo.setBounds(600, 340, 60, 16);
+        lblMoreInfo.setToolTipText("");
+        lblMoreInfo.setAlignmentX(0.5F);
+        lblMoreInfo.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
+        lblMoreInfo.setMaximumSize(new java.awt.Dimension(230, 16));
+        lblMoreInfo.setMinimumSize(new java.awt.Dimension(230, 16));
+        lblMoreInfo.setPreferredSize(new java.awt.Dimension(230, 16));
+        pnlLeftFooter.add(lblMoreInfo);
 
-        lblUrlWeb.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
         lblUrlWeb.setForeground(new java.awt.Color(0, 0, 255));
         lblUrlWeb.setText("www.powerfitbeans.com");
         lblUrlWeb.setToolTipText("https://paucasesnovescifp.cat/");
+        lblUrlWeb.setAlignmentX(0.5F);
         lblUrlWeb.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        add(lblUrlWeb);
-        lblUrlWeb.setBounds(660, 340, 160, 20);
+        lblUrlWeb.setHorizontalTextPosition(javax.swing.SwingConstants.LEADING);
+        lblUrlWeb.setMaximumSize(new java.awt.Dimension(230, 16));
+        lblUrlWeb.setMinimumSize(new java.awt.Dimension(230, 16));
+        lblUrlWeb.setPreferredSize(new java.awt.Dimension(230, 16));
+        pnlLeftFooter.add(lblUrlWeb);
 
-        lblWelcomeImage.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/432x432_PowerFitBeans.png"))); // NOI18N
-        lblWelcomeImage.setMaximumSize(new java.awt.Dimension(112, 108));
-        lblWelcomeImage.setMinimumSize(new java.awt.Dimension(112, 108));
-        add(lblWelcomeImage);
-        lblWelcomeImage.setBounds(10, 10, 432, 432);
+        pnlLeft.add(pnlLeftFooter);
+
+        add(pnlLeft);
+
+        pnlRight.setAlignmentX(0.5F);
+        pnlRight.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        pnlRight.setMaximumSize(new java.awt.Dimension(460, 255));
+        pnlRight.setMinimumSize(new java.awt.Dimension(460, 237));
+        pnlRight.setPreferredSize(new java.awt.Dimension(460, 230));
+        pnlRight.setLayout(new javax.swing.BoxLayout(pnlRight, javax.swing.BoxLayout.Y_AXIS));
+
+        lblWelcome.setFont(new java.awt.Font("Arial", 1, 24)); // NOI18N
+        lblWelcome.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblWelcome.setText("Welcome to the Power Fit Beans App");
+        lblWelcome.setAlignmentX(0.5F);
+        lblWelcome.setMaximumSize(new java.awt.Dimension(426, 42));
+        pnlRight.add(lblWelcome);
+
+        pnlLoginWelcome.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        pnlLoginWelcome.setMaximumSize(new java.awt.Dimension(480, 400));
+        pnlLoginWelcome.setMinimumSize(new java.awt.Dimension(480, 400));
+        pnlLoginWelcome.setPreferredSize(new java.awt.Dimension(480, 400));
+        pnlLoginWelcome.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.CENTER, 10, 80));
+
+        lblAccessLogin.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
+        lblAccessLogin.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        lblAccessLogin.setLabelFor(imgLogin);
+        lblAccessLogin.setText("Click to login:  ");
+        lblAccessLogin.setToolTipText("Access the app by clicking the icon");
+        lblAccessLogin.setAlignmentX(0.5F);
+        lblAccessLogin.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        lblAccessLogin.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        lblAccessLogin.setMaximumSize(new java.awt.Dimension(200, 22));
+        lblAccessLogin.setMinimumSize(new java.awt.Dimension(200, 22));
+        lblAccessLogin.setPreferredSize(new java.awt.Dimension(200, 22));
+        pnlLoginWelcome.add(lblAccessLogin);
+
+        imgLogin.setToolTipText("Click to access the app");
+        imgLogin.setAlignmentX(0.5F);
+        imgLogin.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                imgLoginMouseClicked(evt);
+            }
+        });
+        pnlLoginWelcome.add(imgLogin);
+
+        pnlRight.add(pnlLoginWelcome);
+
+        pnlDarkLightMode.setLayout(new javax.swing.BoxLayout(pnlDarkLightMode, javax.swing.BoxLayout.LINE_AXIS));
+
+        tglDarkLight.setText("Dark Mode");
+        tglDarkLight.setToolTipText("");
+        tglDarkLight.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        tglDarkLight.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                tglDarkLightActionPerformed(evt);
+            }
+        });
+        pnlDarkLightMode.add(tglDarkLight);
+
+        pnlRight.add(pnlDarkLightMode);
+
+        add(pnlRight);
     }// </editor-fold>//GEN-END:initComponents
 
-    /**
-     * This method calls the validateLogin method to validate the user, enabling
-     * him/her access into the app.
-     */
-    private void lblIconLoginMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblIconLoginMouseClicked
+    private void tglDarkLightActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tglDarkLightActionPerformed
+
+        boolean mode = tglDarkLight.isSelected();
+        try {
+            mainForm.changeLookAndFeel(mode);
+        } catch (UnsupportedLookAndFeelException ex) {
+            Logger.getLogger(PnlWelcome.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        if (isEnabled()) {
+            tglDarkLight.setText("Light Mode");
+        } else {
+            tglDarkLight.setText("Dark Mode");
+        }
+    }//GEN-LAST:event_tglDarkLightActionPerformed
+
+    private void imgLoginMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_imgLoginMouseClicked
         mainForm.validateLogin();
-    }//GEN-LAST:event_lblIconLoginMouseClicked
+    }//GEN-LAST:event_imgLoginMouseClicked
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private mrnock.tools.SVGImage imgLogin;
+    private mrnock.tools.SVGImage imgWelcome;
     private javax.swing.JLabel lblAccessLogin;
-    private javax.swing.JLabel lblIconLogin;
     private javax.swing.JLabel lblMoreInfo;
     private javax.swing.JLabel lblUrlWeb;
     private javax.swing.JLabel lblWelcome;
-    private javax.swing.JLabel lblWelcomeImage;
+    private javax.swing.JPanel pnlDarkLightMode;
+    private javax.swing.JPanel pnlLeft;
+    private javax.swing.JPanel pnlLeftFooter;
+    private javax.swing.JPanel pnlLoginWelcome;
+    private javax.swing.JPanel pnlRight;
+    private javax.swing.JToggleButton tglDarkLight;
     // End of variables declaration//GEN-END:variables
-   // private DlgLogin dlgLogin;
-    private MainForm mainForm;
+private MainForm mainForm;
+
 }
