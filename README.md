@@ -1,4 +1,11 @@
 # PowerFitBeans
+**RN 2024.02.10 13:30hrs**
+<br>
+I have found this useful info to overcome the issue changing the look & feel on the app:
+<br>
+https://docs.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html
+<br>
+<br>
 **RN 2024.01.31 23:30hrs**
 <br>
 Open-licensed SVG Vector and Icons (free download):
