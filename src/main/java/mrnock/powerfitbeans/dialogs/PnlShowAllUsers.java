@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import javax.swing.DefaultListModel;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.table.DefaultTableModel;
+import java.awt.Cursor;
 import mrnock.powerfitbeans.MainForm;
 import mrnock.powerfitbeans.VideoCloud;
 import mrnock.powerfitbeans.dto.Attempt;
@@ -52,6 +53,7 @@ public class PnlShowAllUsers extends javax.swing.JPanel {
         setBounds(10, 10, 950, 500);
         add(pnlHeaderSAU, BorderLayout.NORTH);
         icnBack.setSvgImage("images/arrow-left.svg", 45, 45);
+        icnBack.setCursor(new Cursor(Cursor.HAND_CURSOR));
         mediaPlayer = new EmbeddedMediaPlayerComponent();
 
         pnlVideoPlayer.add(mediaPlayer, BorderLayout.CENTER);
@@ -91,7 +93,7 @@ public class PnlShowAllUsers extends javax.swing.JPanel {
 
         pnlHeaderSAU.setLayout(new java.awt.BorderLayout());
 
-        icnBack.setToolTipText("");
+        icnBack.setToolTipText("Navigate to main screen");
         icnBack.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseReleased(java.awt.event.MouseEvent evt) {
                 icnBackMouseReleased(evt);
@@ -105,6 +107,7 @@ public class PnlShowAllUsers extends javax.swing.JPanel {
         pnlMainSAU.setLayout(new java.awt.GridBagLayout());
 
         lstUsers.setBorder(javax.swing.BorderFactory.createTitledBorder("Users"));
+        lstUsers.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         lstUsers.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 lstUsersMouseClicked(evt);
@@ -131,6 +134,7 @@ public class PnlShowAllUsers extends javax.swing.JPanel {
                 "ID", "Activity", "Start_Date", "End_Date"
             }
         ));
+        tblSelectedUserInfo.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         scrTableSelectedUser.setViewportView(tblSelectedUserInfo);
 
         gridBagConstraints = new java.awt.GridBagConstraints();
@@ -153,6 +157,7 @@ public class PnlShowAllUsers extends javax.swing.JPanel {
         pnlVideoContainer.add(pnlVideoPlayer, gridBagConstraints);
 
         btnPauseResumeVideo.setText("Pause");
+        btnPauseResumeVideo.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnPauseResumeVideo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnPauseResumeVideoActionPerformed(evt);
@@ -226,6 +231,7 @@ public class PnlShowAllUsers extends javax.swing.JPanel {
         pnlExtraInfo.add(scrComments, gridBagConstraints);
 
         btnEditReview.setText("Edit Review");
+        btnEditReview.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnEditReview.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnEditReviewActionPerformed(evt);
@@ -239,6 +245,7 @@ public class PnlShowAllUsers extends javax.swing.JPanel {
         pnlExtraInfo.add(btnEditReview, gridBagConstraints);
 
         btnAddReview.setText("Add Review");
+        btnAddReview.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnAddReview.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnAddReviewActionPerformed(evt);
@@ -253,6 +260,7 @@ public class PnlShowAllUsers extends javax.swing.JPanel {
         pnlExtraInfo.add(btnAddReview, gridBagConstraints);
 
         btnDeleteAttempt.setText("Delete Attempt");
+        btnDeleteAttempt.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnDeleteAttempt.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnDeleteAttemptActionPerformed(evt);

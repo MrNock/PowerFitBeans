@@ -4,6 +4,7 @@ package mrnock.powerfitbeans.dialogs;
 
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.awt.Cursor;
 import javax.swing.UnsupportedLookAndFeelException;
 import mrnock.powerfitbeans.MainForm;
 
@@ -31,6 +32,7 @@ public class PnlWelcome extends javax.swing.JPanel {
         initComponents();
         imgWelcome.setSvgImage("images/PowerFitBeansLogo.svg", 450, 450);
         icnLogin.setSvgImage("images/login-2.svg", 45, 45);
+        icnLogin.setCursor(new Cursor(Cursor.HAND_CURSOR));
         //imgWelcome.setSvgImage("images/PowerFitBeansLogo.svg", pnlLeft.getWidth()-20, pnlLeft.getHeight()-20);
         //imgLogin.setSvgImage("images/login-2.svg", 60, 60);
         // imgLogin.animation();
@@ -122,7 +124,7 @@ public class PnlWelcome extends javax.swing.JPanel {
         gridBagConstraints.gridy = 0;
         pnlLoginWelcome.add(lblAccessLogin, gridBagConstraints);
 
-        icnLogin.setToolTipText("");
+        icnLogin.setToolTipText("Click to access the Power Fit Beans App");
         icnLogin.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseReleased(java.awt.event.MouseEvent evt) {
                 icnLoginMouseReleased(evt);

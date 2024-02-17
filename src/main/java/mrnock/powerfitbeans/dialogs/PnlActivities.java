@@ -7,6 +7,7 @@ import com.azure.storage.blob.BlobServiceClient;
 import com.azure.storage.blob.BlobServiceClientBuilder;
 import com.azure.storage.blob.models.BlobItem;
 import java.awt.BorderLayout;
+import java.awt.Cursor;
 import java.awt.Image;
 import java.io.File;
 import java.text.SimpleDateFormat;
@@ -58,8 +59,10 @@ public class PnlActivities extends javax.swing.JPanel implements MiEventSwipeLis
         this.azureVideo = azureVideo;
         initComponents();
         //pnlContenedor.add(pnlActivitiesHeader,BorderLayout.NORTH);
-        icnLogo.setSvgImage("images/login-2.svg", 45, 45);
-        icnLogout.setSvgImage("images/login-2.svg", 45, 45);
+        icnLogo.setSvgImage("images/PowerFitBeansLogo.svg", 45, 45);
+        icnLogo.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        icnLogout.setSvgImage("images/power.svg", 45, 45);
+        icnLogout.setCursor(new Cursor(Cursor.HAND_CURSOR));
         lblSwipeEvent.setText("");
         btnPlayPause.setText("...");
         btnPlayPause.setEnabled(false);
@@ -187,6 +190,8 @@ public class PnlActivities extends javax.swing.JPanel implements MiEventSwipeLis
         setLayout(new java.awt.BorderLayout());
 
         pnlActivitiesHeader.setLayout(new java.awt.BorderLayout());
+
+        icnLogo.setToolTipText("Power Fit Beans App");
         pnlActivitiesHeader.add(icnLogo, java.awt.BorderLayout.WEST);
 
         lblWelcomeInstructor.setFont(new java.awt.Font("Arial", 2, 18)); // NOI18N
@@ -194,6 +199,7 @@ public class PnlActivities extends javax.swing.JPanel implements MiEventSwipeLis
         lblWelcomeInstructor.setText("Welcome <Instructor Name>");
         pnlActivitiesHeader.add(lblWelcomeInstructor, java.awt.BorderLayout.CENTER);
 
+        icnLogout.setToolTipText("Click to logout");
         icnLogout.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseReleased(java.awt.event.MouseEvent evt) {
                 icnLogoutMouseReleased(evt);
@@ -246,10 +252,11 @@ public class PnlActivities extends javax.swing.JPanel implements MiEventSwipeLis
         gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
         gridBagConstraints.weightx = 1.0;
         gridBagConstraints.weighty = 1.0;
+        gridBagConstraints.insets = new java.awt.Insets(10, 0, 10, 0);
         pnlMainRight.add(pnlVideoPlayer, gridBagConstraints);
 
         btnPlayPause.setText("Pause");
-        btnPlayPause.setMargin(new java.awt.Insets(0, 0, 0, 0));
+        btnPlayPause.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnPlayPause.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnPlayPauseActionPerformed(evt);
@@ -258,7 +265,6 @@ public class PnlActivities extends javax.swing.JPanel implements MiEventSwipeLis
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 1;
-        gridBagConstraints.insets = new java.awt.Insets(10, 0, 10, 0);
         pnlMainRight.add(btnPlayPause, gridBagConstraints);
 
         gridBagConstraints = new java.awt.GridBagConstraints();
@@ -267,6 +273,7 @@ public class PnlActivities extends javax.swing.JPanel implements MiEventSwipeLis
         gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
         gridBagConstraints.weightx = 0.5;
         gridBagConstraints.weighty = 0.5;
+        gridBagConstraints.insets = new java.awt.Insets(10, 0, 10, 0);
         pnlActivitiesMain.add(pnlMainRight, gridBagConstraints);
 
         add(pnlActivitiesMain, java.awt.BorderLayout.CENTER);
@@ -274,7 +281,7 @@ public class PnlActivities extends javax.swing.JPanel implements MiEventSwipeLis
         pnlActivitiesFooter.setLayout(new java.awt.GridBagLayout());
 
         btnSeeUsers.setText("See users...");
-        btnSeeUsers.setMargin(new java.awt.Insets(0, 0, 0, 0));
+        btnSeeUsers.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnSeeUsers.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnSeeUsersActionPerformed(evt);

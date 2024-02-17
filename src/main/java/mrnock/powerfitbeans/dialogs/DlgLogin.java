@@ -86,6 +86,8 @@ public class DlgLogin extends javax.swing.JDialog {
         gridBagConstraints.gridy = 0;
         pnlLoginBody.add(txtEmail, gridBagConstraints);
 
+        imgEMail.setLabelFor(txtEmail);
+        imgEMail.setToolTipText("john.doe@email.com");
         imgEMail.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 2;
@@ -110,6 +112,8 @@ public class DlgLogin extends javax.swing.JDialog {
         pnlLoginBody.add(txtPassword, gridBagConstraints);
 
         imgPassword.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        imgPassword.setLabelFor(txtPassword);
+        imgPassword.setToolTipText("Input your super secret password");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 2;
         gridBagConstraints.gridy = 1;
@@ -122,6 +126,7 @@ public class DlgLogin extends javax.swing.JDialog {
         getContentPane().add(pnlLoginBody, gridBagConstraints);
 
         btnSubmit.setText("Submit");
+        btnSubmit.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnSubmit.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnSubmitActionPerformed(evt);

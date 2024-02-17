@@ -1,9 +1,8 @@
 package mrnock.powerfitbeans.dialogs;
 
-import java.awt.Image;
+import java.awt.Color;
 import java.io.Serializable;
 import java.util.ArrayList;
-import javax.swing.ImageIcon;
 import mrnock.events.MiEventPlayVideo;
 import mrnock.events.MiEventPlayVideoListener;
 import mrnock.events.MiEventSwipe;
@@ -41,25 +40,13 @@ public class PnlExercise extends javax.swing.JPanel implements Serializable {
         int size = 30;
         switch (icon) {
             case NOT_ATTEMPTED_YET -> {
-                icnStatusIcon.setSvgImage("images/login-2.svg", size, size);
-//                ImageIcon imageIcon = new ImageIcon(getClass().getResource("/images/notAttemptedYet.png"));
-//                Image image = imageIcon.getImage();
-//                Image newimg = image.getScaledInstance(size, size, java.awt.Image.SCALE_SMOOTH);
-//                this.lblStatusIcon.setIcon(new ImageIcon(newimg));
+                icnStatusIcon.setSvgImage("images/hourglass-line.svg", size, size);
             }
             case PENDING_REVIEW -> {
-                icnStatusIcon.setSvgImage("images/login-2.svg", size, size);
-//                ImageIcon imageIcon = new ImageIcon(getClass().getResource("/images/pendingReview.png"));
-//                Image image = imageIcon.getImage();
-//                Image newimg = image.getScaledInstance(size, size, java.awt.Image.SCALE_SMOOTH);
-//                this.lblStatusIcon.setIcon(new ImageIcon(newimg));
+                icnStatusIcon.setSvgImage("images/history-2.svg", size, size);
             }
             case COMPLETE -> {
-                icnStatusIcon.setSvgImage("images/login-2.svg", size, size);
-//                ImageIcon imageIcon = new ImageIcon(getClass().getResource("/images/complete.png"));
-//                Image image = imageIcon.getImage();
-//                Image newimg = image.getScaledInstance(size, size, java.awt.Image.SCALE_SMOOTH);
-//                this.lblStatusIcon.setIcon(new ImageIcon(newimg));
+                icnStatusIcon.setSvgImage("images/like.svg", size, size);
             }
         }
     }
@@ -83,11 +70,11 @@ public class PnlExercise extends javax.swing.JPanel implements Serializable {
         setBorder(javax.swing.BorderFactory.createEtchedBorder());
         setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                formMouseClicked(evt);
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                formMouseEntered(evt);
             }
-            public void mousePressed(java.awt.event.MouseEvent evt) {
-                formMousePressed(evt);
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                formMouseExited(evt);
             }
             public void mouseReleased(java.awt.event.MouseEvent evt) {
                 formMouseReleased(evt);
@@ -150,10 +137,6 @@ public class PnlExercise extends javax.swing.JPanel implements Serializable {
         add(icnStatusIcon, new java.awt.GridBagConstraints());
     }// </editor-fold>//GEN-END:initComponents
 
-    private void formMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_formMouseClicked
-
-    }//GEN-LAST:event_formMouseClicked
-
     private void formMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_formMouseReleased
         if (evt.getXOnScreen() - posX > 0) {
             fireMiEventoSwipeAction(MiEventSwipe.Direction.RIGHT);
@@ -164,9 +147,13 @@ public class PnlExercise extends javax.swing.JPanel implements Serializable {
         }
     }//GEN-LAST:event_formMouseReleased
 
-    private void formMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_formMousePressed
-        posX = evt.getXOnScreen();
-    }//GEN-LAST:event_formMousePressed
+    private void formMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_formMouseEntered
+        this.setBackground(new Color(255, 217, 0));
+    }//GEN-LAST:event_formMouseEntered
+
+    private void formMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_formMouseExited
+        this.setBackground(new Color(242,242,242));
+    }//GEN-LAST:event_formMouseExited
 
     private void fireMiEventoPlayVideo() {
         for (MiEventPlayVideoListener l : listenersPlayVideo) {
