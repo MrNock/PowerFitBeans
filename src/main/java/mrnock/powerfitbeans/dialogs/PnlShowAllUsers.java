@@ -7,6 +7,7 @@ import javax.swing.DefaultListModel;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.table.DefaultTableModel;
 import mrnock.powerfitbeans.MainForm;
+import mrnock.powerfitbeans.VideoCloud;
 import mrnock.powerfitbeans.dto.Attempt;
 import mrnock.powerfitbeans.dto.Review;
 import mrnock.powerfitbeans.dto.User;
@@ -31,6 +32,7 @@ public class PnlShowAllUsers extends javax.swing.JPanel {
     private boolean playVideo = false;
     private boolean isPlaying = false;
     private int idReviewer;
+    private VideoCloud azureVideo;
     private Review selectedReview;
 
     //final String VIDEO_PATH = "C:\\Users\\SilviaRichard\\AppData\\Local\\Simulap\\videos";
@@ -39,10 +41,12 @@ public class PnlShowAllUsers extends javax.swing.JPanel {
      *
      * @param mainForm information from the MainForm screen
      * @param idReviewer to identify the Reviewer
+     * @param azureVideo
      */
-    public PnlShowAllUsers(MainForm mainForm, int idReviewer) {
+    public PnlShowAllUsers(MainForm mainForm, int idReviewer, VideoCloud azureVideo) {
         this.mainForm = mainForm;
         this.idReviewer = idReviewer;
+        this.azureVideo = azureVideo;
 
         initComponents();
         setBounds(10, 10, 950, 500);
@@ -423,19 +427,21 @@ public class PnlShowAllUsers extends javax.swing.JPanel {
         if (playVideo) {
             String videoName = attempts.get(attempt).getVideoFile();
             String userName = attempts.get(attempt).getUserName();
-            String videoFileAbsolutePath = VIDEO_PATH + File.separator + videoName;
-            if (downloadVideoIfNecessary(videoFile)) {
-                File f = new File(videoFileAbsolutePath);
-                if (f.exists()) {
+           String videoFileAbsolutePath = VideoCloud.videoFileAbsoluteTempPath + File.separator + videoName;
+            if (azureVideo.downloadVideoIfNecessary(videoName)) {
+                //File f = new File(videoFileAbsolutePath);
+                //if (f.exists()) {
 
                     mediaPlayer.mediaPlayer().media().play(videoFileAbsolutePath);
                     pnlVideoPlayer.setBorder(javax.swing.BorderFactory.createTitledBorder("Video Player - " + videoName));
                     scrTableSelectedUser.setBorder(javax.swing.BorderFactory.createTitledBorder(userName + "'s Attempts"));
                     isPlaying = true;
                     btnPauseResumeVideo.setText("Pause");
-                }
+               // }
             }
         }
+    }
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAddReview;
     private javax.swing.JButton btnDeleteAttempt;

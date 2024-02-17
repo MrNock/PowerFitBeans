@@ -23,6 +23,7 @@ import mrnock.events.MiEventPlayVideo;
 import mrnock.events.MiEventPlayVideoListener;
 import mrnock.events.MiEventSwipe;
 import mrnock.events.MiEventSwipeListener;
+import mrnock.powerfitbeans.VideoCloud;
 import uk.co.caprica.vlcj.player.component.EmbeddedMediaPlayerComponent;
 
 /**
@@ -43,12 +44,9 @@ public class PnlActivities extends javax.swing.JPanel implements MiEventSwipeLis
     MainForm mainForm;
     private EmbeddedMediaPlayerComponent mediaPlayer;
     private JScrollPane scrollPane;
+    private VideoCloud azureVideo = null;
     private javax.swing.JPanel pnlContenedor = new javax.swing.JPanel();
-    private LinkedList<String> azureVideos = new LinkedList<>();
 
-    final private String connectStr = "DefaultEndpointsProtocol=https;AccountName=myvideoserver;AccountKey=N8qIEKx8aBdswJm2ZjByjSF0JsqCCcB5VAELyQi204KiuLxt2YDWpQmzFnEmsrIQLnZbZkIiIUD3+AStFiz1oQ==;EndpointSuffix=core.windows.net";
-    final private String containerName = "mrnockvideos";
-    private String videoFileAbsoluteTempPath = System.getProperty("java.io.tmpdir");
 
     /**
      * Creates new form PnlIntentos
@@ -56,7 +54,8 @@ public class PnlActivities extends javax.swing.JPanel implements MiEventSwipeLis
      * @param mainForm information from the MainForm screen.
      * @param user logged in user into the app.
      */
-    public PnlActivities(MainForm mainForm, User user) {
+    public PnlActivities(MainForm mainForm, User user, VideoCloud azureVideo) {
+        this.azureVideo = azureVideo;
         initComponents();
         //pnlContenedor.add(pnlActivitiesHeader,BorderLayout.NORTH);
         icnLogo.setSvgImage("images/login-2.svg", 45, 45);
@@ -93,21 +92,11 @@ public class PnlActivities extends javax.swing.JPanel implements MiEventSwipeLis
             fillContainer(user);
             btnSeeUsers.setVisible(false);
         }
-        initializeVideoListFromCloud();
-        if (videoFileAbsoluteTempPath.isEmpty()) {
-            videoFileAbsoluteTempPath = "c:" + File.separator + "temp";
-        }
-    }
-
-    private void initializeVideoListFromCloud() {
-        BlobServiceClient blobServiceClient = new BlobServiceClientBuilder().connectionString(connectStr).buildClient();
-        BlobContainerClient containerClient = blobServiceClient.getBlobContainerClient(containerName);
-
-        for (BlobItem blobItem : containerClient.listBlobs()) {
-            azureVideos.add(blobItem.getName());
-        }
+        
 
     }
+
+   
 
     private void fillContainer(User user) {
         ArrayList<Activity> activities = mainForm.getActivitiesByUser(user);
@@ -152,8 +141,8 @@ public class PnlActivities extends javax.swing.JPanel implements MiEventSwipeLis
             btnPlayPause.setEnabled(false);
         } else {
 
-            if (downloadVideoIfNecessary(videoFile)) {
-                mediaPlayer.mediaPlayer().media().play(videoFileAbsoluteTempPath + File.separator + videoFile);
+            if (azureVideo.downloadVideoIfNecessary(videoFile)) {
+                mediaPlayer.mediaPlayer().media().play(VideoCloud.videoFileAbsoluteTempPath + File.separator + videoFile);
                 pnlVideoPlayer.setBorder(javax.swing.BorderFactory.createTitledBorder("Video Player - " + videoFile));
                 btnPlayPause.setText("Pause");
                 btnPlayPause.setEnabled(true);
@@ -163,32 +152,7 @@ public class PnlActivities extends javax.swing.JPanel implements MiEventSwipeLis
         }
     }
 
-    /**
-     * This method is used to check if video file needs to be downloaded to Temp
-     * dir
-     *
-     * @param videoFile video to be downloaded.
-     */
-    private static boolean downloadVideoIfNecessary(String videoFile) {
-        File f = new File(videoFileAbsoluteTempPath + File.separator + videoFile);
-        if (!f.exists()) {
-            //Check that the video is in azure
-            if (azureVideos.contains(videoFile)) {
-                //download the video
-                BlobClient blobClient = new BlobClientBuilder().connectionString(connectStr)
-                        .blobName(videoFile)
-                        .containerName(containerName)
-                        .buildClient();
-                blobClient.downloadToFile(videoFileAbsoluteTempPath + File.separator + videoFile);
-
-            } else {
-                //The video file is not uploaded in azure
-                return false;
-            }
-
-        }
-        return true;
-    }
+    
 
     /**
      * This method is called from within the constructor to initialize the form.

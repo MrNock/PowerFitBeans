@@ -45,6 +45,7 @@ public class MainForm extends javax.swing.JFrame {
     private PnlShowAllUsers pnlShowAllUsers;
     private User loggedUser;
     private GridBagConstraints gridBagConstraints;
+    private VideoCloud azureVideo;
 
     /**
      * MainForm constructor method with its settings
@@ -56,7 +57,8 @@ public class MainForm extends javax.swing.JFrame {
         setLocationRelativeTo(null);
 
         controller = new Controller();
-
+        azureVideo = new VideoCloud();
+        azureVideo.initializeVideoListFromCloud();
         showWelcomePanel();
     }
 
@@ -173,7 +175,7 @@ public class MainForm extends javax.swing.JFrame {
      */
     public void showAllUsers() {
         getContentPane().removeAll();
-        pnlShowAllUsers = new PnlShowAllUsers(this, loggedUser.getId());
+        pnlShowAllUsers = new PnlShowAllUsers(this, loggedUser.getId(), azureVideo);
 
         getContentPane().setLayout(new java.awt.GridBagLayout());
         gridBagConstraints = new java.awt.GridBagConstraints();
@@ -211,7 +213,7 @@ public class MainForm extends javax.swing.JFrame {
         }
 
 //        pnlAttempts = new PnlActivities(this, attempts, userName);
-        pnlAttempts = new PnlActivities(this, loggedUser);
+        pnlAttempts = new PnlActivities(this, loggedUser, azureVideo);
         getContentPane().setLayout(new java.awt.GridBagLayout());
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
