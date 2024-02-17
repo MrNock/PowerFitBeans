@@ -33,8 +33,7 @@ public class PnlShowAllUsers extends javax.swing.JPanel {
     private int idReviewer;
     private Review selectedReview;
 
-    final String VIDEO_PATH = "C:\\Users\\SilviaRichard\\AppData\\Local\\Simulap\\videos";
-
+    //final String VIDEO_PATH = "C:\\Users\\SilviaRichard\\AppData\\Local\\Simulap\\videos";
     /**
      * Creates new form PnlShowAllUsers
      *
@@ -47,7 +46,8 @@ public class PnlShowAllUsers extends javax.swing.JPanel {
 
         initComponents();
         setBounds(10, 10, 950, 500);
-         add(pnlHeaderSAU,BorderLayout.NORTH);
+        add(pnlHeaderSAU, BorderLayout.NORTH);
+        icnBack.setSvgImage("images/arrow-left.svg", 45, 45);
         mediaPlayer = new EmbeddedMediaPlayerComponent();
 
         pnlVideoPlayer.add(mediaPlayer, BorderLayout.CENTER);
@@ -61,14 +61,17 @@ public class PnlShowAllUsers extends javax.swing.JPanel {
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
+        java.awt.GridBagConstraints gridBagConstraints;
 
         pnlHeaderSAU = new javax.swing.JPanel();
-        pnlVideoPlayer = new javax.swing.JPanel();
+        icnBack = new mrnock.tools.SVGImage();
+        pnlMainSAU = new javax.swing.JPanel();
         scrListUsers = new javax.swing.JScrollPane();
         lstUsers = new javax.swing.JList<>();
         scrTableSelectedUser = new javax.swing.JScrollPane();
         tblSelectedUserInfo = new javax.swing.JTable();
-        btnBack = new javax.swing.JButton();
+        pnlVideoContainer = new javax.swing.JPanel();
+        pnlVideoPlayer = new javax.swing.JPanel();
         btnPauseResumeVideo = new javax.swing.JButton();
         pnlExtraInfo = new javax.swing.JPanel();
         lblQualification = new javax.swing.JLabel();
@@ -81,11 +84,21 @@ public class PnlShowAllUsers extends javax.swing.JPanel {
         btnDeleteAttempt = new javax.swing.JButton();
 
         setLayout(new java.awt.BorderLayout());
-        add(pnlHeaderSAU, java.awt.BorderLayout.CENTER);
 
-        pnlVideoPlayer.setBorder(javax.swing.BorderFactory.createTitledBorder("Video Player"));
-        pnlVideoPlayer.setLayout(new java.awt.BorderLayout());
-        add(pnlVideoPlayer, java.awt.BorderLayout.CENTER);
+        pnlHeaderSAU.setLayout(new java.awt.BorderLayout());
+
+        icnBack.setToolTipText("");
+        icnBack.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                icnBackMouseReleased(evt);
+            }
+        });
+        pnlHeaderSAU.add(icnBack, java.awt.BorderLayout.WEST);
+        icnBack.getAccessibleContext().setAccessibleName("");
+
+        add(pnlHeaderSAU, java.awt.BorderLayout.NORTH);
+
+        pnlMainSAU.setLayout(new java.awt.GridBagLayout());
 
         lstUsers.setBorder(javax.swing.BorderFactory.createTitledBorder("Users"));
         lstUsers.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -95,7 +108,13 @@ public class PnlShowAllUsers extends javax.swing.JPanel {
         });
         scrListUsers.setViewportView(lstUsers);
 
-        add(scrListUsers, java.awt.BorderLayout.PAGE_START);
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.weightx = 0.5;
+        gridBagConstraints.weighty = 0.5;
+        pnlMainSAU.add(scrListUsers, gridBagConstraints);
 
         scrTableSelectedUser.setBorder(javax.swing.BorderFactory.createTitledBorder("Attempts of Selected User"));
 
@@ -110,15 +129,24 @@ public class PnlShowAllUsers extends javax.swing.JPanel {
         ));
         scrTableSelectedUser.setViewportView(tblSelectedUserInfo);
 
-        add(scrTableSelectedUser, java.awt.BorderLayout.PAGE_END);
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.weightx = 0.5;
+        gridBagConstraints.weighty = 0.5;
+        pnlMainSAU.add(scrTableSelectedUser, gridBagConstraints);
 
-        btnBack.setText("Back");
-        btnBack.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnBackActionPerformed(evt);
-            }
-        });
-        add(btnBack, java.awt.BorderLayout.LINE_END);
+        pnlVideoContainer.setLayout(new java.awt.GridBagLayout());
+
+        pnlVideoPlayer.setBorder(javax.swing.BorderFactory.createTitledBorder("Video Player"));
+        pnlVideoPlayer.setLayout(new java.awt.BorderLayout());
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 1;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.weighty = 0.9;
+        pnlVideoContainer.add(pnlVideoPlayer, gridBagConstraints);
 
         btnPauseResumeVideo.setText("Pause");
         btnPauseResumeVideo.addActionListener(new java.awt.event.ActionListener() {
@@ -126,15 +154,32 @@ public class PnlShowAllUsers extends javax.swing.JPanel {
                 btnPauseResumeVideoActionPerformed(evt);
             }
         });
-        add(btnPauseResumeVideo, java.awt.BorderLayout.LINE_START);
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 1;
+        gridBagConstraints.weighty = 0.1;
+        gridBagConstraints.insets = new java.awt.Insets(10, 0, 10, 0);
+        pnlVideoContainer.add(btnPauseResumeVideo, gridBagConstraints);
+
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 1;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.weightx = 0.5;
+        gridBagConstraints.weighty = 0.5;
+        pnlMainSAU.add(pnlVideoContainer, gridBagConstraints);
 
         pnlExtraInfo.setBorder(javax.swing.BorderFactory.createTitledBorder("Extra Info"));
-        pnlExtraInfo.setLayout(null);
+        pnlExtraInfo.setLayout(new java.awt.GridBagLayout());
 
         lblQualification.setText("Qualification");
         lblQualification.setToolTipText("");
-        pnlExtraInfo.add(lblQualification);
-        lblQualification.setBounds(10, 20, 100, 30);
+        lblQualification.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.EAST;
+        pnlExtraInfo.add(lblQualification, gridBagConstraints);
 
         sldQualification.setMajorTickSpacing(1);
         sldQualification.setMaximum(5);
@@ -144,23 +189,37 @@ public class PnlShowAllUsers extends javax.swing.JPanel {
         sldQualification.setToolTipText("");
         sldQualification.setValue(3);
         sldQualification.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        pnlExtraInfo.add(sldQualification);
-        sldQualification.setBounds(90, 14, 200, 44);
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.gridwidth = java.awt.GridBagConstraints.REMAINDER;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.insets = new java.awt.Insets(10, 10, 10, 10);
+        pnlExtraInfo.add(sldQualification, gridBagConstraints);
 
         lblComments.setText("Comments");
         lblComments.setToolTipText("");
-        pnlExtraInfo.add(lblComments);
-        lblComments.setBounds(10, 60, 70, 20);
+        lblComments.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 1;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.EAST;
+        pnlExtraInfo.add(lblComments, gridBagConstraints);
 
         txtComments.setColumns(20);
         txtComments.setLineWrap(true);
         txtComments.setRows(5);
         scrComments.setViewportView(txtComments);
 
-        pnlExtraInfo.add(scrComments);
-        scrComments.setBounds(80, 70, 370, 80);
-
-        add(pnlExtraInfo, java.awt.BorderLayout.CENTER);
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 1;
+        gridBagConstraints.gridwidth = 2;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.weightx = 1.0;
+        gridBagConstraints.weighty = 1.0;
+        gridBagConstraints.insets = new java.awt.Insets(10, 10, 10, 10);
+        pnlExtraInfo.add(scrComments, gridBagConstraints);
 
         btnEditReview.setText("Edit Review");
         btnEditReview.addActionListener(new java.awt.event.ActionListener() {
@@ -168,7 +227,12 @@ public class PnlShowAllUsers extends javax.swing.JPanel {
                 btnEditReviewActionPerformed(evt);
             }
         });
-        add(btnEditReview, java.awt.BorderLayout.CENTER);
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 2;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
+        gridBagConstraints.insets = new java.awt.Insets(10, 10, 10, 10);
+        pnlExtraInfo.add(btnEditReview, gridBagConstraints);
 
         btnAddReview.setText("Add Review");
         btnAddReview.addActionListener(new java.awt.event.ActionListener() {
@@ -176,7 +240,13 @@ public class PnlShowAllUsers extends javax.swing.JPanel {
                 btnAddReviewActionPerformed(evt);
             }
         });
-        add(btnAddReview, java.awt.BorderLayout.CENTER);
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 2;
+        gridBagConstraints.weightx = 1.0;
+        gridBagConstraints.weighty = 1.0;
+        gridBagConstraints.insets = new java.awt.Insets(10, 10, 10, 10);
+        pnlExtraInfo.add(btnAddReview, gridBagConstraints);
 
         btnDeleteAttempt.setText("Delete Attempt");
         btnDeleteAttempt.addActionListener(new java.awt.event.ActionListener() {
@@ -184,16 +254,23 @@ public class PnlShowAllUsers extends javax.swing.JPanel {
                 btnDeleteAttemptActionPerformed(evt);
             }
         });
-        add(btnDeleteAttempt, java.awt.BorderLayout.CENTER);
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 2;
+        gridBagConstraints.gridy = 2;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.EAST;
+        gridBagConstraints.insets = new java.awt.Insets(10, 10, 10, 10);
+        pnlExtraInfo.add(btnDeleteAttempt, gridBagConstraints);
+
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 1;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.weightx = 0.5;
+        gridBagConstraints.weighty = 0.5;
+        pnlMainSAU.add(pnlExtraInfo, gridBagConstraints);
+
+        add(pnlMainSAU, java.awt.BorderLayout.CENTER);
     }// </editor-fold>//GEN-END:initComponents
-
-    /**
-     * This method navigates back to the PnlAttempts screen.
-     */
-    private void btnBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBackActionPerformed
-        mainForm.showPnlAttempts();
-
-    }//GEN-LAST:event_btnBackActionPerformed
 
     /**
      * This method initializes the Datatable component with the information.
@@ -265,6 +342,10 @@ public class PnlShowAllUsers extends javax.swing.JPanel {
         }
         playVideo = true;
     }//GEN-LAST:event_btnDeleteAttemptActionPerformed
+
+    private void icnBackMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_icnBackMouseReleased
+        mainForm.showPnlAttempts();
+    }//GEN-LAST:event_icnBackMouseReleased
 
     /**
      * This public method initializes the list of users.
@@ -343,31 +424,31 @@ public class PnlShowAllUsers extends javax.swing.JPanel {
             String videoName = attempts.get(attempt).getVideoFile();
             String userName = attempts.get(attempt).getUserName();
             String videoFileAbsolutePath = VIDEO_PATH + File.separator + videoName;
+            if (downloadVideoIfNecessary(videoFile)) {
+                File f = new File(videoFileAbsolutePath);
+                if (f.exists()) {
 
-            File f = new File(videoFileAbsolutePath);
-            if (f.exists()) {
-
-                mediaPlayer.mediaPlayer().media().play(videoFileAbsolutePath);
-                pnlVideoPlayer.setBorder(javax.swing.BorderFactory.createTitledBorder("Video Player - " + videoName));
-                scrTableSelectedUser.setBorder(javax.swing.BorderFactory.createTitledBorder(userName + "'s Attempts"));
-                isPlaying = true;
-                btnPauseResumeVideo.setText("Pause");
+                    mediaPlayer.mediaPlayer().media().play(videoFileAbsolutePath);
+                    pnlVideoPlayer.setBorder(javax.swing.BorderFactory.createTitledBorder("Video Player - " + videoName));
+                    scrTableSelectedUser.setBorder(javax.swing.BorderFactory.createTitledBorder(userName + "'s Attempts"));
+                    isPlaying = true;
+                    btnPauseResumeVideo.setText("Pause");
+                }
             }
         }
-    }
-
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAddReview;
-    private javax.swing.JButton btnBack;
     private javax.swing.JButton btnDeleteAttempt;
     private javax.swing.JButton btnEditReview;
     private javax.swing.JButton btnPauseResumeVideo;
+    private mrnock.tools.SVGImage icnBack;
     private javax.swing.JLabel lblComments;
     private javax.swing.JLabel lblQualification;
     private javax.swing.JList<String> lstUsers;
     private javax.swing.JPanel pnlExtraInfo;
     private javax.swing.JPanel pnlHeaderSAU;
+    private javax.swing.JPanel pnlMainSAU;
+    private javax.swing.JPanel pnlVideoContainer;
     private javax.swing.JPanel pnlVideoPlayer;
     private javax.swing.JScrollPane scrComments;
     private javax.swing.JScrollPane scrListUsers;

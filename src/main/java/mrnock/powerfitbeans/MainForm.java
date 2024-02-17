@@ -174,7 +174,15 @@ public class MainForm extends javax.swing.JFrame {
     public void showAllUsers() {
         getContentPane().removeAll();
         pnlShowAllUsers = new PnlShowAllUsers(this, loggedUser.getId());
-        getContentPane().add(pnlShowAllUsers);
+
+        getContentPane().setLayout(new java.awt.GridBagLayout());
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.weightx = 1.0;
+        gridBagConstraints.weighty = 1.0;
+        getContentPane().add(pnlShowAllUsers, gridBagConstraints);
         pnlShowAllUsers.initializeElements();
         pnlShowAllUsers.updateUI();
     }

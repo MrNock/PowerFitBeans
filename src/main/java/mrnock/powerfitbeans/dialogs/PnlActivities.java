@@ -169,7 +169,7 @@ public class PnlActivities extends javax.swing.JPanel implements MiEventSwipeLis
      *
      * @param videoFile video to be downloaded.
      */
-    private boolean downloadVideoIfNecessary(String videoFile) {
+    private static boolean downloadVideoIfNecessary(String videoFile) {
         File f = new File(videoFileAbsoluteTempPath + File.separator + videoFile);
         if (!f.exists()) {
             //Check that the video is in azure
