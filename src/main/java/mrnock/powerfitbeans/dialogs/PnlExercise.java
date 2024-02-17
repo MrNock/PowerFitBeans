@@ -41,22 +41,25 @@ public class PnlExercise extends javax.swing.JPanel implements Serializable {
         int size = 30;
         switch (icon) {
             case NOT_ATTEMPTED_YET -> {
-                ImageIcon imageIcon = new ImageIcon(getClass().getResource("/images/notAttemptedYet.png"));
-                Image image = imageIcon.getImage();
-                Image newimg = image.getScaledInstance(size, size, java.awt.Image.SCALE_SMOOTH);
-                this.lblStatusIcon.setIcon(new ImageIcon(newimg));
+                icnStatusIcon.setSvgImage("images/login-2.svg", size, size);
+//                ImageIcon imageIcon = new ImageIcon(getClass().getResource("/images/notAttemptedYet.png"));
+//                Image image = imageIcon.getImage();
+//                Image newimg = image.getScaledInstance(size, size, java.awt.Image.SCALE_SMOOTH);
+//                this.lblStatusIcon.setIcon(new ImageIcon(newimg));
             }
             case PENDING_REVIEW -> {
-                ImageIcon imageIcon = new ImageIcon(getClass().getResource("/images/pendingReview.png"));
-                Image image = imageIcon.getImage();
-                Image newimg = image.getScaledInstance(size, size, java.awt.Image.SCALE_SMOOTH);
-                this.lblStatusIcon.setIcon(new ImageIcon(newimg));
+                icnStatusIcon.setSvgImage("images/login-2.svg", size, size);
+//                ImageIcon imageIcon = new ImageIcon(getClass().getResource("/images/pendingReview.png"));
+//                Image image = imageIcon.getImage();
+//                Image newimg = image.getScaledInstance(size, size, java.awt.Image.SCALE_SMOOTH);
+//                this.lblStatusIcon.setIcon(new ImageIcon(newimg));
             }
             case COMPLETE -> {
-                ImageIcon imageIcon = new ImageIcon(getClass().getResource("/images/complete.png"));
-                Image image = imageIcon.getImage();
-                Image newimg = image.getScaledInstance(size, size, java.awt.Image.SCALE_SMOOTH);
-                this.lblStatusIcon.setIcon(new ImageIcon(newimg));
+                icnStatusIcon.setSvgImage("images/login-2.svg", size, size);
+//                ImageIcon imageIcon = new ImageIcon(getClass().getResource("/images/complete.png"));
+//                Image image = imageIcon.getImage();
+//                Image newimg = image.getScaledInstance(size, size, java.awt.Image.SCALE_SMOOTH);
+//                this.lblStatusIcon.setIcon(new ImageIcon(newimg));
             }
         }
     }
@@ -75,6 +78,7 @@ public class PnlExercise extends javax.swing.JPanel implements Serializable {
         lblStatusIcon = new javax.swing.JLabel();
         lblUserName = new javax.swing.JLabel();
         lblTimeStamp = new javax.swing.JLabel();
+        icnStatusIcon = new mrnock.tools.SVGImage();
 
         setBorder(javax.swing.BorderFactory.createEtchedBorder());
         setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
@@ -141,6 +145,9 @@ public class PnlExercise extends javax.swing.JPanel implements Serializable {
         gridBagConstraints.weighty = 0.5;
         gridBagConstraints.insets = new java.awt.Insets(5, 5, 5, 5);
         add(lblTimeStamp, gridBagConstraints);
+
+        icnStatusIcon.setToolTipText("");
+        add(icnStatusIcon, new java.awt.GridBagConstraints());
     }// </editor-fold>//GEN-END:initComponents
 
     private void formMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_formMouseClicked
@@ -193,6 +200,7 @@ public class PnlExercise extends javax.swing.JPanel implements Serializable {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private mrnock.tools.SVGImage icnStatusIcon;
     private javax.swing.JLabel lblExerciseID;
     private javax.swing.JLabel lblStatusIcon;
     private javax.swing.JLabel lblTimeStamp;

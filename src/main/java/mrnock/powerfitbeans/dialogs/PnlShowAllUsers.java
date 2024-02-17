@@ -47,6 +47,7 @@ public class PnlShowAllUsers extends javax.swing.JPanel {
 
         initComponents();
         setBounds(10, 10, 950, 500);
+         add(pnlHeaderSAU,BorderLayout.NORTH);
         mediaPlayer = new EmbeddedMediaPlayerComponent();
 
         pnlVideoPlayer.add(mediaPlayer, BorderLayout.CENTER);
@@ -61,6 +62,7 @@ public class PnlShowAllUsers extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        pnlHeaderSAU = new javax.swing.JPanel();
         pnlVideoPlayer = new javax.swing.JPanel();
         scrListUsers = new javax.swing.JScrollPane();
         lstUsers = new javax.swing.JList<>();
@@ -78,12 +80,12 @@ public class PnlShowAllUsers extends javax.swing.JPanel {
         btnAddReview = new javax.swing.JButton();
         btnDeleteAttempt = new javax.swing.JButton();
 
-        setLayout(null);
+        setLayout(new java.awt.BorderLayout());
+        add(pnlHeaderSAU, java.awt.BorderLayout.CENTER);
 
         pnlVideoPlayer.setBorder(javax.swing.BorderFactory.createTitledBorder("Video Player"));
         pnlVideoPlayer.setLayout(new java.awt.BorderLayout());
-        add(pnlVideoPlayer);
-        pnlVideoPlayer.setBounds(20, 250, 240, 160);
+        add(pnlVideoPlayer, java.awt.BorderLayout.CENTER);
 
         lstUsers.setBorder(javax.swing.BorderFactory.createTitledBorder("Users"));
         lstUsers.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -93,8 +95,7 @@ public class PnlShowAllUsers extends javax.swing.JPanel {
         });
         scrListUsers.setViewportView(lstUsers);
 
-        add(scrListUsers);
-        scrListUsers.setBounds(40, 70, 190, 160);
+        add(scrListUsers, java.awt.BorderLayout.PAGE_START);
 
         scrTableSelectedUser.setBorder(javax.swing.BorderFactory.createTitledBorder("Attempts of Selected User"));
 
@@ -109,8 +110,7 @@ public class PnlShowAllUsers extends javax.swing.JPanel {
         ));
         scrTableSelectedUser.setViewportView(tblSelectedUserInfo);
 
-        add(scrTableSelectedUser);
-        scrTableSelectedUser.setBounds(270, 10, 490, 230);
+        add(scrTableSelectedUser, java.awt.BorderLayout.PAGE_END);
 
         btnBack.setText("Back");
         btnBack.addActionListener(new java.awt.event.ActionListener() {
@@ -118,8 +118,7 @@ public class PnlShowAllUsers extends javax.swing.JPanel {
                 btnBackActionPerformed(evt);
             }
         });
-        add(btnBack);
-        btnBack.setBounds(20, 20, 72, 23);
+        add(btnBack, java.awt.BorderLayout.LINE_END);
 
         btnPauseResumeVideo.setText("Pause");
         btnPauseResumeVideo.addActionListener(new java.awt.event.ActionListener() {
@@ -127,8 +126,7 @@ public class PnlShowAllUsers extends javax.swing.JPanel {
                 btnPauseResumeVideoActionPerformed(evt);
             }
         });
-        add(btnPauseResumeVideo);
-        btnPauseResumeVideo.setBounds(80, 420, 110, 30);
+        add(btnPauseResumeVideo, java.awt.BorderLayout.LINE_START);
 
         pnlExtraInfo.setBorder(javax.swing.BorderFactory.createTitledBorder("Extra Info"));
         pnlExtraInfo.setLayout(null);
@@ -162,8 +160,7 @@ public class PnlShowAllUsers extends javax.swing.JPanel {
         pnlExtraInfo.add(scrComments);
         scrComments.setBounds(80, 70, 370, 80);
 
-        add(pnlExtraInfo);
-        pnlExtraInfo.setBounds(280, 250, 480, 160);
+        add(pnlExtraInfo, java.awt.BorderLayout.CENTER);
 
         btnEditReview.setText("Edit Review");
         btnEditReview.addActionListener(new java.awt.event.ActionListener() {
@@ -171,8 +168,7 @@ public class PnlShowAllUsers extends javax.swing.JPanel {
                 btnEditReviewActionPerformed(evt);
             }
         });
-        add(btnEditReview);
-        btnEditReview.setBounds(540, 420, 110, 30);
+        add(btnEditReview, java.awt.BorderLayout.CENTER);
 
         btnAddReview.setText("Add Review");
         btnAddReview.addActionListener(new java.awt.event.ActionListener() {
@@ -180,8 +176,7 @@ public class PnlShowAllUsers extends javax.swing.JPanel {
                 btnAddReviewActionPerformed(evt);
             }
         });
-        add(btnAddReview);
-        btnAddReview.setBounds(400, 420, 100, 30);
+        add(btnAddReview, java.awt.BorderLayout.CENTER);
 
         btnDeleteAttempt.setText("Delete Attempt");
         btnDeleteAttempt.addActionListener(new java.awt.event.ActionListener() {
@@ -189,8 +184,7 @@ public class PnlShowAllUsers extends javax.swing.JPanel {
                 btnDeleteAttemptActionPerformed(evt);
             }
         });
-        add(btnDeleteAttempt);
-        btnDeleteAttempt.setBounds(150, 20, 110, 30);
+        add(btnDeleteAttempt, java.awt.BorderLayout.CENTER);
     }// </editor-fold>//GEN-END:initComponents
 
     /**
@@ -373,6 +367,7 @@ public class PnlShowAllUsers extends javax.swing.JPanel {
     private javax.swing.JLabel lblQualification;
     private javax.swing.JList<String> lstUsers;
     private javax.swing.JPanel pnlExtraInfo;
+    private javax.swing.JPanel pnlHeaderSAU;
     private javax.swing.JPanel pnlVideoPlayer;
     private javax.swing.JScrollPane scrComments;
     private javax.swing.JScrollPane scrListUsers;

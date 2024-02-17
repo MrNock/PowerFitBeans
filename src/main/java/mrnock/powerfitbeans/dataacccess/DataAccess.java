@@ -66,7 +66,7 @@ public class DataAccess {
                 user.setUserName(resultSet.getString("Nom"));
                 user.setEmail(resultSet.getString("Email"));
                 user.setPasswordHash(resultSet.getString("PasswordHash"));
-                user.setIsInstructor(resultSet.getInt("IsInstructor") == 1);
+                user.setInstructor(resultSet.getInt("IsInstructor") == 1);
             }
         } catch (SQLException e) {
             System.err.println("Connection error: " + e.getMessage());
@@ -92,7 +92,7 @@ public class DataAccess {
                 user.setUserName(resultSet.getString("Nom"));
                 user.setEmail(resultSet.getString("Email"));
                 user.setPasswordHash(resultSet.getString("PasswordHash"));
-                user.setIsInstructor(resultSet.getInt("IsInstructor") == 1);
+                user.setInstructor(resultSet.getInt("IsInstructor") == 1);
                 usuaris.add(user);
             }
         } catch (SQLException e) {
@@ -115,7 +115,7 @@ public class DataAccess {
             insertStatement.setString(1, user.getUserName());
             insertStatement.setString(2, user.getEmail());
             insertStatement.setString(3, user.getPasswordHash());
-            insertStatement.setBoolean(4, user.getIsInstructor());
+            insertStatement.setBoolean(4, user.isInstructor());
 
             int newUserId = insertStatement.executeUpdate();
             return newUserId;

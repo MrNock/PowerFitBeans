@@ -1,7 +1,5 @@
 package mrnock.powerfitbeans.dialogs;
 
-import com.formdev.flatlaf.FlatDarkLaf;
-import com.formdev.flatlaf.FlatLightLaf;
 import mrnock.powerfitbeans.MainForm;
 
 /**
@@ -27,11 +25,11 @@ public class DlgLogin extends javax.swing.JDialog {
         this.mainForm = mainForm;
         initComponents();
         imgEMail.setSvgImage(
-                "images/email.svg", 60, 60);
+                "images/email.svg", 25, 25);
         imgPassword.setSvgImage(
-                "images/incognito.svg", 60, 60);
-        setSize(432, 432);
-        setLayout(null);
+                "images/incognito.svg", 25, 25);
+        //setSize(432, 432);
+        //setLayout(null);
         setLocationRelativeTo(null);
     }
 
@@ -43,30 +41,85 @@ public class DlgLogin extends javax.swing.JDialog {
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
+        java.awt.GridBagConstraints gridBagConstraints;
 
-        pnlLogin = new javax.swing.JPanel();
-        lblPassword = new javax.swing.JLabel();
-        lblEmail = new javax.swing.JLabel();
-        btnSubmit = new javax.swing.JButton();
-        txtEmail = new javax.swing.JTextField();
-        txtPassword = new javax.swing.JPasswordField();
         lblLoginTitle = new javax.swing.JLabel();
-        imgPassword = new mrnock.tools.SVGImage();
+        pnlLoginBody = new javax.swing.JPanel();
+        lblEmail = new javax.swing.JLabel();
+        txtEmail = new javax.swing.JTextField();
         imgEMail = new mrnock.tools.SVGImage();
+        lblPassword = new javax.swing.JLabel();
+        txtPassword = new javax.swing.JPasswordField();
+        imgPassword = new mrnock.tools.SVGImage();
+        btnSubmit = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        getContentPane().setLayout(null);
+        setMinimumSize(new java.awt.Dimension(400, 200));
+        setPreferredSize(new java.awt.Dimension(400, 200));
+        getContentPane().setLayout(new java.awt.GridBagLayout());
 
-        pnlLogin.setBorder(javax.swing.BorderFactory.createEtchedBorder());
-        pnlLogin.setLayout(null);
+        lblLoginTitle.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
+        lblLoginTitle.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblLoginTitle.setText("LOGIN");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.insets = new java.awt.Insets(20, 0, 20, 0);
+        getContentPane().add(lblLoginTitle, gridBagConstraints);
 
-        lblPassword.setText("Password:");
-        pnlLogin.add(lblPassword);
-        lblPassword.setBounds(110, 150, 80, 20);
+        pnlLoginBody.setLayout(new java.awt.GridBagLayout());
 
+        lblEmail.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         lblEmail.setText("E-Mail:");
-        pnlLogin.add(lblEmail);
-        lblEmail.setBounds(110, 120, 70, 20);
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.EAST;
+        gridBagConstraints.insets = new java.awt.Insets(5, 5, 5, 5);
+        pnlLoginBody.add(lblEmail, gridBagConstraints);
+
+        txtEmail.setToolTipText("john.doe@email.com");
+        txtEmail.setMinimumSize(new java.awt.Dimension(100, 22));
+        txtEmail.setPreferredSize(new java.awt.Dimension(100, 22));
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 0;
+        pnlLoginBody.add(txtEmail, gridBagConstraints);
+
+        imgEMail.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 2;
+        gridBagConstraints.gridy = 0;
+        pnlLoginBody.add(imgEMail, gridBagConstraints);
+
+        lblPassword.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        lblPassword.setText("Password:");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 1;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.EAST;
+        gridBagConstraints.insets = new java.awt.Insets(5, 5, 5, 5);
+        pnlLoginBody.add(lblPassword, gridBagConstraints);
+
+        txtPassword.setToolTipText("Your secret password");
+        txtPassword.setMinimumSize(new java.awt.Dimension(100, 22));
+        txtPassword.setPreferredSize(new java.awt.Dimension(100, 22));
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 1;
+        pnlLoginBody.add(txtPassword, gridBagConstraints);
+
+        imgPassword.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 2;
+        gridBagConstraints.gridy = 1;
+        pnlLoginBody.add(imgPassword, gridBagConstraints);
+
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 1;
+        gridBagConstraints.insets = new java.awt.Insets(5, 5, 5, 5);
+        getContentPane().add(pnlLoginBody, gridBagConstraints);
 
         btnSubmit.setText("Submit");
         btnSubmit.addActionListener(new java.awt.event.ActionListener() {
@@ -74,29 +127,11 @@ public class DlgLogin extends javax.swing.JDialog {
                 btnSubmitActionPerformed(evt);
             }
         });
-        pnlLogin.add(btnSubmit);
-        btnSubmit.setBounds(210, 200, 90, 30);
-
-        txtEmail.setToolTipText("john.doe@email.com");
-        pnlLogin.add(txtEmail);
-        txtEmail.setBounds(190, 120, 130, 22);
-
-        txtPassword.setToolTipText("Your secret password");
-        pnlLogin.add(txtPassword);
-        txtPassword.setBounds(190, 150, 130, 22);
-
-        lblLoginTitle.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
-        lblLoginTitle.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lblLoginTitle.setText("LOGIN");
-        pnlLogin.add(lblLoginTitle);
-        lblLoginTitle.setBounds(20, 20, 380, 50);
-        pnlLogin.add(imgPassword);
-        imgPassword.setBounds(330, 150, 30, 30);
-        pnlLogin.add(imgEMail);
-        imgEMail.setBounds(329, 116, 30, 30);
-
-        getContentPane().add(pnlLogin);
-        pnlLogin.setBounds(6, 6, 419, 374);
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 2;
+        gridBagConstraints.insets = new java.awt.Insets(20, 0, 20, 0);
+        getContentPane().add(btnSubmit, gridBagConstraints);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -120,7 +155,7 @@ public class DlgLogin extends javax.swing.JDialog {
     private javax.swing.JLabel lblEmail;
     private javax.swing.JLabel lblLoginTitle;
     private javax.swing.JLabel lblPassword;
-    private javax.swing.JPanel pnlLogin;
+    private javax.swing.JPanel pnlLoginBody;
     private javax.swing.JTextField txtEmail;
     private javax.swing.JPasswordField txtPassword;
     // End of variables declaration//GEN-END:variables

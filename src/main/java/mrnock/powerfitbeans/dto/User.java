@@ -15,9 +15,10 @@ public class User {
     private String email;
     private String passwordHash;
     private byte[] photo;
-    private boolean isInstructor;
+    private boolean instructor;
 
     //Getters and Setters
+
     public int getId() {
         return id;
     }
@@ -58,17 +59,12 @@ public class User {
         this.photo = photo;
     }
 
-    public boolean getIsInstructor() {
-        return isInstructor;
+    public boolean isInstructor() {
+        return instructor;
     }
 
-    public void setIsInstructor(boolean isInstructor) {
-        this.isInstructor = isInstructor;
+    public void setInstructor(boolean instructor) {
+        this.instructor = instructor;
     }
-
-//    @Override
-//    public String toString() {
-//        return "Id: " + id + " | Nombre: " + userName + " | Email: " + email + " | PasswordHash: "
-//                + passwordHash.substring(0, 5) + " | Instructor: " + isInstructor + "\n";
-//    }
+   
 }

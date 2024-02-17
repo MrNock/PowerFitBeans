@@ -4,6 +4,7 @@ import com.formdev.flatlaf.FlatDarkLaf;
 import com.formdev.flatlaf.FlatLightLaf;
 import com.formdev.flatlaf.intellijthemes.FlatArcDarkIJTheme;
 import com.formdev.flatlaf.intellijthemes.materialthemeuilite.FlatLightOwlIJTheme;
+import java.awt.GridBagConstraints;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
@@ -43,6 +44,7 @@ public class MainForm extends javax.swing.JFrame {
     private PnlActivities pnlAttempts;
     private PnlShowAllUsers pnlShowAllUsers;
     private User loggedUser;
+    private GridBagConstraints gridBagConstraints;
 
     /**
      * MainForm constructor method with its settings
@@ -50,7 +52,7 @@ public class MainForm extends javax.swing.JFrame {
     public MainForm() {
         initComponents();
         setSize(1000, 600);
-        setResizable(false);
+        setResizable(true);
         setLocationRelativeTo(null);
 
         controller = new Controller();
@@ -63,8 +65,16 @@ public class MainForm extends javax.swing.JFrame {
         getContentPane().repaint();
         pnlWelcome = new PnlWelcome(this);
         pnlWelcome.setBounds(0, 10, 1000, 500);
-        getContentPane().add(pnlWelcome);
-        pnlWelcome.repaint();
+        getContentPane().setLayout(new java.awt.GridBagLayout());
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.weightx = 1.0;
+        gridBagConstraints.weighty = 1.0;
+        getContentPane().add(pnlWelcome, gridBagConstraints);
+        //pnlWelcome.repaint();
+        pnlWelcome.updateUI();
     }
 
     /**
@@ -194,8 +204,14 @@ public class MainForm extends javax.swing.JFrame {
 
 //        pnlAttempts = new PnlActivities(this, attempts, userName);
         pnlAttempts = new PnlActivities(this, loggedUser);
-
-        getContentPane().add(pnlAttempts);
+        getContentPane().setLayout(new java.awt.GridBagLayout());
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.weightx = 1.0;
+        gridBagConstraints.weighty = 1.0;
+        getContentPane().add(pnlAttempts, gridBagConstraints);
 
         pnlAttempts.updateUI();
         pnlAttempts.playSelectedVideo("");

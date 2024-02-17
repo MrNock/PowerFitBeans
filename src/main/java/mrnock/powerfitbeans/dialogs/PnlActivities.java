@@ -58,14 +58,16 @@ public class PnlActivities extends javax.swing.JPanel implements MiEventSwipeLis
      */
     public PnlActivities(MainForm mainForm, User user) {
         initComponents();
-
+        //pnlContenedor.add(pnlActivitiesHeader,BorderLayout.NORTH);
+        icnLogo.setSvgImage("images/login-2.svg", 45, 45);
+        icnLogout.setSvgImage("images/login-2.svg", 45, 45);
         lblSwipeEvent.setText("");
         btnPlayPause.setText("...");
         btnPlayPause.setEnabled(false);
-        ImageIcon imageIcon = new ImageIcon(getClass().getResource("/images/home.svg"));
-        Image image = imageIcon.getImage();
-        Image newimg = image.getScaledInstance(54, 54, java.awt.Image.SCALE_SMOOTH);
-        this.lblLogOut.setIcon(new ImageIcon(newimg));
+        // ImageIcon imageIcon = new ImageIcon(getClass().getResource("/images/home.svg"));
+        //  Image image = imageIcon.getImage();
+        //   Image newimg = image.getScaledInstance(54, 54, java.awt.Image.SCALE_SMOOTH);
+        //this.lblLogOut.setIcon(new ImageIcon(newimg));
 
         scrollPane = new JScrollPane(pnlContenedor);
 
@@ -80,7 +82,7 @@ public class PnlActivities extends javax.swing.JPanel implements MiEventSwipeLis
         pnlVideoPlayer.add(mediaPlayer, BorderLayout.CENTER);
         setBounds(10, 10, 950, 500);
 
-        if (user.getIsInstructor()) {
+        if (user.isInstructor()) {
             ArrayList<User> allUsers = mainForm.getAllNormalUsers();
             for (User u : allUsers) {
                 fillContainer(u);
@@ -196,123 +198,131 @@ public class PnlActivities extends javax.swing.JPanel implements MiEventSwipeLis
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
+        java.awt.GridBagConstraints gridBagConstraints;
 
         jLabel1 = new javax.swing.JLabel();
         button1 = new java.awt.Button();
-        lblLogoImg = new javax.swing.JLabel();
+        pnlActivitiesHeader = new javax.swing.JPanel();
+        icnLogo = new mrnock.tools.SVGImage();
         lblWelcomeInstructor = new javax.swing.JLabel();
-        pnlVideoPlayer = new javax.swing.JPanel();
-        lblSwipeEvent = new javax.swing.JLabel();
-        btnSeeUsers = new javax.swing.JButton();
+        icnLogout = new mrnock.tools.SVGImage();
+        pnlActivitiesMain = new javax.swing.JPanel();
+        pnlMainLeft = new javax.swing.JPanel();
         pnlExercises = new javax.swing.JPanel();
-        lblLogOut = new javax.swing.JLabel();
-        lblActivities = new javax.swing.JLabel();
+        lblSwipeEvent = new javax.swing.JLabel();
+        pnlMainRight = new javax.swing.JPanel();
+        pnlVideoPlayer = new javax.swing.JPanel();
         btnPlayPause = new javax.swing.JButton();
+        pnlActivitiesFooter = new javax.swing.JPanel();
+        btnSeeUsers = new javax.swing.JButton();
 
         jLabel1.setText("jLabel1");
 
         button1.setLabel("button1");
 
-        setPreferredSize(new java.awt.Dimension(1000, 432));
+        setLayout(new java.awt.BorderLayout());
 
-        lblLogoImg.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/54x54_PowerFitBeans.png"))); // NOI18N
-        lblLogoImg.setText("jLabel1");
+        pnlActivitiesHeader.setLayout(new java.awt.BorderLayout());
+        pnlActivitiesHeader.add(icnLogo, java.awt.BorderLayout.WEST);
 
         lblWelcomeInstructor.setFont(new java.awt.Font("Arial", 2, 18)); // NOI18N
         lblWelcomeInstructor.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         lblWelcomeInstructor.setText("Welcome <Instructor Name>");
+        pnlActivitiesHeader.add(lblWelcomeInstructor, java.awt.BorderLayout.CENTER);
 
-        pnlVideoPlayer.setBorder(javax.swing.BorderFactory.createTitledBorder("Playing <Ejercicio>"));
-        pnlVideoPlayer.setLayout(new java.awt.BorderLayout());
+        icnLogout.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                icnLogoutMouseReleased(evt);
+            }
+        });
+        pnlActivitiesHeader.add(icnLogout, java.awt.BorderLayout.EAST);
+
+        add(pnlActivitiesHeader, java.awt.BorderLayout.NORTH);
+
+        pnlActivitiesMain.setLayout(new java.awt.GridBagLayout());
+
+        pnlMainLeft.setBorder(javax.swing.BorderFactory.createTitledBorder("Activities"));
+        pnlMainLeft.setLayout(new java.awt.GridBagLayout());
+
+        pnlExercises.setLayout(new javax.swing.BoxLayout(pnlExercises, javax.swing.BoxLayout.Y_AXIS));
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.weightx = 1.0;
+        gridBagConstraints.weighty = 0.9;
+        pnlMainLeft.add(pnlExercises, gridBagConstraints);
 
         lblSwipeEvent.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
         lblSwipeEvent.setText("xxxxxxxxxxx");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 1;
+        gridBagConstraints.gridwidth = 2;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.weighty = 0.1;
+        pnlMainLeft.add(lblSwipeEvent, gridBagConstraints);
 
-        btnSeeUsers.setText("See users...");
-        btnSeeUsers.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnSeeUsersActionPerformed(evt);
-            }
-        });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.weightx = 0.5;
+        gridBagConstraints.weighty = 0.5;
+        pnlActivitiesMain.add(pnlMainLeft, gridBagConstraints);
 
-        pnlExercises.setLayout(new javax.swing.BoxLayout(pnlExercises, javax.swing.BoxLayout.Y_AXIS));
+        pnlMainRight.setLayout(new java.awt.GridBagLayout());
 
-        lblLogOut.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                lblLogOutMouseClicked(evt);
-            }
-        });
-
-        lblActivities.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
-        lblActivities.setText("Activities");
+        pnlVideoPlayer.setBorder(javax.swing.BorderFactory.createTitledBorder("Playing <Ejercicio>"));
+        pnlVideoPlayer.setLayout(new java.awt.BorderLayout());
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.weightx = 1.0;
+        gridBagConstraints.weighty = 1.0;
+        pnlMainRight.add(pnlVideoPlayer, gridBagConstraints);
 
         btnPlayPause.setText("Pause");
+        btnPlayPause.setMargin(new java.awt.Insets(0, 0, 0, 0));
         btnPlayPause.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnPlayPauseActionPerformed(evt);
             }
         });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 1;
+        gridBagConstraints.insets = new java.awt.Insets(10, 0, 10, 0);
+        pnlMainRight.add(btnPlayPause, gridBagConstraints);
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
-        this.setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(39, 39, 39)
-                .addComponent(btnSeeUsers, javax.swing.GroupLayout.PREFERRED_SIZE, 147, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(btnPlayPause)
-                .addGap(198, 198, 198))
-            .addGroup(layout.createSequentialGroup()
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(6, 6, 6)
-                                .addComponent(pnlExercises, javax.swing.GroupLayout.PREFERRED_SIZE, 470, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(lblActivities, javax.swing.GroupLayout.PREFERRED_SIZE, 149, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(39, 39, 39)
-                                .addComponent(lblSwipeEvent, javax.swing.GroupLayout.PREFERRED_SIZE, 249, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(37, 37, 37)
-                        .addComponent(pnlVideoPlayer, javax.swing.GroupLayout.PREFERRED_SIZE, 392, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(lblLogoImg, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(lblWelcomeInstructor, javax.swing.GroupLayout.PREFERRED_SIZE, 485, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(293, 293, 293)
-                        .addComponent(lblLogOut, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(77, Short.MAX_VALUE))
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                        .addComponent(lblLogOut, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(pnlVideoPlayer, javax.swing.GroupLayout.PREFERRED_SIZE, 272, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(lblLogoImg, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(lblWelcomeInstructor, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(27, 27, 27)
-                                .addComponent(lblSwipeEvent, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(lblActivities, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(pnlExercises, javax.swing.GroupLayout.PREFERRED_SIZE, 255, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(18, 18, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnSeeUsers)
-                    .addComponent(btnPlayPause))
-                .addGap(35, 35, 35))
-        );
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.weightx = 0.5;
+        gridBagConstraints.weighty = 0.5;
+        pnlActivitiesMain.add(pnlMainRight, gridBagConstraints);
+
+        add(pnlActivitiesMain, java.awt.BorderLayout.CENTER);
+
+        pnlActivitiesFooter.setLayout(new java.awt.GridBagLayout());
+
+        btnSeeUsers.setText("See users...");
+        btnSeeUsers.setMargin(new java.awt.Insets(0, 0, 0, 0));
+        btnSeeUsers.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSeeUsersActionPerformed(evt);
+            }
+        });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.insets = new java.awt.Insets(20, 0, 20, 0);
+        pnlActivitiesFooter.add(btnSeeUsers, gridBagConstraints);
+
+        add(pnlActivitiesFooter, java.awt.BorderLayout.SOUTH);
     }// </editor-fold>//GEN-END:initComponents
 
     /**
@@ -322,10 +332,6 @@ public class PnlActivities extends javax.swing.JPanel implements MiEventSwipeLis
     private void btnSeeUsersActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSeeUsersActionPerformed
         mainForm.showAllUsers();
     }//GEN-LAST:event_btnSeeUsersActionPerformed
-
-    private void lblLogOutMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblLogOutMouseClicked
-        mainForm.showWelcomePanel();
-    }//GEN-LAST:event_lblLogOutMouseClicked
 
     private void btnPlayPauseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPlayPauseActionPerformed
         if ("Pause".equals(btnPlayPause.getText())) {
@@ -339,18 +345,26 @@ public class PnlActivities extends javax.swing.JPanel implements MiEventSwipeLis
 
     }//GEN-LAST:event_btnPlayPauseActionPerformed
 
+    private void icnLogoutMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_icnLogoutMouseReleased
+        mainForm.showWelcomePanel();
+    }//GEN-LAST:event_icnLogoutMouseReleased
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnPlayPause;
     private javax.swing.JButton btnSeeUsers;
     private java.awt.Button button1;
+    private mrnock.tools.SVGImage icnLogo;
+    private mrnock.tools.SVGImage icnLogout;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel lblActivities;
-    private javax.swing.JLabel lblLogOut;
-    private javax.swing.JLabel lblLogoImg;
     private javax.swing.JLabel lblSwipeEvent;
     private javax.swing.JLabel lblWelcomeInstructor;
+    private javax.swing.JPanel pnlActivitiesFooter;
+    private javax.swing.JPanel pnlActivitiesHeader;
+    private javax.swing.JPanel pnlActivitiesMain;
     private javax.swing.JPanel pnlExercises;
+    private javax.swing.JPanel pnlMainLeft;
+    private javax.swing.JPanel pnlMainRight;
     private javax.swing.JPanel pnlVideoPlayer;
     // End of variables declaration//GEN-END:variables
 
