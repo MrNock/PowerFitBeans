@@ -3,7 +3,12 @@ package mrnock.powerfitbeans.dto;
 import java.util.Date;
 
 /**
+ * Public class Activity with its private attributes. It contains the getters
+ * and setters methods.
+ *
  * @author Richard Navarro {@literal <richardnavarro@paucasesnovescifp.cat>}
+ * @version 4.0 Final version to submit for Unit 4 (Desarrollo de Interfaces)
+ * @since 1.5
  */
 public class Activity {
 

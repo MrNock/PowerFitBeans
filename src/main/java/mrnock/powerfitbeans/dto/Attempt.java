@@ -5,7 +5,7 @@ package mrnock.powerfitbeans.dto;
  * setters methods.
  *
  * @author Richard Navarro {@literal <richardnavarro@paucasesnovescifp.cat>}
- * @version 2.0 Final version to submit for Unit 1 (Desarrollo de Interfaces)
+ * @version 4.0 Final version to submit for Unit 4 (Desarrollo de Interfaces)
  * @since 1.5
  */
 public class Attempt {

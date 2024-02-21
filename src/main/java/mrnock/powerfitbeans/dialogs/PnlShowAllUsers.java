@@ -21,7 +21,7 @@ import uk.co.caprica.vlcj.player.component.EmbeddedMediaPlayerComponent;
  * after confirming the action.
  *
  * @author Richard Navarro {@literal <richardnavarro@paucasesnovescifp.cat>}
- * @version 2.0 Final version to submit for Unit 3 (Desarrollo de Interfaces)
+ * @version 4.0 Final version to submit for Unit 4 (Desarrollo de Interfaces)
  * @since 1.5
  */
 public class PnlShowAllUsers extends javax.swing.JPanel {
@@ -36,7 +36,6 @@ public class PnlShowAllUsers extends javax.swing.JPanel {
     private VideoCloud azureVideo;
     private Review selectedReview;
 
-    //final String VIDEO_PATH = "C:\\Users\\SilviaRichard\\AppData\\Local\\Simulap\\videos";
     /**
      * Creates new form PnlShowAllUsers
      *
@@ -100,7 +99,6 @@ public class PnlShowAllUsers extends javax.swing.JPanel {
             }
         });
         pnlHeaderSAU.add(icnBack, java.awt.BorderLayout.WEST);
-        icnBack.getAccessibleContext().setAccessibleName("");
 
         add(pnlHeaderSAU, java.awt.BorderLayout.NORTH);
 
@@ -153,6 +151,7 @@ public class PnlShowAllUsers extends javax.swing.JPanel {
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 1;
         gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.weightx = 1.0;
         gridBagConstraints.weighty = 0.9;
         pnlVideoContainer.add(pnlVideoPlayer, gridBagConstraints);
 
@@ -231,6 +230,7 @@ public class PnlShowAllUsers extends javax.swing.JPanel {
         pnlExtraInfo.add(scrComments, gridBagConstraints);
 
         btnEditReview.setText("Edit Review");
+        btnEditReview.setToolTipText("Click to edit the review");
         btnEditReview.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnEditReview.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -245,6 +245,7 @@ public class PnlShowAllUsers extends javax.swing.JPanel {
         pnlExtraInfo.add(btnEditReview, gridBagConstraints);
 
         btnAddReview.setText("Add Review");
+        btnAddReview.setToolTipText("Click to update your review");
         btnAddReview.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnAddReview.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -260,6 +261,7 @@ public class PnlShowAllUsers extends javax.swing.JPanel {
         pnlExtraInfo.add(btnAddReview, gridBagConstraints);
 
         btnDeleteAttempt.setText("Delete Attempt");
+        btnDeleteAttempt.setToolTipText("Click to delete the exercise");
         btnDeleteAttempt.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnDeleteAttempt.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -437,15 +439,11 @@ public class PnlShowAllUsers extends javax.swing.JPanel {
             String userName = attempts.get(attempt).getUserName();
            String videoFileAbsolutePath = VideoCloud.videoFileAbsoluteTempPath + File.separator + videoName;
             if (azureVideo.downloadVideoIfNecessary(videoName)) {
-                //File f = new File(videoFileAbsolutePath);
-                //if (f.exists()) {
-
                     mediaPlayer.mediaPlayer().media().play(videoFileAbsolutePath);
                     pnlVideoPlayer.setBorder(javax.swing.BorderFactory.createTitledBorder("Video Player - " + videoName));
                     scrTableSelectedUser.setBorder(javax.swing.BorderFactory.createTitledBorder(userName + "'s Attempts"));
                     isPlaying = true;
                     btnPauseResumeVideo.setText("Pause");
-               // }
             }
         }
     }

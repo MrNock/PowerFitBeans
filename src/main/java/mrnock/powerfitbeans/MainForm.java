@@ -23,7 +23,7 @@ import mrnock.powerfitbeans.dto.User;
 /**
  * This sports-training application provides users with the capability to submit
  * workout videos, receiving personalized feedback and ratings from expert
- * instructors. Users benefit from detailed comments and a precise 1 to 5 score,
+ * instructors. Users benefit from detailed comments and a precise 1-to-5 score,
  * facilitating targeted improvements in athletic performance.
  *
  * This MainForm is in charge of interacting with the rest of panels from within
@@ -33,7 +33,7 @@ import mrnock.powerfitbeans.dto.User;
  * the logic of the program.
  *
  * @author Richard Navarro {@literal <richardnavarro@paucasesnovescifp.cat>}
- * @version 2.0 Final version to submit for Unit 3 (Desarrollo de Interfaces)
+ * @version 4.0 Final version to submit for Unit 4 (Desarrollo de Interfaces)
  * @since 1.5
  */
 public class MainForm extends javax.swing.JFrame {

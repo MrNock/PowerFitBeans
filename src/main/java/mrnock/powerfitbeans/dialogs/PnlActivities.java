@@ -1,20 +1,11 @@
 package mrnock.powerfitbeans.dialogs;
 
-import com.azure.storage.blob.BlobClient;
-import com.azure.storage.blob.BlobClientBuilder;
-import com.azure.storage.blob.BlobContainerClient;
-import com.azure.storage.blob.BlobServiceClient;
-import com.azure.storage.blob.BlobServiceClientBuilder;
-import com.azure.storage.blob.models.BlobItem;
 import java.awt.BorderLayout;
 import java.awt.Cursor;
-import java.awt.Image;
 import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.LinkedList;
 import javax.swing.BoxLayout;
-import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import mrnock.powerfitbeans.MainForm;
 import mrnock.powerfitbeans.dto.Activity;
@@ -36,7 +27,7 @@ import uk.co.caprica.vlcj.player.component.EmbeddedMediaPlayerComponent;
  * users.
  *
  * @author Richard Navarro {@literal <richardnavarro@paucasesnovescifp.cat>}
- * @version 2.0 Final version to submit for Unit 3 (Desarrollo de Interfaces)
+ * @version 4.0 Final version to submit for Unit 4 (Desarrollo de Interfaces)
  * @since 1.5
  */
 public class PnlActivities extends javax.swing.JPanel implements MiEventSwipeListener, MiEventPlayVideoListener {
@@ -53,12 +44,13 @@ public class PnlActivities extends javax.swing.JPanel implements MiEventSwipeLis
      * Creates new form PnlIntentos
      *
      * @param mainForm information from the MainForm screen.
-     * @param user logged in user into the app.
+     * @param user logged-in user into the app.
+     * @param azureVideo video file to be played.
      */
     public PnlActivities(MainForm mainForm, User user, VideoCloud azureVideo) {
         this.azureVideo = azureVideo;
         initComponents();
-        //pnlContenedor.add(pnlActivitiesHeader,BorderLayout.NORTH);
+        
         icnLogo.setSvgImage("images/PowerFitBeansLogo.svg", 45, 45);
         icnLogo.setCursor(new Cursor(Cursor.HAND_CURSOR));
         icnLogout.setSvgImage("images/power.svg", 45, 45);
@@ -66,10 +58,6 @@ public class PnlActivities extends javax.swing.JPanel implements MiEventSwipeLis
         lblSwipeEvent.setText("");
         btnPlayPause.setText("...");
         btnPlayPause.setEnabled(false);
-        // ImageIcon imageIcon = new ImageIcon(getClass().getResource("/images/home.svg"));
-        //  Image image = imageIcon.getImage();
-        //   Image newimg = image.getScaledInstance(54, 54, java.awt.Image.SCALE_SMOOTH);
-        //this.lblLogOut.setIcon(new ImageIcon(newimg));
 
         scrollPane = new JScrollPane(pnlContenedor);
 
@@ -88,7 +76,6 @@ public class PnlActivities extends javax.swing.JPanel implements MiEventSwipeLis
             ArrayList<User> allUsers = mainForm.getAllNormalUsers();
             for (User u : allUsers) {
                 fillContainer(u);
-
             }
 
         } else {
@@ -96,11 +83,14 @@ public class PnlActivities extends javax.swing.JPanel implements MiEventSwipeLis
             btnSeeUsers.setVisible(false);
         }
         
-
     }
 
    
-
+    /**
+     * This method adds the activities into the container
+     *
+     * @param user information for the user to get his/her activities.
+     */
     private void fillContainer(User user) {
         ArrayList<Activity> activities = mainForm.getActivitiesByUser(user);
         for (Activity activity : activities) {
@@ -256,6 +246,7 @@ public class PnlActivities extends javax.swing.JPanel implements MiEventSwipeLis
         pnlMainRight.add(pnlVideoPlayer, gridBagConstraints);
 
         btnPlayPause.setText("Pause");
+        btnPlayPause.setToolTipText("Control the video");
         btnPlayPause.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnPlayPause.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -281,6 +272,7 @@ public class PnlActivities extends javax.swing.JPanel implements MiEventSwipeLis
         pnlActivitiesFooter.setLayout(new java.awt.GridBagLayout());
 
         btnSeeUsers.setText("See users...");
+        btnSeeUsers.setToolTipText("Navigate to the details screen");
         btnSeeUsers.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnSeeUsers.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {

@@ -6,20 +6,24 @@ import com.azure.storage.blob.BlobContainerClient;
 import com.azure.storage.blob.BlobServiceClient;
 import com.azure.storage.blob.BlobServiceClientBuilder;
 import com.azure.storage.blob.models.BlobItem;
-import com.sun.jna.platform.win32.WinUser;
 import java.io.File;
 import java.util.LinkedList;
 
 /**
+ * This VideoCloud class manages the connection with the Azure Cloud and it is
+ * instantiated to download the video recordings of the exercises.
+ *
  * @author Richard Navarro {@literal <richardnavarro@paucasesnovescifp.cat>}
+ * @version 4.0 Final version to submit for Unit 4 (Desarrollo de Interfaces)
+ * @since 1.5
  */
 public class VideoCloud {
 
     LinkedList<String> azureVideos = new LinkedList<>();
     public static String videoFileAbsoluteTempPath = System.getProperty("java.io.tmpdir");
 
-    final private String connectStr = "DefaultEndpointsProtocol=https;AccountName=myvideoserver;AccountKey=N8qIEKx8aBdswJm2ZjByjSF0JsqCCcB5VAELyQi204KiuLxt2YDWpQmzFnEmsrIQLnZbZkIiIUD3+AStFiz1oQ==;EndpointSuffix=core.windows.net";
-    final private String containerName = "mrnockvideos";
+    final private String CONNECTION_STRING = "DefaultEndpointsProtocol=https;AccountName=myvideoserver;AccountKey=N8qIEKx8aBdswJm2ZjByjSF0JsqCCcB5VAELyQi204KiuLxt2YDWpQmzFnEmsrIQLnZbZkIiIUD3+AStFiz1oQ==;EndpointSuffix=core.windows.net";
+    final private String CONTAINER_NAME = "mrnockvideos";
 
     public VideoCloud() {
 
@@ -30,8 +34,8 @@ public class VideoCloud {
     }
 
     public void initializeVideoListFromCloud() {
-        BlobServiceClient blobServiceClient = new BlobServiceClientBuilder().connectionString(connectStr).buildClient();
-        BlobContainerClient containerClient = blobServiceClient.getBlobContainerClient(containerName);
+        BlobServiceClient blobServiceClient = new BlobServiceClientBuilder().connectionString(CONNECTION_STRING).buildClient();
+        BlobContainerClient containerClient = blobServiceClient.getBlobContainerClient(CONTAINER_NAME);
 
         for (BlobItem blobItem : containerClient.listBlobs()) {
             azureVideos.add(blobItem.getName());
@@ -43,18 +47,18 @@ public class VideoCloud {
      * This method is used to check if video file needs to be downloaded to Temp
      * dir
      *
-     * @param videoFile video to be downloaded.
-     * @return
+     * @param videoFile String with the name of the video to be downloaded.
+     * @return boolean with the result
      */
     public boolean downloadVideoIfNecessary(String videoFile) {
         File f = new File(videoFileAbsoluteTempPath + File.separator + videoFile);
         if (!f.exists()) {
-            //Check that the video is in azure
+            //Checks that the video exists in azure
             if (azureVideos.contains(videoFile)) {
-                //download the video
-                BlobClient blobClient = new BlobClientBuilder().connectionString(connectStr)
+                //Download the video
+                BlobClient blobClient = new BlobClientBuilder().connectionString(CONNECTION_STRING)
                         .blobName(videoFile)
-                        .containerName(containerName)
+                        .containerName(CONTAINER_NAME)
                         .buildClient();
                 blobClient.downloadToFile(videoFileAbsoluteTempPath + File.separator + videoFile);
 

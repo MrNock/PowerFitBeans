@@ -7,7 +7,7 @@ import mrnock.powerfitbeans.MainForm;
  * credentials and login into the app. It is instantiated from the MainForm.
  *
  * @author Richard Navarro {@literal <richardnavarro@paucasesnovescifp.cat>}
- * @version 2.0 Final version to submit for Unit 3 (Desarrollo de Interfaces)
+ * @version 4.0 Final version to submit for Unit 4 (Desarrollo de Interfaces)
  * @since 1.5
  */
 public class DlgLogin extends javax.swing.JDialog {
@@ -28,8 +28,6 @@ public class DlgLogin extends javax.swing.JDialog {
                 "images/email.svg", 25, 25);
         imgPassword.setSvgImage(
                 "images/incognito.svg", 25, 25);
-        //setSize(432, 432);
-        //setLayout(null);
         setLocationRelativeTo(null);
     }
 
@@ -126,6 +124,7 @@ public class DlgLogin extends javax.swing.JDialog {
         getContentPane().add(pnlLoginBody, gridBagConstraints);
 
         btnSubmit.setText("Submit");
+        btnSubmit.setToolTipText("Validate your credentials");
         btnSubmit.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnSubmit.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {

@@ -13,7 +13,7 @@ import mrnock.powerfitbeans.dto.User;
  * MainForm (dealing with the rest of windows in the app.
  *
  * @author Richard Navarro {@literal <richardnavarro@paucasesnovescifp.cat>}
- * @version 2.0 Final version to submit for Unit 3 (Desarrollo de Interfaces)
+ * @version 4.0 Final version to submit for Unit 4 (Desarrollo de Interfaces)
  * @since 1.5
  */
 public class Controller {

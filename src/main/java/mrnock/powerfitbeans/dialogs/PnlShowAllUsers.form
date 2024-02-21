@@ -29,9 +29,6 @@
           <Properties>
             <Property name="toolTipText" type="java.lang.String" value="Navigate to main screen"/>
           </Properties>
-          <AccessibilityProperties>
-            <Property name="AccessibleContext.accessibleName" type="java.lang.String" value=""/>
-          </AccessibilityProperties>
           <Events>
             <EventHandler event="mouseReleased" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="icnBackMouseReleased"/>
           </Events>
@@ -174,7 +171,7 @@
               </Properties>
               <Constraints>
                 <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignGridBagLayout" value="org.netbeans.modules.form.compat2.layouts.DesignGridBagLayout$GridBagConstraintsDescription">
-                  <GridBagConstraints gridX="0" gridY="1" gridWidth="1" gridHeight="1" fill="1" ipadX="0" ipadY="0" insetsTop="0" insetsLeft="0" insetsBottom="0" insetsRight="0" anchor="10" weightX="0.0" weightY="0.9"/>
+                  <GridBagConstraints gridX="0" gridY="1" gridWidth="1" gridHeight="1" fill="1" ipadX="0" ipadY="0" insetsTop="0" insetsLeft="0" insetsBottom="0" insetsRight="0" anchor="10" weightX="1.0" weightY="0.9"/>
                 </Constraint>
               </Constraints>
 
@@ -281,6 +278,7 @@
             <Component class="javax.swing.JButton" name="btnEditReview">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Edit Review"/>
+                <Property name="toolTipText" type="java.lang.String" value="Click to edit the review"/>
                 <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
                   <Color id="Hand Cursor"/>
                 </Property>
@@ -297,6 +295,7 @@
             <Component class="javax.swing.JButton" name="btnAddReview">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Add Review"/>
+                <Property name="toolTipText" type="java.lang.String" value="Click to update your review"/>
                 <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
                   <Color id="Hand Cursor"/>
                 </Property>
@@ -313,6 +312,7 @@
             <Component class="javax.swing.JButton" name="btnDeleteAttempt">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Delete Attempt"/>
+                <Property name="toolTipText" type="java.lang.String" value="Click to delete the exercise"/>
                 <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
                   <Color id="Hand Cursor"/>
                 </Property>

@@ -1,33 +1,22 @@
 package mrnock.tools;
 
 import com.formdev.flatlaf.extras.FlatSVGIcon;
-import java.awt.Color;
-import java.awt.event.ActionEvent;
 import javax.swing.JLabel;
-import javax.swing.Timer;
 
+/**
+ * Public class SVGImage used to add icons in the app.
+ *
+ * @author Richard Navarro {@literal <richardnavarro@paucasesnovescifp.cat>}
+ * @version 4.0 Final version to submit for Unit 4 (Desarrollo de Interfaces)
+ * @since 1.5
+ */
 public class SVGImage extends JLabel {
 
     private FlatSVGIcon svgIcon;
-    private Timer timer;
-    private int iconColor = 0;
 
     public void setSvgImage(String image, int width, int height) {
         svgIcon = new FlatSVGIcon(image, width, height);
         setIcon(svgIcon);
     }
 
-    public void animation() {
-        if (svgIcon != null) {
-            svgIcon.setColorFilter(new FlatSVGIcon.ColorFilter((Color t) -> {
-                iconColor += 1;
-                iconColor %= 255;
-                return Color.getHSBColor(iconColor / 255f, 1, 1);
-            }));
-            timer = new Timer(50, (ActionEvent e) -> {
-                SVGImage.this.repaint();
-            });
-            timer.start();
-        }
-    }
 }

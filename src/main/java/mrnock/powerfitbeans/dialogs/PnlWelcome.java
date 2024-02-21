@@ -1,5 +1,3 @@
-/*
- */
 package mrnock.powerfitbeans.dialogs;
 
 import java.util.logging.Level;
@@ -16,8 +14,8 @@ import mrnock.powerfitbeans.MainForm;
  * the app after validation.
  *
  * @author Richard Navarro {@literal <richardnavarro@paucasesnovescifp.cat>}
- * @version 2.0 Final version to submit for Unit 3 (Desarrollo de Interfaces)
- * @since 2.0
+ * @version 4.0 Final version to submit for Unit 4 (Desarrollo de Interfaces)
+ * @since 1.5
  */
 public class PnlWelcome extends javax.swing.JPanel {
 
@@ -33,10 +31,6 @@ public class PnlWelcome extends javax.swing.JPanel {
         imgWelcome.setSvgImage("images/PowerFitBeansLogo.svg", 450, 450);
         icnLogin.setSvgImage("images/login-2.svg", 45, 45);
         icnLogin.setCursor(new Cursor(Cursor.HAND_CURSOR));
-        //imgWelcome.setSvgImage("images/PowerFitBeansLogo.svg", pnlLeft.getWidth()-20, pnlLeft.getHeight()-20);
-        //imgLogin.setSvgImage("images/login-2.svg", 60, 60);
-        // imgLogin.animation();
-       // imgLogin.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
     }
 
     /**
@@ -155,6 +149,9 @@ public class PnlWelcome extends javax.swing.JPanel {
         add(pnlRight, gridBagConstraints);
     }// </editor-fold>//GEN-END:initComponents
 
+     /**
+     * Switch look and feel from light to dark mode
+     */
     private void tglDarkLightActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tglDarkLightActionPerformed
 
         boolean mode = tglDarkLight.isSelected();

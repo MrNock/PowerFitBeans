@@ -9,8 +9,15 @@ import mrnock.events.MiEventSwipe;
 import mrnock.events.MiEventSwipeListener;
 
 /**
+ * This PnlExercise class extends from JPanel and it is used to create the
+ * cards with the details of each activity (username, exercise ID, status and a
+ * timestamp for the completion date.
+ *
+ * Once clicked the button, the app will play the video with the exercise.
  *
  * @author Richard Navarro {@literal <richardnavarro@paucasesnovescifp.cat>}
+ * @version 4.0 Final version to submit for Unit 4 (Desarrollo de Interfaces)
+ * @since 1.5
  */
 public class PnlExercise extends javax.swing.JPanel implements Serializable {
 
@@ -68,6 +75,7 @@ public class PnlExercise extends javax.swing.JPanel implements Serializable {
         icnStatusIcon = new mrnock.tools.SVGImage();
 
         setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        setToolTipText("Details for the exercise");
         setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) {

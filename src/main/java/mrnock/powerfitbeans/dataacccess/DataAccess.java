@@ -22,7 +22,7 @@ import mrnock.powerfitbeans.dto.Review;
  * It performs the connection and all CRUD methods needed in the app.
  *
  * @author Richard Navarro {@literal <richardnavarro@paucasesnovescifp.cat>}
- * @version 2.0 Final version to submit for Unit 3 (Desarrollo de Interfaces)
+ * @version 4.0 Final version to submit for Unit 4 (Desarrollo de Interfaces)
  * @since 1.5
  */
 public class DataAccess {
