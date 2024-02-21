@@ -245,6 +245,7 @@ public class PnlActivities extends javax.swing.JPanel implements MiEventSwipeLis
         gridBagConstraints.insets = new java.awt.Insets(10, 0, 10, 0);
         pnlMainRight.add(pnlVideoPlayer, gridBagConstraints);
 
+        btnPlayPause.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
         btnPlayPause.setText("Pause");
         btnPlayPause.setToolTipText("Control the video");
         btnPlayPause.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
@@ -271,6 +272,7 @@ public class PnlActivities extends javax.swing.JPanel implements MiEventSwipeLis
 
         pnlActivitiesFooter.setLayout(new java.awt.GridBagLayout());
 
+        btnSeeUsers.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
         btnSeeUsers.setText("See users...");
         btnSeeUsers.setToolTipText("Navigate to the details screen");
         btnSeeUsers.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));

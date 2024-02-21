@@ -205,14 +205,12 @@ public class MainForm extends javax.swing.JFrame {
      * pending review.
      */
     public void showPnlAttempts() {
-        //ArrayList<Attempt> attempts = controller.getAttemptsPendingReview();
 
         getContentPane().removeAll();
         if (pnlShowAllUsers != null) {
             pnlShowAllUsers.updateUI();
         }
 
-//        pnlAttempts = new PnlActivities(this, attempts, userName);
         pnlAttempts = new PnlActivities(this, loggedUser, azureVideo);
         getContentPane().setLayout(new java.awt.GridBagLayout());
         gridBagConstraints = new java.awt.GridBagConstraints();

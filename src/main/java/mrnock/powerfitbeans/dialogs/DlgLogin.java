@@ -67,6 +67,7 @@ public class DlgLogin extends javax.swing.JDialog {
 
         pnlLoginBody.setLayout(new java.awt.GridBagLayout());
 
+        lblEmail.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
         lblEmail.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         lblEmail.setText("E-Mail:");
         gridBagConstraints = new java.awt.GridBagConstraints();
@@ -92,6 +93,7 @@ public class DlgLogin extends javax.swing.JDialog {
         gridBagConstraints.gridy = 0;
         pnlLoginBody.add(imgEMail, gridBagConstraints);
 
+        lblPassword.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
         lblPassword.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         lblPassword.setText("Password:");
         gridBagConstraints = new java.awt.GridBagConstraints();
@@ -123,6 +125,7 @@ public class DlgLogin extends javax.swing.JDialog {
         gridBagConstraints.insets = new java.awt.Insets(5, 5, 5, 5);
         getContentPane().add(pnlLoginBody, gridBagConstraints);
 
+        btnSubmit.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
         btnSubmit.setText("Submit");
         btnSubmit.setToolTipText("Validate your credentials");
         btnSubmit.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));

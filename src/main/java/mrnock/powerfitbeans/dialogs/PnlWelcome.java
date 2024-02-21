@@ -70,6 +70,7 @@ public class PnlWelcome extends javax.swing.JPanel {
         gridBagConstraints.insets = new java.awt.Insets(10, 10, 10, 10);
         pnlLeft.add(imgWelcome, gridBagConstraints);
 
+        lblMoreInfo.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
         lblMoreInfo.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
         lblMoreInfo.setText("More info: ");
         lblMoreInfo.setToolTipText("");
@@ -77,6 +78,7 @@ public class PnlWelcome extends javax.swing.JPanel {
         lblMoreInfo.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
         pnlLeftFooter.add(lblMoreInfo);
 
+        lblUrlWeb.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
         lblUrlWeb.setForeground(new java.awt.Color(0, 0, 255));
         lblUrlWeb.setText("www.powerfitbeans.com");
         lblUrlWeb.setToolTipText("https://paucasesnovescifp.cat/");
@@ -128,6 +130,7 @@ public class PnlWelcome extends javax.swing.JPanel {
 
         pnlRight.add(pnlLoginWelcome, java.awt.BorderLayout.CENTER);
 
+        tglDarkLight.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
         tglDarkLight.setText("Dark Mode");
         tglDarkLight.setToolTipText("");
         tglDarkLight.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));

@@ -105,6 +105,7 @@ public class PnlShowAllUsers extends javax.swing.JPanel {
         pnlMainSAU.setLayout(new java.awt.GridBagLayout());
 
         lstUsers.setBorder(javax.swing.BorderFactory.createTitledBorder("Users"));
+        lstUsers.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
         lstUsers.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         lstUsers.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -124,6 +125,7 @@ public class PnlShowAllUsers extends javax.swing.JPanel {
         scrTableSelectedUser.setBorder(javax.swing.BorderFactory.createTitledBorder("Attempts of Selected User"));
 
         tblSelectedUserInfo.setBorder(javax.swing.BorderFactory.createTitledBorder(""));
+        tblSelectedUserInfo.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
         tblSelectedUserInfo.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
@@ -180,6 +182,7 @@ public class PnlShowAllUsers extends javax.swing.JPanel {
         pnlExtraInfo.setBorder(javax.swing.BorderFactory.createTitledBorder("Extra Info"));
         pnlExtraInfo.setLayout(new java.awt.GridBagLayout());
 
+        lblQualification.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
         lblQualification.setText("Qualification");
         lblQualification.setToolTipText("");
         lblQualification.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
@@ -205,6 +208,7 @@ public class PnlShowAllUsers extends javax.swing.JPanel {
         gridBagConstraints.insets = new java.awt.Insets(10, 10, 10, 10);
         pnlExtraInfo.add(sldQualification, gridBagConstraints);
 
+        lblComments.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
         lblComments.setText("Comments");
         lblComments.setToolTipText("");
         lblComments.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
@@ -229,6 +233,7 @@ public class PnlShowAllUsers extends javax.swing.JPanel {
         gridBagConstraints.insets = new java.awt.Insets(10, 10, 10, 10);
         pnlExtraInfo.add(scrComments, gridBagConstraints);
 
+        btnEditReview.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
         btnEditReview.setText("Edit Review");
         btnEditReview.setToolTipText("Click to edit the review");
         btnEditReview.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
@@ -244,6 +249,7 @@ public class PnlShowAllUsers extends javax.swing.JPanel {
         gridBagConstraints.insets = new java.awt.Insets(10, 10, 10, 10);
         pnlExtraInfo.add(btnEditReview, gridBagConstraints);
 
+        btnAddReview.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
         btnAddReview.setText("Add Review");
         btnAddReview.setToolTipText("Click to update your review");
         btnAddReview.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
@@ -260,6 +266,7 @@ public class PnlShowAllUsers extends javax.swing.JPanel {
         gridBagConstraints.insets = new java.awt.Insets(10, 10, 10, 10);
         pnlExtraInfo.add(btnAddReview, gridBagConstraints);
 
+        btnDeleteAttempt.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
         btnDeleteAttempt.setText("Delete Attempt");
         btnDeleteAttempt.setToolTipText("Click to delete the exercise");
         btnDeleteAttempt.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
