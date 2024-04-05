@@ -14,7 +14,7 @@ public class Activity {
 
     protected String userName;
     protected String exerciseName;
-    protected Date timeStamp;
+    protected Date timeStamp = null;
     protected int idReview = -1;
     protected String videofile;
 

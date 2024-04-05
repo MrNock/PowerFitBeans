@@ -414,7 +414,10 @@ public class PnlShowAllUsers extends javax.swing.JPanel {
         });
 
         playVideo = true;
-        tblSelectedUserInfo.setRowSelectionInterval(0, 0);
+        if (tblSelectedUserInfo.getRowCount() > 0) {
+            tblSelectedUserInfo.setRowSelectionInterval(0, 0);
+        }
+
     }
 
     /**
@@ -444,17 +447,17 @@ public class PnlShowAllUsers extends javax.swing.JPanel {
         if (playVideo) {
             String videoName = attempts.get(attempt).getVideoFile();
             String userName = attempts.get(attempt).getUserName();
-           String videoFileAbsolutePath = VideoCloud.videoFileAbsoluteTempPath + File.separator + videoName;
+            String videoFileAbsolutePath = VideoCloud.videoFileAbsoluteTempPath + File.separator + videoName;
             if (azureVideo.downloadVideoIfNecessary(videoName)) {
-                    mediaPlayer.mediaPlayer().media().play(videoFileAbsolutePath);
-                    pnlVideoPlayer.setBorder(javax.swing.BorderFactory.createTitledBorder("Video Player - " + videoName));
-                    scrTableSelectedUser.setBorder(javax.swing.BorderFactory.createTitledBorder(userName + "'s Attempts"));
-                    isPlaying = true;
-                    btnPauseResumeVideo.setText("Pause");
+                mediaPlayer.mediaPlayer().media().play(videoFileAbsolutePath);
+                pnlVideoPlayer.setBorder(javax.swing.BorderFactory.createTitledBorder("Video Player - " + videoName));
+                scrTableSelectedUser.setBorder(javax.swing.BorderFactory.createTitledBorder(userName + "'s Attempts"));
+                isPlaying = true;
+                btnPauseResumeVideo.setText("Pause");
             }
         }
     }
-    
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAddReview;
     private javax.swing.JButton btnDeleteAttempt;

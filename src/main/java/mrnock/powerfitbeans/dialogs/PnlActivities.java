@@ -39,7 +39,6 @@ public class PnlActivities extends javax.swing.JPanel implements MiEventSwipeLis
     private VideoCloud azureVideo = null;
     private javax.swing.JPanel pnlContenedor = new javax.swing.JPanel();
 
-
     /**
      * Creates new form PnlIntentos
      *
@@ -50,7 +49,7 @@ public class PnlActivities extends javax.swing.JPanel implements MiEventSwipeLis
     public PnlActivities(MainForm mainForm, User user, VideoCloud azureVideo) {
         this.azureVideo = azureVideo;
         initComponents();
-        
+
         icnLogo.setSvgImage("images/PowerFitBeansLogo.svg", 45, 45);
         icnLogo.setCursor(new Cursor(Cursor.HAND_CURSOR));
         icnLogout.setSvgImage("images/power.svg", 45, 45);
@@ -82,10 +81,9 @@ public class PnlActivities extends javax.swing.JPanel implements MiEventSwipeLis
             fillContainer(user);
             btnSeeUsers.setVisible(false);
         }
-        
+
     }
 
-   
     /**
      * This method adds the activities into the container
      *
@@ -106,12 +104,16 @@ public class PnlActivities extends javax.swing.JPanel implements MiEventSwipeLis
         ArrayList<Activity> activitiesPendingReview = mainForm.getPendingReviewByUser(user);
         for (Activity activity : activitiesPendingReview) {
             PnlExercise pne = null;
+            String time = "";
+            if (activity.getTimeStamp() != null) {
+                time = pattern.format(activity.getTimeStamp());
+            }
             if (activity.getIdReview() < 0) {
                 pne = new PnlExercise(activity.getExerciseName(), PnlExercise.IconExercise.PENDING_REVIEW, user.getUserName(),
-                        pattern.format(activity.getTimeStamp()), activity.getVideofile());
+                        time, activity.getVideofile());
             } else {
                 pne = new PnlExercise(activity.getExerciseName(), PnlExercise.IconExercise.COMPLETE, user.getUserName(),
-                        pattern.format(activity.getTimeStamp()), activity.getVideofile());
+                        time, activity.getVideofile());
             }
             pne.addMiEventoSwipe(this);
             pne.addMiEventoPlayVideo(this);
@@ -144,8 +146,6 @@ public class PnlActivities extends javax.swing.JPanel implements MiEventSwipeLis
             }
         }
     }
-
-    
 
     /**
      * This method is called from within the constructor to initialize the form.
