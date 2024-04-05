@@ -222,7 +222,7 @@ public class MainForm extends javax.swing.JFrame {
         getContentPane().add(pnlAttempts, gridBagConstraints);
 
         pnlAttempts.updateUI();
-        pnlAttempts.playSelectedVideo("");
+        pnlAttempts.playSelectedVideo();
     }
 
     /**

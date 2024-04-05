@@ -68,8 +68,6 @@ public class PnlShowAllUsers extends javax.swing.JPanel {
     private void initComponents() {
         java.awt.GridBagConstraints gridBagConstraints;
 
-        scrComments = new javax.swing.JScrollPane();
-        txtComments = new javax.swing.JTextArea();
         pnlHeaderSAU = new javax.swing.JPanel();
         icnBack = new mrnock.tools.SVGImage();
         pnlMainSAU = new javax.swing.JPanel();
@@ -84,14 +82,11 @@ public class PnlShowAllUsers extends javax.swing.JPanel {
         lblQualification = new javax.swing.JLabel();
         sldQualification = new javax.swing.JSlider();
         lblComments = new javax.swing.JLabel();
+        scrComments = new javax.swing.JScrollPane();
+        txtComments = new javax.swing.JTextArea();
         btnEditReview = new javax.swing.JButton();
         btnAddReview = new javax.swing.JButton();
         btnDeleteAttempt = new javax.swing.JButton();
-
-        txtComments.setColumns(20);
-        txtComments.setLineWrap(true);
-        txtComments.setRows(5);
-        scrComments.setViewportView(txtComments);
 
         setLayout(new java.awt.BorderLayout());
 
@@ -109,9 +104,13 @@ public class PnlShowAllUsers extends javax.swing.JPanel {
 
         pnlMainSAU.setLayout(new java.awt.GridBagLayout());
 
+        scrListUsers.setPreferredSize(new java.awt.Dimension(200, 200));
+
         lstUsers.setBorder(javax.swing.BorderFactory.createTitledBorder("Users"));
         lstUsers.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
         lstUsers.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        lstUsers.setMaximumSize(new java.awt.Dimension(200, 200));
+        lstUsers.setMinimumSize(new java.awt.Dimension(200, 200));
         lstUsers.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 lstUsersMouseClicked(evt);
@@ -140,6 +139,9 @@ public class PnlShowAllUsers extends javax.swing.JPanel {
             }
         ));
         tblSelectedUserInfo.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        tblSelectedUserInfo.setMaximumSize(new java.awt.Dimension(200, 200));
+        tblSelectedUserInfo.setMinimumSize(new java.awt.Dimension(200, 200));
+        tblSelectedUserInfo.setPreferredSize(new java.awt.Dimension(200, 200));
         scrTableSelectedUser.setViewportView(tblSelectedUserInfo);
 
         gridBagConstraints = new java.awt.GridBagConstraints();
@@ -150,13 +152,18 @@ public class PnlShowAllUsers extends javax.swing.JPanel {
         gridBagConstraints.weighty = 0.5;
         pnlMainSAU.add(scrTableSelectedUser, gridBagConstraints);
 
+        pnlVideoContainer.setMaximumSize(new java.awt.Dimension(200, 200));
+        pnlVideoContainer.setMinimumSize(new java.awt.Dimension(200, 200));
+        pnlVideoContainer.setPreferredSize(new java.awt.Dimension(200, 200));
         pnlVideoContainer.setLayout(new java.awt.GridBagLayout());
 
         pnlVideoPlayer.setBorder(javax.swing.BorderFactory.createTitledBorder("Video Player"));
+        pnlVideoPlayer.setMaximumSize(new java.awt.Dimension(200, 200));
+        pnlVideoPlayer.setMinimumSize(new java.awt.Dimension(200, 200));
         pnlVideoPlayer.setLayout(new java.awt.BorderLayout());
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 1;
+        gridBagConstraints.gridy = 0;
         gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
         gridBagConstraints.weightx = 1.0;
         gridBagConstraints.weighty = 0.9;
@@ -185,6 +192,9 @@ public class PnlShowAllUsers extends javax.swing.JPanel {
         pnlMainSAU.add(pnlVideoContainer, gridBagConstraints);
 
         pnlExtraInfo.setBorder(javax.swing.BorderFactory.createTitledBorder("Extra Info"));
+        pnlExtraInfo.setMaximumSize(new java.awt.Dimension(200, 200));
+        pnlExtraInfo.setMinimumSize(new java.awt.Dimension(200, 200));
+        pnlExtraInfo.setPreferredSize(new java.awt.Dimension(200, 200));
         pnlExtraInfo.setLayout(new java.awt.GridBagLayout());
 
         lblQualification.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
@@ -195,6 +205,7 @@ public class PnlShowAllUsers extends javax.swing.JPanel {
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 0;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.EAST;
+        gridBagConstraints.weighty = 0.3;
         pnlExtraInfo.add(lblQualification, gridBagConstraints);
 
         sldQualification.setMajorTickSpacing(1);
@@ -222,6 +233,18 @@ public class PnlShowAllUsers extends javax.swing.JPanel {
         gridBagConstraints.gridy = 1;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.EAST;
         pnlExtraInfo.add(lblComments, gridBagConstraints);
+
+        txtComments.setColumns(20);
+        txtComments.setLineWrap(true);
+        txtComments.setRows(5);
+        scrComments.setViewportView(txtComments);
+
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 1;
+        gridBagConstraints.gridwidth = 2;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        pnlExtraInfo.add(scrComments, gridBagConstraints);
 
         btnEditReview.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
         btnEditReview.setText("Edit Review");

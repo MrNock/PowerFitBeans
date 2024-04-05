@@ -83,6 +83,7 @@ public class PnlActivities extends javax.swing.JPanel implements MiEventSwipeLis
             btnSeeUsers.setVisible(false);
         }
 
+
     }
 
     /**
@@ -124,6 +125,7 @@ public class PnlActivities extends javax.swing.JPanel implements MiEventSwipeLis
             pne.addMiEventoPlayVideo(this);
 
             this.pnlContenedor.add(pne);
+            
             if (firstVideoToPlay == null && activity.getVideofile() != null) {
                 firstVideoToPlay = new String(activity.getVideofile());
             }
@@ -154,6 +156,14 @@ public class PnlActivities extends javax.swing.JPanel implements MiEventSwipeLis
                 JOptionPane.showMessageDialog(this, "File is not in azure", "File not found", JOptionPane.ERROR_MESSAGE);
             }
         }
+    }
+    
+    public void playSelectedVideo()
+    {
+        if (firstVideoToPlay != null && !firstVideoToPlay.isEmpty()) {
+            playSelectedVideo(firstVideoToPlay);
+        }
+       
     }
 
     /**
