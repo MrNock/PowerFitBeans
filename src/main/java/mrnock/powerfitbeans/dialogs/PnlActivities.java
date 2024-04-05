@@ -55,7 +55,7 @@ public class PnlActivities extends javax.swing.JPanel implements MiEventSwipeLis
         icnLogo.setCursor(new Cursor(Cursor.HAND_CURSOR));
         icnLogout.setSvgImage("images/power.svg", 45, 45);
         icnLogout.setCursor(new Cursor(Cursor.HAND_CURSOR));
-        //lblSwipeEvent.setText("");
+        lblSwipeEvent.setText(" ");
         btnPlayPause.setText("...");
         btnPlayPause.setEnabled(false);
 
@@ -176,24 +176,19 @@ public class PnlActivities extends javax.swing.JPanel implements MiEventSwipeLis
     private void initComponents() {
         java.awt.GridBagConstraints gridBagConstraints;
 
-        jLabel1 = new javax.swing.JLabel();
-        button1 = new java.awt.Button();
         pnlActivitiesHeader = new javax.swing.JPanel();
         icnLogo = new mrnock.tools.SVGImage();
         lblWelcomeInstructor = new javax.swing.JLabel();
         icnLogout = new mrnock.tools.SVGImage();
         pnlActivitiesMain = new javax.swing.JPanel();
         pnlMainLeft = new javax.swing.JPanel();
+        lblSwipeEvent = new javax.swing.JLabel();
         pnlExercises = new javax.swing.JPanel();
         pnlMainRight = new javax.swing.JPanel();
         pnlVideoPlayer = new javax.swing.JPanel();
         btnPlayPause = new javax.swing.JButton();
         pnlActivitiesFooter = new javax.swing.JPanel();
         btnSeeUsers = new javax.swing.JButton();
-
-        jLabel1.setText("jLabel1");
-
-        button1.setLabel("button1");
 
         setLayout(new java.awt.GridBagLayout());
 
@@ -228,6 +223,14 @@ public class PnlActivities extends javax.swing.JPanel implements MiEventSwipeLis
         pnlMainLeft.setBorder(javax.swing.BorderFactory.createTitledBorder("Activities"));
         pnlMainLeft.setPreferredSize(new java.awt.Dimension(200, 23));
         pnlMainLeft.setLayout(new java.awt.GridBagLayout());
+
+        lblSwipeEvent.setText("jLabel2");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 1;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.insets = new java.awt.Insets(10, 10, 10, 10);
+        pnlMainLeft.add(lblSwipeEvent, gridBagConstraints);
 
         pnlExercises.setLayout(new javax.swing.BoxLayout(pnlExercises, javax.swing.BoxLayout.Y_AXIS));
         gridBagConstraints = new java.awt.GridBagConstraints();
@@ -346,10 +349,9 @@ public class PnlActivities extends javax.swing.JPanel implements MiEventSwipeLis
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnPlayPause;
     private javax.swing.JButton btnSeeUsers;
-    private java.awt.Button button1;
     private mrnock.tools.SVGImage icnLogo;
     private mrnock.tools.SVGImage icnLogout;
-    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel lblSwipeEvent;
     private javax.swing.JLabel lblWelcomeInstructor;
     private javax.swing.JPanel pnlActivitiesFooter;
     private javax.swing.JPanel pnlActivitiesHeader;
@@ -362,7 +364,7 @@ public class PnlActivities extends javax.swing.JPanel implements MiEventSwipeLis
 
     @Override
     public void miEventoSwipeActionPerformed(MiEventSwipe evt) {
-        //lblSwipeEvent.setText(evt.swipeInfo());
+        lblSwipeEvent.setText(evt.swipeInfo());
     }
 
     @Override

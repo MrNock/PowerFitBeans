@@ -9,8 +9,8 @@ import mrnock.events.MiEventSwipe;
 import mrnock.events.MiEventSwipeListener;
 
 /**
- * This PnlExercise class extends from JPanel and it is used to create the
- * cards with the details of each activity (username, exercise ID, status and a
+ * This PnlExercise class extends from JPanel and it is used to create the cards
+ * with the details of each activity (username, exercise ID, status and a
  * timestamp for the completion date.
  *
  * Once clicked the button, the app will play the video with the exercise.
@@ -151,10 +151,8 @@ public class PnlExercise extends javax.swing.JPanel implements Serializable {
     private void formMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_formMouseReleased
         if (evt.getXOnScreen() - posX > 0) {
             fireMiEventoSwipeAction(MiEventSwipe.Direction.RIGHT);
-            System.out.println("Swipe Derecha");
         } else if (evt.getXOnScreen() - posX < 0) {
             fireMiEventoSwipeAction(MiEventSwipe.Direction.LEFT);
-            System.out.println("Swipe Izquierda");
         } else {
             fireMiEventoPlayVideo();
         }
@@ -165,7 +163,7 @@ public class PnlExercise extends javax.swing.JPanel implements Serializable {
     }//GEN-LAST:event_formMouseEntered
 
     private void formMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_formMouseExited
-        this.setBackground(new Color(242,242,242));
+        this.setBackground(new Color(242, 242, 242));
     }//GEN-LAST:event_formMouseExited
 
     private void formMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_formMousePressed
