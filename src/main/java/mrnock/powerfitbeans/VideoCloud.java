@@ -22,8 +22,10 @@ public class VideoCloud {
     LinkedList<String> azureVideos = new LinkedList<>();
     public static String videoFileAbsoluteTempPath = System.getProperty("java.io.tmpdir");
 
-    final private String CONNECTION_STRING = "DefaultEndpointsProtocol=https;AccountName=myvideoserver;AccountKey=N8qIEKx8aBdswJm2ZjByjSF0JsqCCcB5VAELyQi204KiuLxt2YDWpQmzFnEmsrIQLnZbZkIiIUD3+AStFiz1oQ==;EndpointSuffix=core.windows.net";
-    final private String CONTAINER_NAME = "mrnockvideos";
+    final private String CONNECTION_STRING = "DefaultEndpointsProtocol=https;AccountName=simulapfileserver;AccountKey=rARWVR8b+HYR9t3Clc7SSYSKg3ziOhmItZUUdNMqSbV70r8xHhXYDw17dtNF13Ftujtj7UOZBRH5+AStTP81ig==;EndpointSuffix=core.windows.net";
+    //final private String CONNECTION_STRING = "DefaultEndpointsProtocol=https;AccountName=myvideoserver;AccountKey=N8qIEKx8aBdswJm2ZjByjSF0JsqCCcB5VAELyQi204KiuLxt2YDWpQmzFnEmsrIQLnZbZkIiIUD3+AStFiz1oQ==;EndpointSuffix=core.windows.net";
+    final private String CONTAINER_NAME = "simulapvideoscontainer";
+    //final private String CONTAINER_NAME = "mrnockvideos";
 
     public VideoCloud() {
 

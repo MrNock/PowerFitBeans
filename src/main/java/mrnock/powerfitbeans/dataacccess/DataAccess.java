@@ -36,8 +36,11 @@ public class DataAccess {
         Connection connection = null;
 
         //My personal connection URL
-        final String CONNECTION_URL = "jdbc:sqlserver://localhost;database=simulapdb;"
-                + "user=sa;password=/Welcome02;encrypt=false;";
+//        final String CONNECTION_URL = "jdbc:sqlserver://localhost;database=simulapdb;"
+//                + "user=sa;password=/Welcome02;encrypt=false;";
+        final String CONNECTION_URL = "jdbc:sqlserver://simulapsqlserver.database.windows.net:1433;"
+                + "database=simulapdb;user=simulapdbadmin@simulapsqlserver;password=Pwd1234.;"
+                + "encrypt=true;trustServerCertificate=false;hostNameInCertificate=*.database.windows.net;loginTimeout=30;";
 
         try {
             connection = DriverManager.getConnection(CONNECTION_URL);
@@ -66,7 +69,7 @@ public class DataAccess {
                 user.setUserName(resultSet.getString("Nom"));
                 user.setEmail(resultSet.getString("Email"));
                 user.setPasswordHash(resultSet.getString("PasswordHash"));
-                user.setInstructor(resultSet.getInt("IsInstructor") == 1);
+                user.setInstructor(resultSet.getInt("Instructor") == 1);
             }
         } catch (SQLException e) {
             System.err.println("Connection error: " + e.getMessage());
@@ -81,7 +84,7 @@ public class DataAccess {
      */
     public ArrayList<User> getAllNormalUsers() {
         ArrayList<User> usuaris = new ArrayList<>();
-        String sql = "SELECT * FROM Usuaris WHERE IsInstructor=0";
+        String sql = "SELECT * FROM Usuaris WHERE Instructor=0";
         try (Connection con = getConnection(); PreparedStatement selectStatement = con.prepareStatement(sql);) {
 
             ResultSet resultSet = selectStatement.executeQuery();
@@ -92,7 +95,7 @@ public class DataAccess {
                 user.setUserName(resultSet.getString("Nom"));
                 user.setEmail(resultSet.getString("Email"));
                 user.setPasswordHash(resultSet.getString("PasswordHash"));
-                user.setInstructor(resultSet.getInt("IsInstructor") == 1);
+                user.setInstructor(resultSet.getInt("Instructor") == 1);
                 usuaris.add(user);
             }
         } catch (SQLException e) {
@@ -108,7 +111,7 @@ public class DataAccess {
      * @return int with the number of rows affected.
      */
     public int registerUser(User user) {
-        String sql = "INSERT INTO dbo.Usuaris (Nom, Email, PasswordHash, isInstructor)"
+        String sql = "INSERT INTO dbo.Usuaris (Nom, Email, PasswordHash, Instructor)"
                 + " VALUES (?,?,?,?)"
                 + " SELECT CAST(SCOPE_IDENTITY() as int)";
         try (Connection connection = getConnection(); PreparedStatement insertStatement = connection.prepareStatement(sql)) {
@@ -207,10 +210,12 @@ public class DataAccess {
                 Activity activity = new Activity();
                 activity.setExerciseName(resultSet.getString("NomExercici"));
                 Timestamp fecha = resultSet.getTimestamp("Timestamp_Inici");
-                System.out.println("fecha " + fecha);
-                Date d = new Date();
-                d.setTime(fecha.getTime());
-                activity.setTimeStamp(d);
+                if (fecha != null) {
+                    Date d = new Date();
+                    d.setTime(fecha.getTime());
+                    activity.setTimeStamp(d);
+                }
+
                 activity.setIdReview(resultSet.getInt("reviewId"));
                 activity.setVideofile(resultSet.getString("videofile"));
                 activities.add(activity);
