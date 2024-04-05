@@ -84,6 +84,9 @@ public class PnlExercise extends javax.swing.JPanel implements Serializable {
             public void mouseExited(java.awt.event.MouseEvent evt) {
                 formMouseExited(evt);
             }
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                formMousePressed(evt);
+            }
             public void mouseReleased(java.awt.event.MouseEvent evt) {
                 formMouseReleased(evt);
             }
@@ -148,8 +151,10 @@ public class PnlExercise extends javax.swing.JPanel implements Serializable {
     private void formMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_formMouseReleased
         if (evt.getXOnScreen() - posX > 0) {
             fireMiEventoSwipeAction(MiEventSwipe.Direction.RIGHT);
+            System.out.println("Swipe Derecha");
         } else if (evt.getXOnScreen() - posX < 0) {
             fireMiEventoSwipeAction(MiEventSwipe.Direction.LEFT);
+            System.out.println("Swipe Izquierda");
         } else {
             fireMiEventoPlayVideo();
         }
@@ -162,6 +167,10 @@ public class PnlExercise extends javax.swing.JPanel implements Serializable {
     private void formMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_formMouseExited
         this.setBackground(new Color(242,242,242));
     }//GEN-LAST:event_formMouseExited
+
+    private void formMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_formMousePressed
+        posX = evt.getXOnScreen();
+    }//GEN-LAST:event_formMousePressed
 
     private void fireMiEventoPlayVideo() {
         for (MiEventPlayVideoListener l : listenersPlayVideo) {

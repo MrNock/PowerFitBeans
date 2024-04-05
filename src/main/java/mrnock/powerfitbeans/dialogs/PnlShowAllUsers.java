@@ -68,6 +68,8 @@ public class PnlShowAllUsers extends javax.swing.JPanel {
     private void initComponents() {
         java.awt.GridBagConstraints gridBagConstraints;
 
+        scrComments = new javax.swing.JScrollPane();
+        txtComments = new javax.swing.JTextArea();
         pnlHeaderSAU = new javax.swing.JPanel();
         icnBack = new mrnock.tools.SVGImage();
         pnlMainSAU = new javax.swing.JPanel();
@@ -82,11 +84,14 @@ public class PnlShowAllUsers extends javax.swing.JPanel {
         lblQualification = new javax.swing.JLabel();
         sldQualification = new javax.swing.JSlider();
         lblComments = new javax.swing.JLabel();
-        scrComments = new javax.swing.JScrollPane();
-        txtComments = new javax.swing.JTextArea();
         btnEditReview = new javax.swing.JButton();
         btnAddReview = new javax.swing.JButton();
         btnDeleteAttempt = new javax.swing.JButton();
+
+        txtComments.setColumns(20);
+        txtComments.setLineWrap(true);
+        txtComments.setRows(5);
+        scrComments.setViewportView(txtComments);
 
         setLayout(new java.awt.BorderLayout());
 
@@ -217,21 +222,6 @@ public class PnlShowAllUsers extends javax.swing.JPanel {
         gridBagConstraints.gridy = 1;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.EAST;
         pnlExtraInfo.add(lblComments, gridBagConstraints);
-
-        txtComments.setColumns(20);
-        txtComments.setLineWrap(true);
-        txtComments.setRows(5);
-        scrComments.setViewportView(txtComments);
-
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 1;
-        gridBagConstraints.gridy = 1;
-        gridBagConstraints.gridwidth = 2;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
-        gridBagConstraints.weightx = 1.0;
-        gridBagConstraints.weighty = 1.0;
-        gridBagConstraints.insets = new java.awt.Insets(10, 10, 10, 10);
-        pnlExtraInfo.add(scrComments, gridBagConstraints);
 
         btnEditReview.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
         btnEditReview.setText("Edit Review");
