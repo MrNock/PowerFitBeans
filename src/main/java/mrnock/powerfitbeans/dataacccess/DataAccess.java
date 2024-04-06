@@ -15,29 +15,41 @@ import mrnock.powerfitbeans.dto.Attempt;
 import mrnock.powerfitbeans.dto.Review;
 
 /**
+ * <p>
  * This DataAccess class is instantiated by the Controller and its in charge of
  * dealing with the Database. It has been encapsulated to add extra security,
- * avoiding unwanted external access.
+ * avoiding unwanted external access.</p>
  *
- * It performs the connection and all CRUD methods needed in the app.
+ * <p>
+ * It performs the connection and all CRUD methods needed in the app.</p>
  *
  * @author Richard Navarro {@literal <richardnavarro@paucasesnovescifp.cat>}
- * @version 4.0 Final version to submit for Unit 4 (Desarrollo de Interfaces)
+ * @version 6.0 Final version to submit for Unit 6 (Desarrollo de Interfaces)
  * @since 1.5
  */
 public class DataAccess {
 
     /**
-     * This method connects with the Database with the personal connection URL.
+     * <p>
+     * This method connects with the Database with the personal connection
+     * URL.</p>
      *
      * @return Connection object or null on failure.
      */
     private Connection getConnection() {
         Connection connection = null;
 
-        //My personal connection URL
-//        final String CONNECTION_URL = "jdbc:sqlserver://localhost;database=simulapdb;"
-//                + "user=sa;password=/Welcome02;encrypt=false;";
+        /*
+    ****************************************************************************************************
+    *********************** COMMENT / UNCOMMENT WHEN DEVELOPING (Test with localhost) ******************
+    ****************************************************************************************************
+    
+         final String CONNECTION_URL = "jdbc:sqlserver://localhost;database=simulapdb;"
+                + "user=sa;password=/Welcome02;encrypt=false;";
+    
+    ****************************************************************************************************
+    ****************************************************************************************************
+         */
         final String CONNECTION_URL = "jdbc:sqlserver://simulapsqlserver.database.windows.net:1433;"
                 + "database=simulapdb;user=simulapdbadmin@simulapsqlserver;password=Pwd1234.;"
                 + "encrypt=true;trustServerCertificate=false;hostNameInCertificate=*.database.windows.net;loginTimeout=30;";
@@ -51,7 +63,8 @@ public class DataAccess {
     }
 
     /**
-     * This method gets a user by its email address.
+     * <p>
+     * This method gets a user by its email address.</p>
      *
      * @param email String with the email to look up in the Database.
      * @return User object with the same email received by parameter.
@@ -78,9 +91,10 @@ public class DataAccess {
     }
 
     /**
-     * This method gets an ArrayList of users from the Database.
+     * <p>
+     * This method gets an ArrayList of users from the Database.</p>
      *
-     * @return ArrayList of users.
+     * @return ArrayList of normal users (not instructors).
      */
     public ArrayList<User> getAllNormalUsers() {
         ArrayList<User> usuaris = new ArrayList<>();
@@ -105,7 +119,8 @@ public class DataAccess {
     }
 
     /**
-     * This method adds a new user in the Database.
+     * <p>
+     * This method adds a new user in the Database.</p>
      *
      * @param user with all the details to be inserted in the Database.
      * @return int with the number of rows affected.
@@ -129,8 +144,9 @@ public class DataAccess {
     }
 
     /**
+     * <p>
      * This method gets a list of attempts where the instructor is pending to
-     * give a review.
+     * give a review.</p>
      *
      * @return ArrayList of attempts pending of review.
      */
@@ -167,7 +183,8 @@ public class DataAccess {
     }
 
     /**
-     * This method gets a list of activities pending filtered by user.
+     * <p>
+     * This method gets a list of activities pending filtered by user.</p>
      *
      * @param user User from whom the app needs to return his/her pending
      * activities.
@@ -177,8 +194,9 @@ public class DataAccess {
         ArrayList<Activity> activities = new ArrayList<>();
         String sql = "select NomExercici from Exercicis where id not in "
                 + "( select Exercicis.id from Usuaris full join Intents "
-                + "on Intents.IdUsuari = Usuaris.Id full join  Exercicis on Exercicis.id = Intents.IdExercici full join Review on Review.IdIntent = Intents.id "
-                + "where Usuaris.Id = ?)";
+                + "on Intents.IdUsuari = Usuaris.Id full join  Exercicis "
+                + "on Exercicis.id = Intents.IdExercici full join Review "
+                + "on Review.IdIntent = Intents.id where Usuaris.Id = ?)";
         try (Connection connection = getConnection(); PreparedStatement selectStatement = connection.prepareStatement(sql);) {
 
             selectStatement.setInt(1, user.getId());
@@ -195,12 +213,24 @@ public class DataAccess {
         return activities;
     }
 
+    /**
+     * <p>
+     * This method gets a list of activities pending to be reviewed for a
+     * specific user.</p>
+     *
+     * @param user User from whom the app needs to return his/her pending
+     * activities.
+     * @return ArrayList of activities that remain pending to be reviewed for a
+     * specific user.
+     */
     public ArrayList<Activity> getPendingReviewByUser(User user) {
 
         ArrayList<Activity> activities = new ArrayList<>();
-        String sql = "select NomExercici,Usuaris.Nom,Timestamp_Inici,Review.Id as reviewId, Intents.Videofile as videofile "
-                + "from Usuaris full join Intents on Intents.IdUsuari = Usuaris.Id full join  Exercicis on Exercicis.id = Intents.IdExercici full "
-                + "join Review on Review.IdIntent = Intents.id where Usuaris.Id = ?";
+        String sql = "select NomExercici,Usuaris.Nom,Timestamp_Inici,Review.Id"
+                + " as reviewId, Intents.Videofile as videofile from Usuaris"
+                + " full join Intents on Intents.IdUsuari = Usuaris.Id full join"
+                + " Exercicis on Exercicis.id = Intents.IdExercici full join"
+                + " Review on Review.IdIntent = Intents.id where Usuaris.Id = ?";
         try (Connection connection = getConnection(); PreparedStatement selectStatement = connection.prepareStatement(sql);) {
 
             selectStatement.setInt(1, user.getId());
@@ -227,7 +257,8 @@ public class DataAccess {
     }
 
     /**
-     * This method adds a new review in the Database.
+     * <p>
+     * This method adds a new review in the Database.</p>
      *
      * @param review Review object to be inserted in the Database.
      * @return int number of new rows added.
@@ -262,9 +293,11 @@ public class DataAccess {
     }
 
     /**
+     * <p>
      * This method checks if an attempts is a repetition of a former failed
      * exercise. It validates if there is an attempt with the same idUser and
-     * idAttempt where its performance date is previous from the attempt date.
+     * idAttempt where its performance date is previous from the attempt
+     * date.</p>
      *
      * @param attempt Attempt to be checked.
      * @return int with the former idAttempt or 0 if no previous attempt has
@@ -275,10 +308,11 @@ public class DataAccess {
     }
 
     /**
-     * This method gets all the attempts for a certain user.
+     * <p>
+     * This method gets all the attempts for a certain user.</p>
      *
      * @param user User to get all its attempts from the Database.
-     * @return ArrayList of attempts for that specific user.
+     * @return ArrayList of attempts for the specific user.
      */
     public ArrayList<Attempt> getAttemptsPerUser(User user) {
         ArrayList<Attempt> attempts = new ArrayList<>();
@@ -313,7 +347,8 @@ public class DataAccess {
     }
 
     /**
-     * This method gets the last review for a specific attempts.
+     * <p>
+     * This method gets the last review for a specific attempts.</p>
      *
      * @param idAttempt int with the identification of the attempt to look up in
      * the Database.
@@ -340,7 +375,8 @@ public class DataAccess {
     }
 
     /**
-     * This method updates a review received by parameter.
+     * <p>
+     * This method updates a review received by parameter.</p>
      *
      * @param review with the new values to be updated in the Database.
      * @return int with the rows altered with the query.
@@ -364,7 +400,8 @@ public class DataAccess {
     }
 
     /**
-     * This method deletes all the reviews for a certain attempt.
+     * <p>
+     * This method deletes all the reviews for a certain attempt.</p>
      *
      * @param attempt from which the reviews have to be deleted.
      * @return int with the number of rows affected with the action.
@@ -386,7 +423,8 @@ public class DataAccess {
     }
 
     /**
-     * This method deletes an attempt in the Database.
+     * <p>
+     * This method deletes an attempt in the Database.</p>
      *
      * @param attempt to be deleted.
      * @return int with the number of rows affected with the action.
